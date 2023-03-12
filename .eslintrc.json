@@ -29,6 +29,8 @@
   },
   "rules": {
     // Add your own rules here to override ones from the extended configs.
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-explicit-any": "off"
   }
 }
