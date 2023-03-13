@@ -1,20 +1,16 @@
-import Header from 'components/common/Header';
-import {
-  BrowserRouter as Router,
-  Routes as AppRoutes,
-  Route,
-} from 'react-router-dom';
+import CssBaseline from '@mui/material/CssBaseline';
+import { useRoutes } from 'react-router-dom';
+import ThemeProvider from './theme/ThemeProvider';
+import router from './router';
 
 const App = () => {
+  const content = useRoutes(router);
+
   return (
-    <div className="App">
-      <Header />
-      <Router>
-        <AppRoutes>
-          <Route path="/" element={<Home />} />
-        </AppRoutes>
-      </Router>
-    </div>
+    <ThemeProvider>
+      <CssBaseline />
+      {content}
+    </ThemeProvider>
   );
 };
 
