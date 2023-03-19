@@ -2,6 +2,8 @@
   "env": {
     "node": true
   },
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
   "extends": [
     // By extending from a plugin config, we can get recommended rules without having to add them manually.
     "eslint:recommended",
@@ -31,6 +33,7 @@
     // Add your own rules here to override ones from the extended configs.
     "react/react-in-jsx-scope": "off",
     "@typescript-eslint/no-empty-function": "off",
-    "@typescript-eslint/no-explicit-any": "off"
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-empty-interface": "off"
   }
 }

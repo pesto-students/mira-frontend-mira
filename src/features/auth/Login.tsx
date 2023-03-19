@@ -3,7 +3,6 @@ import {
   Grid,
   Typography,
   Box,
-  Link,
   InputAdornment,
   IconButton,
 } from '@mui/material';
@@ -13,11 +12,45 @@ import ButtonWrapper from 'shared/components/ButtonWrapper';
 import TextFieldWrapper from 'shared/components/TextFieldWrapper';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { saveUser } from './authSlice';
+import LinkWrapper from 'shared/components/LinkWrapper';
+
+interface ILoginData {
+  email: string;
+  password: string;
+  rememberMe: boolean;
+}
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const handleClickShowPassword = () => setShowPassword(!showPassword);
-  const handleMouseDownPassword = () => setShowPassword(!showPassword);
+  const [loginData, setLoginData] = useState<ILoginData>({
+    email: '',
+    password: '',
+    rememberMe: false,
+  });
+
+  const handleChange = (e: React.BaseSyntheticEvent) => {
+    const [value, name] = [
+      e.target.type === 'checkbox' ? e.target.checked : e.target.value,
+      e.target.name,
+    ];
+    setLoginData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const isLoginDisabled = () => {
+    if (!loginData.email || !loginData.password) return true;
+    return false;
+  };
+
+  const dispatch = useAppDispatch();
+
+  const handleLoginSubmit = () => {
+    dispatch(saveUser(loginData));
+    console.log(loginData);
+  };
+
+  const user = useAppSelector((state) => state.auth.value);
 
   return (
     <>
@@ -29,6 +62,9 @@ const Login = () => {
               type="email"
               label="Email"
               name="email"
+              value={loginData.email}
+              onChange={handleChange}
+              required
               autoFocus
             ></TextFieldWrapper>
           </Grid>
@@ -36,14 +72,17 @@ const Login = () => {
             <TextFieldWrapper
               label="Password"
               name="password"
+              value={loginData.password}
+              required
+              onChange={handleChange}
               type={showPassword ? 'text' : 'password'}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton
                       aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
+                      onClick={() => setShowPassword(!showPassword)}
+                      onMouseDown={() => setShowPassword(!showPassword)}
                     >
                       {showPassword ? <Visibility /> : <VisibilityOff />}
                     </IconButton>
@@ -54,59 +93,40 @@ const Login = () => {
           </Grid>
           <Grid item container>
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={
+                <Checkbox
+                  name="rememberMe"
+                  onChange={handleChange}
+                  color="primary"
+                  required
+                />
+              }
               label="Remember me"
-            />
-            <FormControlLabel
-              sx={{ width: '100%' }}
-              control={<Checkbox value="remember" color="primary" />}
-              label="I Agree to all the Terms and Privacy Policy"
             />
           </Grid>
           <Grid item xs={12}>
             <ButtonWrapper
               variant="contained"
               disableElevation
-              onClick={() => {
-                alert('clicked');
-              }}
               size="large"
               fullWidth
               sx={{
                 margin: '10px 0px',
                 padding: '10px',
               }}
+              disabled={isLoginDisabled()}
+              onClick={handleLoginSubmit}
             >
               Login
             </ButtonWrapper>
             <Grid container justifyContent="space-between">
               <Grid item>
-                <Link
-                  href="/sign-up"
-                  underline="none"
-                  variant="body1"
-                  sx={{
-                    '&:hover': {
-                      color: 'primary.dark',
-                    },
-                  }}
-                >
-                  Register
-                </Link>
+                <LinkWrapper href="/sign-up">Register</LinkWrapper>
               </Grid>
               <Grid item>
-                <Link
-                  href="/forgot-password"
-                  underline="none"
-                  variant="body1"
-                  sx={{
-                    '&:hover': {
-                      color: 'primary.dark',
-                    },
-                  }}
-                >
+                <LinkWrapper href="/forgot-password">
                   Forgot password?
-                </Link>
+                </LinkWrapper>
               </Grid>
             </Grid>
           </Grid>

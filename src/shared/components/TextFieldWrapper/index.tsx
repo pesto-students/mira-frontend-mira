@@ -21,9 +21,8 @@ const TextFieldWrapper: React.FC<TextFieldProps> = (props) => {
     <>
       {label && <InputLabel htmlFor={name}>{label}</InputLabel>}
       <TextField
-        autoComplete="given-name"
+        autoComplete="on"
         name={name}
-        required
         fullWidth
         id={name}
         sx={styles}
