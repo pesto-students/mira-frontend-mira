@@ -1,7 +1,7 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import { Box, Container, Grid, styled } from '@mui/material';
 import Hero from './Hero';
-import HeroImage from 'App/assets/hero.png';
+import HeroImage from 'app/assets/hero.png';
 
 const HomeWrapper = styled(Box)(
   () => `

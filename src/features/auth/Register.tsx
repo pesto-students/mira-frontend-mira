@@ -7,9 +7,9 @@ import {
   Grid,
   Typography,
 } from '@mui/material';
-import TextFieldWrapper from 'components/common/TextFieldWrapper';
-import UploadImage from './common/UploadImage';
-import ButtonWrapper from './common/ButtonWrapper';
+import TextFieldWrapper from 'shared/components/TextFieldWrapper';
+import UploadImage from 'shared/components/UploadImage';
+import ButtonWrapper from 'shared/components/ButtonWrapper';
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);

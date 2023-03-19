@@ -9,8 +9,8 @@ import {
 } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import ButtonWrapper from './common/ButtonWrapper';
-import TextFieldWrapper from './common/TextFieldWrapper';
+import ButtonWrapper from 'shared/components/ButtonWrapper';
+import TextFieldWrapper from 'shared/components/TextFieldWrapper';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
