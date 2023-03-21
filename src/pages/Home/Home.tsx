@@ -15,7 +15,9 @@ const HomeWrapper = styled(Box)(
 
 function Home() {
   const location = useLocation();
-  const content = ['/sign-up', '/login'].includes(location.pathname) ? (
+  const content = ['/sign-up', '/login', '/create-project'].includes(
+    location.pathname,
+  ) ? (
     <Outlet />
   ) : (
     <Hero />
