@@ -1,4 +1,4 @@
-import { Box, Card, Avatar, IconButton } from '@mui/material';
+import { Box, Card, Avatar, IconButton, Grid, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import UploadTwoToneIcon from '@mui/icons-material/UploadTwoTone';
 
@@ -43,28 +43,42 @@ const Input = styled('input')({
   display: 'none',
 });
 
-const UploadImage = ({ imageSrc }) => {
+const UploadImage = ({ name, label, helperText, value, onChange }) => {
   return (
-    <AvatarWrapper>
-      <Avatar
-        variant="rounded"
-        alt={'upload-image'}
-        src={imageSrc || 'https://source.unsplash.com/random'}
-      />
-      <ButtonUploadWrapper>
-        <Input
-          accept="image/*"
-          id="icon-button-file"
-          name="icon-button-file"
-          type="file"
-        />
-        <label htmlFor="icon-button-file">
-          <IconButton component="span" color="primary">
-            <UploadTwoToneIcon />
-          </IconButton>
-        </label>
-      </ButtonUploadWrapper>
-    </AvatarWrapper>
+    <Grid container item xs={12}>
+      {label && (
+        <Grid item xs={6} alignItems="center" container>
+          {label}
+          {helperText && (
+            <Typography
+              variant="caption"
+              sx={{ color: '#777', marginLeft: '4px' }}
+            >
+              ({helperText})
+            </Typography>
+          )}
+        </Grid>
+      )}
+      <Grid item xs={6}>
+        <AvatarWrapper>
+          <Avatar variant="rounded" alt={'upload-image'} src={value} />
+          <ButtonUploadWrapper>
+            <Input
+              accept="image/*"
+              id="icon-button-file"
+              name={name}
+              type="file"
+              onChange={onChange}
+            />
+            <label htmlFor="icon-button-file">
+              <IconButton component="span" color="primary">
+                <UploadTwoToneIcon />
+              </IconButton>
+            </label>
+          </ButtonUploadWrapper>
+        </AvatarWrapper>
+      </Grid>
+    </Grid>
   );
 };
 
