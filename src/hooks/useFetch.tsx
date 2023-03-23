@@ -9,6 +9,7 @@ const useFetch = (path: string, method: string) => {
   const base_urls: Record<string, string> = {
     dev: 'https://dev--mira-backend.netlify.app/.netlify/functions/',
     prod: 'https://mira-backend.netlify.app/.netlify/functions/',
+    local: 'http://127.0.0.1:8000/',
   };
 
   useEffect(() => {

@@ -13,7 +13,7 @@ type UserType = {
   imageUrl: string;
 };
 
-const SearchMemberGlobal = () => {
+const SearchMemberGlobal = ({ onChange }) => {
   // options: The list of users
   const [options, setOptions] = React.useState<UserType[]>([]);
   // selectedUsers: Users selected by the clent
@@ -28,6 +28,10 @@ const SearchMemberGlobal = () => {
   const [serchPath, setSearchPath] = React.useState<string>(
     'api/v1/users/search',
   );
+
+  useEffect(() => {
+    onChange(selectedUsers);
+  }, [selectedUsers]);
 
   // If inputValue is present, use email filter else use base path to search for users.
   useEffect(() => {
@@ -95,7 +99,11 @@ const SearchMemberGlobal = () => {
           </Box>
         )}
         renderInput={(params) => (
-          <TextFieldWrapper {...params} label="Controllable" />
+          <TextFieldWrapper
+            {...params}
+            label="Add Members"
+            placeholder="Seach by email id"
+          />
         )}
       />
       <div>

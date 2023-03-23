@@ -43,13 +43,13 @@ const Input = styled('input')({
   display: 'none',
 });
 
-const UploadImage = () => {
+const UploadImage = ({ imageSrc }) => {
   return (
     <AvatarWrapper>
       <Avatar
         variant="rounded"
         alt={'upload-image'}
-        src={'https://source.unsplash.com/random'}
+        src={imageSrc || 'https://source.unsplash.com/random'}
       />
       <ButtonUploadWrapper>
         <Input

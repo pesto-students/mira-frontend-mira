@@ -15,7 +15,7 @@ const HomeWrapper = styled(Box)(
 
 function Home() {
   const location = useLocation();
-  const content = ['/sign-up', '/login', '/create-project'].includes(
+  const content = ['/sign-up', '/login', '/onboard/create-project'].includes(
     location.pathname,
   ) ? (
     <Outlet />
@@ -25,7 +25,7 @@ function Home() {
 
   return (
     <HomeWrapper>
-      <Container maxWidth="lg">
+      <Container>
         <Grid container>
           <Grid
             container

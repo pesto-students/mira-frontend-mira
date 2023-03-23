@@ -1,8 +1,11 @@
 import BaseLayout from 'components/layout/BaseLayout';
+import DashboardLayout from 'components/layout/DashboardLayout';
 import Login from 'components/Login';
 import Register from 'components/Register';
 import Home from 'pages/Home/Home';
-import CreateProject from 'components/project/CreateProject';
+import PageProjectList from 'pages/project/list';
+import PageProjectCreate from 'pages/project/create';
+import PageProjectDetails from 'pages/project/details';
 import type { RouteObject } from 'react-router';
 
 const router: RouteObject[] = [
@@ -23,10 +26,28 @@ const router: RouteObject[] = [
             element: <Login />,
           },
           {
-            path: '/create-project',
-            element: <CreateProject />,
+            path: '/onboard/create-project',
+            element: <PageProjectCreate />,
           },
         ],
+      },
+    ],
+  },
+  {
+    path: '',
+    element: <DashboardLayout />,
+    children: [
+      {
+        path: '/projects/list',
+        element: <PageProjectList />,
+      },
+      {
+        path: '/projects/create',
+        element: <PageProjectCreate />,
+      },
+      {
+        path: '/projects/:projectId',
+        element: <PageProjectDetails />,
       },
     ],
   },

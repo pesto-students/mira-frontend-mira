@@ -3,7 +3,7 @@ import { Link, Box, Grid, Typography } from '@mui/material';
 import TextFieldWrapper from 'components/common/TextFieldWrapper';
 import UploadImage from '../common/UploadImage';
 import ButtonWrapper from '../common/ButtonWrapper';
-import SearchMemberGlobal from 'components/common/SearchMemberGlobal/SearchMemberGlobal';
+import SearchMemberGlobal from 'components/common/SearchMemberGlobal';
 
 const CreateProject = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -12,6 +12,8 @@ const CreateProject = () => {
     console.log(data);
   };
 
+  const [newMembers, setNewMembers] = useState([]);
+
   return (
     <Box
       component="form"
@@ -19,7 +21,7 @@ const CreateProject = () => {
       onSubmit={handleSubmit}
       sx={{ padding: 5, pt: 0 }}
     >
-      <div>{}</div>
+      <div>{JSON.stringify(newMembers)}</div>
       <Typography variant="h5">Create Project</Typography>
       <Grid container spacing={2} sx={{ marginTop: '24px' }}>
         <Grid container item xs={12}>
@@ -48,7 +50,7 @@ const CreateProject = () => {
           />
         </Grid>
         <Grid item xs={12} sm={12}>
-          <SearchMemberGlobal />
+          <SearchMemberGlobal onChange={setNewMembers} />
         </Grid>
       </Grid>
       <Grid item xs={12}>
@@ -65,7 +67,7 @@ const CreateProject = () => {
             padding: '10px',
           }}
         >
-          Create Project
+          Create
         </ButtonWrapper>
       </Grid>
     </Box>
