@@ -5,16 +5,18 @@ import {
   Box,
   InputAdornment,
   IconButton,
+  Checkbox,
+  FormControlLabel,
 } from '@mui/material';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import ButtonWrapper from 'shared/components/ButtonWrapper';
 import TextFieldWrapper from 'shared/components/TextFieldWrapper';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { saveUser } from './authSlice';
 import LinkWrapper from 'shared/components/LinkWrapper';
+import GenericErrorModal from 'shared/components/Modal/GenericErrorModal';
+import ResetPassword from './ResetPassword';
+
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from 'app/firebase/firebaseConfig';
 
 interface ILoginData {
   email: string;
@@ -29,6 +31,9 @@ const Login = () => {
     password: '',
     rememberMe: false,
   });
+  const [loading, setLoading] = useState(false);
+  const [openErrorModal, setOpenErrorModal] = useState(false);
+  const [resetPassword, setResetPassword] = useState(false);
 
   const handleChange = (e: React.BaseSyntheticEvent) => {
     const [value, name] = [
@@ -43,14 +48,23 @@ const Login = () => {
     return false;
   };
 
-  const dispatch = useAppDispatch();
-
   const handleLoginSubmit = () => {
-    dispatch(saveUser(loginData));
-    console.log(loginData);
+    setLoading(true);
+    signInWithEmailAndPassword(auth, loginData.email, loginData.password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log('Singed in user: ', user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log('An error occured: ', errorCode, errorMessage);
+        setOpenErrorModal(true);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
-
-  const user = useAppSelector((state) => state.auth.value);
 
   return (
     <>
@@ -75,11 +89,17 @@ const Login = () => {
               value={loginData.password}
               required
               onChange={handleChange}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleLoginSubmit();
+                }
+              }}
               type={showPassword ? 'text' : 'password'}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton
+                      disableRipple={true}
                       aria-label="toggle password visibility"
                       onClick={() => setShowPassword(!showPassword)}
                       onMouseDown={() => setShowPassword(!showPassword)}
@@ -105,26 +125,29 @@ const Login = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <ButtonWrapper
-              variant="contained"
-              disableElevation
-              size="large"
-              fullWidth
-              sx={{
-                margin: '10px 0px',
-                padding: '10px',
-              }}
-              disabled={isLoginDisabled()}
-              onClick={handleLoginSubmit}
-            >
-              Login
-            </ButtonWrapper>
+            {
+              <ButtonWrapper
+                variant="contained"
+                disableElevation
+                loading={loading}
+                size="large"
+                fullWidth
+                sx={{
+                  margin: '10px 0px',
+                  padding: '10px',
+                }}
+                disabled={isLoginDisabled()}
+                onClick={handleLoginSubmit}
+              >
+                Login
+              </ButtonWrapper>
+            }
             <Grid container justifyContent="space-between">
               <Grid item>
                 <LinkWrapper href="/sign-up">Register</LinkWrapper>
               </Grid>
               <Grid item>
-                <LinkWrapper href="/forgot-password">
+                <LinkWrapper onClick={() => setResetPassword(true)}>
                   Forgot password?
                 </LinkWrapper>
               </Grid>
@@ -132,6 +155,15 @@ const Login = () => {
           </Grid>
         </Grid>
       </Box>
+      {resetPassword && (
+        <ResetPassword onClose={() => setResetPassword(false)} />
+      )}
+      <GenericErrorModal
+        title="Error: Invalid Credentials"
+        description="Incorrect password or email does not exists! Please try again."
+        open={openErrorModal}
+        handleClose={() => setOpenErrorModal(false)}
+      ></GenericErrorModal>
     </>
   );
 };

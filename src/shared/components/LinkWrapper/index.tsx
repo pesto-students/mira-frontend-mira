@@ -5,7 +5,8 @@ import type { LinkTypeMap } from '@mui/material';
 
 interface ILinkWrapper extends Partial<OverridableComponent<LinkTypeMap>> {
   children: React.ReactNode;
-  href: string;
+  href?: string;
+  onClick?: () => void;
 }
 
 const index: React.FC<ILinkWrapper> = ({ children, ...props }) => {
