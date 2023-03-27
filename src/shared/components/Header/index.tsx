@@ -12,7 +12,7 @@ import {
   MenuItem,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import Logo from 'App/assets/MIRA.png';
+import Logo from 'app/assets/MIRA.png';
 
 const pages = [
   {
@@ -48,8 +48,9 @@ function Header() {
     >
       <Container maxWidth="lg">
         <Toolbar>
-          <img src={Logo} alt="logo" height={70} />
-
+          <a href="/">
+            <img src={Logo} alt="logo" height={70} />
+          </a>
           <Box
             sx={{
               flexGrow: 1,

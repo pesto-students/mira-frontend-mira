@@ -1,7 +1,9 @@
-import BaseLayout from 'components/layout/BaseLayout';
-import Login from 'components/Login';
-import Register from 'components/Register';
-import Home from 'pages/Home/Home';
+import BaseLayout from 'shared/components/layout/BaseLayout';
+import Login from 'features/auth/Login';
+import Register from 'features/auth/Register';
+import Home from 'features/home';
+import Status404 from 'features/home/Status404';
+// types
 import type { RouteObject } from 'react-router';
 
 const router: RouteObject[] = [
@@ -22,6 +24,10 @@ const router: RouteObject[] = [
             element: <Login />,
           },
         ],
+      },
+      {
+        path: '*',
+        element: <Status404 />,
       },
     ],
   },

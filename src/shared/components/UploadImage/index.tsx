@@ -1,6 +1,7 @@
 import { Box, Card, Avatar, IconButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import UploadTwoToneIcon from '@mui/icons-material/UploadTwoTone';
+import React, { useState } from 'react';
 
 const AvatarWrapper = styled(Card)(
   ({ theme }) => ` 
@@ -43,20 +44,31 @@ const Input = styled('input')({
   display: 'none',
 });
 
-const UploadImage = () => {
+interface IProps {
+  onImageChange: (file: File) => void;
+}
+
+const UploadImage: React.FC<IProps> = (props) => {
+  const [image, setImage] = useState(
+    'https://i2.wp.com/thehealthyexec.com/wp-content/uploads/2015/11/reddit-logo.png',
+  );
+
+  const handleImageChange = (e: React.BaseSyntheticEvent) => {
+    console.log(e.target.files);
+    setImage(URL.createObjectURL(e.target.files[0]));
+    props.onImageChange(e.target.files[0]);
+  };
+
   return (
     <AvatarWrapper>
-      <Avatar
-        variant="rounded"
-        alt={'upload-image'}
-        src={'https://source.unsplash.com/random'}
-      />
+      <Avatar variant="rounded" alt={'upload-image'} src={image} />
       <ButtonUploadWrapper>
         <Input
           accept="image/*"
           id="icon-button-file"
           name="icon-button-file"
           type="file"
+          onChange={handleImageChange}
         />
         <label htmlFor="icon-button-file">
           <IconButton component="span" color="primary">
