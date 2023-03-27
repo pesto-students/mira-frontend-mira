@@ -78,7 +78,6 @@ const EditProject = ({ projectId }) => {
             required
             multiline
             rows={4}
-            maxRows={4}
             fullWidth
             name="description"
             label={'Description'}

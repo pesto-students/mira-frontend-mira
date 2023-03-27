@@ -12,7 +12,8 @@ export interface ButtonProps extends MuiButtonProps {
 
 const styles: SxProps<Theme> = (theme) => {
   return {
-    '&.MuiButton-root': { textTransform: 'unset', margin: theme.spacing(0.5) },
+    '&.MuiButton-root': { textTransform: 'unset' },
+    '&.Mui-disabled': { backgroundColor: theme.palette.primary.light },
   };
 };
 

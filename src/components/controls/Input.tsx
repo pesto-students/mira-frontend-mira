@@ -14,8 +14,8 @@ const styles: SxProps<Theme> = {
   },
 };
 
-const Input: React.FC<TextFieldProps> = (props) => {
-  const { name, label, value, error = null, onChange, ...otherProps } = props;
+const Input: React.FC<TextFieldProps> = (props, ref) => {
+  const { name, label, value, onChange, ...otherProps } = props;
   return (
     <>
       <InputLabel htmlFor={name}>{label}</InputLabel>
@@ -24,12 +24,12 @@ const Input: React.FC<TextFieldProps> = (props) => {
         name={name}
         value={value}
         onChange={onChange}
+        inputRef={ref}
         sx={styles}
         {...otherProps}
-        {...(error && { error: true, helperText: error })}
       />
     </>
   );
 };
 
-export default Input;
+export default React.forwardRef(Input);

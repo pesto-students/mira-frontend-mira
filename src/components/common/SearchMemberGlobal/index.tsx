@@ -4,6 +4,7 @@ import TextFieldWrapper from 'components/common/TextFieldWrapper';
 import ChipWrapper from 'components/common/ChipWrapper';
 import useFetch from 'hooks/useFetch';
 import { debounce } from '@mui/material/utils';
+import Controls from 'components/controls/Controls';
 
 type UserType = {
   _id: string;
@@ -13,7 +14,8 @@ type UserType = {
   imageUrl: string;
 };
 
-const SearchMemberGlobal = ({ onChange }) => {
+const SearchMemberGlobal = (props) => {
+  const { onChange, name, ...otherProps } = props;
   // options: The list of users
   const [options, setOptions] = React.useState<UserType[]>([]);
   // selectedUsers: Users selected by the clent
@@ -69,8 +71,10 @@ const SearchMemberGlobal = ({ onChange }) => {
       setSelectedUsers(selectedUsers.filter((user) => user._id != userid));
   };
 
-  const updateQuery = (event, newInputValue) => {
-    setInputValue(newInputValue);
+  const updateQuery = (event, newInputValue, reason) => {
+    if (['input', 'clear'].includes(reason)) {
+      setInputValue(newInputValue);
+    }
   };
 
   const debouncedUpdateQuery = debounce(updateQuery, 400);
@@ -82,8 +86,8 @@ const SearchMemberGlobal = ({ onChange }) => {
           if (newValue) {
             setSelectedUsers([...selectedUsers, newValue]);
           }
-          setInputValue(undefined);
         }}
+        loading={isPendingLoadingUser}
         getOptionLabel={(user) => `${user.email}`}
         isOptionEqualToValue={(option, value) => {
           return option.email == value.email;
@@ -99,10 +103,11 @@ const SearchMemberGlobal = ({ onChange }) => {
           </Box>
         )}
         renderInput={(params) => (
-          <TextFieldWrapper
+          <Controls.Input
             {...params}
             label="Add Members"
             placeholder="Seach by email id"
+            {...otherProps}
           />
         )}
       />

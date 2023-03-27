@@ -1,27 +1,70 @@
 import React from 'react';
 import {
-  FormControl,
   InputLabel,
   Select as MuiSelect,
   MenuItem,
   FormHelperText,
 } from '@mui/material';
+import type {
+  SxProps,
+  Theme,
+  SelectProps as MuiSelectProps,
+} from '@mui/material';
 
-export default function Select(props) {
-  const { name, label, value, error = null, onChange, options } = props;
+const styles: SxProps<Theme> = {
+  mt: 0,
+  mb: 0,
+  '&.MuiInputBase-root': { backgroundColor: 'secondary.main' },
+  '&.MuiInputBase-root:hover': {
+    backgroundColor: 'secondary.light',
+  },
+  '& input:focus': {
+    backgroundColor: '#ffffff',
+  },
+  '& .MuiInputBase-input': {
+    padding: '10px 26px 10px 12px',
+  },
+};
+
+type SelectOptionsType = {
+  title: string;
+  value: string;
+};
+
+export interface SelectProps extends MuiSelectProps {
+  options: SelectOptionsType[];
+}
+
+const Select: React.FC<SelectProps> = (props) => {
+  const {
+    name,
+    label,
+    value,
+    error = null,
+    onChange,
+    options,
+    ...otherProps
+  } = props;
 
   return (
-    <FormControl variant="outlined" {...(error && { error: true })}>
-      <InputLabel>{label}</InputLabel>
-      <MuiSelect label={label} name={name} value={value} onChange={onChange}>
+    <>
+      <InputLabel htmlFor={name}>{label}</InputLabel>
+      <MuiSelect
+        name={name}
+        value={value}
+        onChange={onChange}
+        sx={styles}
+        {...otherProps}
+      >
         <MenuItem value="">None</MenuItem>
         {options.map((item) => (
-          <MenuItem key={item.id} value={item.id}>
+          <MenuItem key={item.value} value={item.value}>
             {item.title}
           </MenuItem>
         ))}
       </MuiSelect>
       {error && <FormHelperText>{error}</FormHelperText>}
-    </FormControl>
+    </>
   );
-}
+};
+export default Select;

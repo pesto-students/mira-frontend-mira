@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import { Box, Card, Avatar, IconButton, Grid, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import UploadTwoToneIcon from '@mui/icons-material/UploadTwoTone';
@@ -43,7 +44,18 @@ const Input = styled('input')({
   display: 'none',
 });
 
-const UploadImage = ({ name, label, helperText, value, onChange }) => {
+const defaultPic =
+  'https://firebasestorage.googleapis.com/v0/b/mira-v1-2b0a0.appspot.com/o/assets%2FdefaultPic.svg?alt=media&token=75d1e193-6661-4199-b46d-71036cb44cae';
+
+const UploadImage = (props) => {
+  const { label, helperText, imageUrl, onChange } = props;
+  useEffect(() => {
+    if (!imageUrl) {
+      onChange(defaultPic);
+    }
+  }, []);
+  const tempUrl =
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/640px-Image_created_with_a_mobile_phone.png';
   return (
     <Grid container item xs={12}>
       {label && (
@@ -61,14 +73,13 @@ const UploadImage = ({ name, label, helperText, value, onChange }) => {
       )}
       <Grid item xs={6}>
         <AvatarWrapper>
-          <Avatar variant="rounded" alt={'upload-image'} src={value} />
+          <Avatar variant="rounded" alt={'upload-image'} src={imageUrl} />
           <ButtonUploadWrapper>
             <Input
               accept="image/*"
               id="icon-button-file"
-              name={name}
               type="file"
-              onChange={onChange}
+              onChange={() => onChange(tempUrl)}
             />
             <label htmlFor="icon-button-file">
               <IconButton component="span" color="primary">
