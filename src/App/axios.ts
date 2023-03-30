@@ -17,6 +17,6 @@ axios.interceptors.request.use(
 
 export const request = axios.create({
   baseURL: 'https://dev--mira-backend.netlify.app/.netlify/functions/api/v1',
-  headers: { Authorization: `Bearer ${token}` },
+  headers: { Authorization: `Bearer ${token}`, 'Access-Control-Allow-Origin': '*' },
   timeout: 4000,
 });

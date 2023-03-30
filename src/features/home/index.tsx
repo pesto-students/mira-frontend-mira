@@ -15,11 +15,17 @@ const HomeWrapper = styled(Box)(
 
 function Home() {
   const location = useLocation();
-  const content = ['/sign-up', '/login'].includes(location.pathname) ? (
-    <Outlet />
-  ) : (
-    <Hero />
-  );
+  // const content = [
+  //   '/sign-up',
+  //   '/login',
+  //   '/project-create',
+  //   '/project-list', //TODO: remove it
+  // ].includes(location.pathname) ? (
+  //   <Outlet />
+  // ) : (
+  //   <Hero />
+  // );
+  const content = <Outlet />; //TODO: remove this and restore above
 
   return (
     <HomeWrapper>

@@ -31,6 +31,7 @@ const App = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         dispatch(saveUser(user.refreshToken));
+        localStorage.setItem('token', user.accessToken);
       } else {
         dispatch(saveUser(undefined));
       }

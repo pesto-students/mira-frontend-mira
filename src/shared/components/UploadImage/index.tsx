@@ -1,17 +1,27 @@
-import { Box, Card, Avatar, IconButton } from '@mui/material';
+import { Box, Card, Avatar, IconButton, CircularProgress } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import UploadTwoToneIcon from '@mui/icons-material/UploadTwoTone';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { storage } from 'App/firebase/firebaseConfig';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 const AvatarWrapper = styled(Card)(
   ({ theme }) => ` 
     position: relative;
     overflow: visible;
-    display: inline-block;   
+    display: grid;  
+    border-radius: 50%;
+    width: ${theme.spacing(16)};
+    height: ${theme.spacing(16)};
 
     .MuiAvatar-root {
       width: ${theme.spacing(16)};
       height: ${theme.spacing(16)};
+    }
+
+    & .MuiCircularProgress-root{
+      align-self: center;
+      justify-self: center;
     }
 `,
 );
@@ -45,23 +55,71 @@ const Input = styled('input')({
 });
 
 interface IProps {
-  onImageChange: (file: File) => void;
+  onImageChange: (image: string) => void;
+  currentImage?: string;
+  path: string;
+  loading: boolean;
 }
 
-const UploadImage: React.FC<IProps> = (props) => {
-  const [image, setImage] = useState(
-    'https://i2.wp.com/thehealthyexec.com/wp-content/uploads/2015/11/reddit-logo.png',
-  );
+const UploadImage: React.FC<IProps> = ({
+  onImageChange,
+  currentImage,
+  path,
+  loading = false,
+}) => {
+  const defaultImage = '';
+  const [image, setImage] = useState(defaultImage);
+  const [imageFile, setImageFile] = useState(null);
+  const [isProcessing, setIsProcessing] = useState(loading);
+
+  useEffect(() => {
+    setIsProcessing(loading);
+  }, [loading]);
+
+  const uploadImage = () => {
+    if (!imageFile) return;
+    const random = Math.floor(Math.random() * 100000000 + 1);
+    const imageRef = ref(storage, `${path}${imageFile.name}${random}`);
+    setIsProcessing(true);
+    uploadBytes(imageRef, imageFile)
+      .then((snapshot) => {
+        console.log('Success: Image upload');
+        return getDownloadURL(snapshot.ref);
+      })
+      .then((downloadURL) => {
+        // setImage(downloadURL);
+        onImageChange(downloadURL);
+      })
+      .catch((err) => {
+        console.error('Failed: image upload', err);
+      })
+      .finally(() => {
+        setImageFile(null);
+        setIsProcessing(false);
+      });
+  };
+
+  useEffect(() => {
+    uploadImage();
+  }, [imageFile]);
+
+  useEffect(() => {
+    if (currentImage) {
+      setImage(currentImage);
+    }
+  }, [currentImage]);
 
   const handleImageChange = (e: React.BaseSyntheticEvent) => {
-    console.log(e.target.files);
-    setImage(URL.createObjectURL(e.target.files[0]));
-    props.onImageChange(e.target.files[0]);
+    setImageFile(e.target.files[0]);
   };
 
   return (
     <AvatarWrapper>
-      <Avatar variant="rounded" alt={'upload-image'} src={image} />
+      {isProcessing ? (
+        <CircularProgress />
+      ) : (
+        <Avatar alt={'upload-image'} src={image} />
+      )}
       <ButtonUploadWrapper>
         <Input
           accept="image/*"

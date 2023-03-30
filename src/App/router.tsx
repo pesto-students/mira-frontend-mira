@@ -3,8 +3,10 @@ import Login from 'features/auth/Login';
 import Register from 'features/auth/Register';
 import Home from 'features/home';
 import Status404 from 'features/home/Status404';
-// types
 import type { RouteObject } from 'react-router';
+import ProjectList from 'features/project/ProjectList';
+import ProjectCreate from 'pages/project/ProjectCreate';
+import ProjectEdit from 'pages/project/ProjectEdit';
 
 const router: RouteObject[] = [
   {
@@ -22,6 +24,18 @@ const router: RouteObject[] = [
           {
             path: '/login',
             element: <Login />,
+          },
+          {
+            path: '/project-create',
+            element: <ProjectCreate />,
+          },
+          {
+            path: '/project-edit/:projectId',
+            element: <ProjectEdit />,
+          },
+          {
+            path: '/project-list',
+            element: <ProjectList />,
           },
         ],
       },

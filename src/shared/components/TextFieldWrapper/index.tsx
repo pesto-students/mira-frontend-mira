@@ -5,16 +5,16 @@ import type { TextFieldProps, SxProps, Theme } from '@mui/material';
 const styles: SxProps<Theme> = {
   mt: 0,
   mb: 0,
-  backgroundColor: 'secondary.main',
-  '&:hover': {
-    backgroundColor: 'secondary.light', //'#ebecf0',
+  '& .MuiInputBase-root': { backgroundColor: 'secondary.main' },
+  '& .MuiInputBase-root:hover': {
+    backgroundColor: 'secondary.light',
   },
   '& input:focus': {
     backgroundColor: '#ffffff',
   },
 };
 
-const TextFieldWrapper: React.FC<TextFieldProps> = (props) => {
+const TextFieldWrapper: React.FC<TextFieldProps> = (props, ref) => {
   const { label, name, ...textFieldProps } = props;
 
   return (
@@ -26,10 +26,11 @@ const TextFieldWrapper: React.FC<TextFieldProps> = (props) => {
         fullWidth
         id={name}
         sx={styles}
+        inputRef={ref}
         {...textFieldProps}
       />
     </>
   );
 };
 
-export default TextFieldWrapper;
+export default React.forwardRef(TextFieldWrapper);
