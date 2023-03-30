@@ -7,6 +7,7 @@ import type { RouteObject } from 'react-router';
 import ProjectList from 'features/project/ProjectList';
 import ProjectCreate from 'pages/project/ProjectCreate';
 import ProjectEdit from 'pages/project/ProjectEdit';
+import Hero from 'features/home/Hero';
 
 const router: RouteObject[] = [
   {
@@ -17,6 +18,10 @@ const router: RouteObject[] = [
         path: '/',
         element: <Home />,
         children: [
+          {
+            path: '/',
+            element: <Hero />,
+          },
           {
             path: '/sign-up',
             element: <Register />,

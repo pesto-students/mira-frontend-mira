@@ -1,6 +1,5 @@
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { Box, Container, Grid, styled } from '@mui/material';
-import Hero from './Hero';
 import HeroImage from 'app/assets/hero.png';
 
 const HomeWrapper = styled(Box)(
@@ -14,19 +13,6 @@ const HomeWrapper = styled(Box)(
 );
 
 function Home() {
-  const location = useLocation();
-  // const content = [
-  //   '/sign-up',
-  //   '/login',
-  //   '/project-create',
-  //   '/project-list', //TODO: remove it
-  // ].includes(location.pathname) ? (
-  //   <Outlet />
-  // ) : (
-  //   <Hero />
-  // );
-  const content = <Outlet />; //TODO: remove this and restore above
-
   return (
     <HomeWrapper>
       <Container maxWidth="lg">
@@ -48,7 +34,7 @@ function Home() {
           </Grid>
 
           <Grid item container xs={12} md={6} order={{ xs: 1 }}>
-            {content}
+            <Outlet />
           </Grid>
         </Grid>
       </Container>
