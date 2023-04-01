@@ -5,6 +5,7 @@ import Home from 'features/home';
 import Status404 from 'features/home/Status404';
 // types
 import type { RouteObject } from 'react-router';
+import SidebarLayout from 'shared/components/layout/SidebarLayout/SidebarLayout';
 
 const router: RouteObject[] = [
   {
@@ -28,6 +29,16 @@ const router: RouteObject[] = [
       {
         path: '*',
         element: <Status404 />,
+      },
+    ],
+  },
+  {
+    path: '/project',
+    element: <SidebarLayout />,
+    children: [
+      {
+        path: '/:id',
+        element: 'Hello',
       },
     ],
   },

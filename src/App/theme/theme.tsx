@@ -20,6 +20,14 @@ const LinkBehavior = React.forwardRef<
 LinkBehavior.displayName = 'LinkBehavior';
 
 const themeOptions: ThemeOptions = {
+  header: {
+    height: '80px',
+  },
+  sidebar: {
+    width: '290px',
+    boxShadow:
+      '2px 0 3px rgba(159, 162, 191, .18), 1px 0 1px rgba(159, 162, 191, 0.32)',
+  },
   colors: {
     shadows: {
       primary:
