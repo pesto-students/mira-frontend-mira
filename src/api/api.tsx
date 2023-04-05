@@ -58,3 +58,47 @@ export const updateProject = async (id, payload) => {
     return errorParser(e);
   }
 };
+
+export const getCardList = async (projectId) => {
+  try {
+    const response = await request.get(`/projects/${projectId}/cards`);
+    return response.data;
+  } catch (e) {
+    return errorParser(e);
+  }
+};
+
+export const createCard = async (projectId, payload) => {
+  try {
+    const response = await request.post(
+      `/projects/${projectId}/cards`,
+      payload,
+    );
+    return response.data;
+  } catch (e) {
+    return errorParser(e);
+  }
+};
+
+export const getCard = async ({ projectId, cardId }) => {
+  try {
+    const response = await request.get(
+      `/projects/${projectId}/cards/${cardId}`,
+    );
+    return response.data;
+  } catch (e) {
+    return errorParser(e);
+  }
+};
+
+export const updateCard = async (projectId, cardId, payload) => {
+  try {
+    const response = await request.patch(
+      `/projects/${projectId}/cards/${cardId}`,
+      payload,
+    );
+    return response.data;
+  } catch (e) {
+    return errorParser(e);
+  }
+};

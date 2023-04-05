@@ -4,6 +4,7 @@ import type { DatePickerProps } from '@mui/x-date-pickers/DatePicker';
 import type { SxProps, Theme } from '@mui/material';
 import type { PickerChangeHandler } from '@mui/x-date-pickers/internals/hooks/usePicker/usePickerValue';
 import type { DateValidationError } from '@mui/x-date-pickers';
+import React from 'react';
 
 interface IDatePickerWrapperProps extends DatePickerProps<any> {
   label: string;
@@ -23,18 +24,22 @@ const styles: SxProps<Theme> = {
   },
 };
 
-const DatePickerWrapper: React.FunctionComponent<IDatePickerWrapperProps> = ({
-  label,
-  value,
-  onChange,
-  ...props
-}) => {
+const DatePickerWrapper: React.FunctionComponent<IDatePickerWrapperProps> = (
+  { label, value, onChange, ...props },
+  ref,
+) => {
   return (
     <>
       {label && <InputLabel>{label}</InputLabel>}
-      <DatePicker sx={styles} value={value} onChange={onChange} {...props} />
+      <DatePicker
+        sx={styles}
+        value={value}
+        onChange={onChange}
+        ref={ref}
+        {...props}
+      />
     </>
   );
 };
 
-export default DatePickerWrapper;
+export default React.forwardRef(DatePickerWrapper);

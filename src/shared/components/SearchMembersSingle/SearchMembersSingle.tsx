@@ -20,8 +20,8 @@ type UserType = {
   imageUrl: string;
 };
 
-const SearchMembers = (props) => {
-  const { onChange, name, ...otherProps } = props;
+const SearchMembersSingle = (props) => {
+  const { onChange, name, label, ...otherProps } = props;
   // selectedUsers: Users selected by the clent
   const [selectedUsers, setSelectedUsers] = React.useState<UserType[]>([]);
   // inputValue: value typed in the input textfield
@@ -69,9 +69,7 @@ const SearchMembers = (props) => {
   };
 
   const updateQuery = (event, newInputValue, reason) => {
-    if (['input', 'clear'].includes(reason)) {
-      setInputValue(newInputValue);
-    }
+    setInputValue(newInputValue);
   };
 
   return (
@@ -108,28 +106,14 @@ const SearchMembers = (props) => {
         renderInput={(params) => (
           <TextFieldWrapper
             {...params}
-            label="Add Members"
+            label={label}
             placeholder="Seach by email id"
             {...otherProps}
           />
         )}
       />
-      <div>
-        <Grid container spacing={1} sx={{ marginTop: '8px' }}>
-          {selectedUsers.map((user) => (
-            <Grid item key={user._id}>
-              <ChipWrapper
-                avatar={<Avatar alt="Natacha" src={user.imageUrl} />}
-                label={user.firstName}
-                variant="outlined"
-                onDelete={removeUserFromSelection(user._id)}
-              />
-            </Grid>
-          ))}
-        </Grid>
-      </div>
     </div>
   );
 };
 
-export default SearchMembers;
+export default SearchMembersSingle;

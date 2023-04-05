@@ -31,7 +31,7 @@ const ListProjects = () => {
             key={project._id}
             button
             component="a"
-            href={`project-edit/${project._id}`}
+            href={`${project._id}`}
           >
             <ListItemText primary={project.name} />
           </ListItem>

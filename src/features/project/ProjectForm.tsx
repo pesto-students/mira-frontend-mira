@@ -90,7 +90,19 @@ const ProjectForm: FC<IProjectForm> = ({
 
           <Grid item xs={12}>
             <TextFieldWrapper
-              {...register('name', { required: 'Name is required' })}
+              {...register('name', {
+                // required: 'Name is required',
+                minLength: {
+                  value: 3,
+                  message: 'Project name must be atleast 3 characters long',
+                },
+                maxLength: {
+                  value: 15,
+                  message: 'Project name can be max 15 characters long',
+                },
+                validate: (value) =>
+                  value?.trim() === value || 'No trailing spaces',
+              })}
               error={errors.name ? true : false}
               helperText={errors.name?.message?.toString()}
               fullWidth
@@ -101,6 +113,17 @@ const ProjectForm: FC<IProjectForm> = ({
             <TextFieldWrapper
               {...register('description', {
                 required: 'Description is required',
+                minLength: {
+                  value: 3,
+                  message:
+                    'Project description must be atleast 3 characters long',
+                },
+                maxLength: {
+                  value: 300,
+                  message: 'Project description can be max 300 characters long',
+                },
+                validate: (value) =>
+                  value?.trim() === value || 'No trailing spaces',
               })}
               error={errors.description ? true : false}
               helperText={errors.description?.message?.toString()}
@@ -112,16 +135,8 @@ const ProjectForm: FC<IProjectForm> = ({
           </Grid>
           <Grid item xs={12} sm={12}>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <SearchMembers
-                  name="newUsers"
-                  onChange={(value) =>
-                    setValue('newUsers', value, { shouldDirty: true })
-                  }
-                />
-              </Grid>
               {!isCreateProject ? (
-                <Grid item xs={12}>
+                <Grid item xs={12} md={6}>
                   <ViewMembersTable
                     register={register}
                     fields={fieldsUsersWithRole}
@@ -132,6 +147,14 @@ const ProjectForm: FC<IProjectForm> = ({
               ) : (
                 ''
               )}
+              <Grid item xs={12} md={6}>
+                <SearchMembers
+                  name="newUsers"
+                  onChange={(value) =>
+                    setValue('newUsers', value, { shouldDirty: true })
+                  }
+                />
+              </Grid>
             </Grid>
           </Grid>
           <Grid item xs={12}>

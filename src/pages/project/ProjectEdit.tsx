@@ -45,7 +45,7 @@ const ProjectEdit: FC = () => {
         'success',
         'Successfully updated the project',
         () => {
-          navigate('/project-list');
+          navigate('/projects/list');
         },
       );
     } else {
@@ -84,7 +84,7 @@ const ProjectEdit: FC = () => {
 
   const onSubmit = async (data, dirtyFields) => {
     setLoading(true);
-    console.log(data, dirtyFields);
+
     const newUsers = data.newUsers.map((user) => user._id);
     const users = data.usersWithRole
       .filter((item) => item.role == 'user')
@@ -102,6 +102,38 @@ const ProjectEdit: FC = () => {
       users: allUsers,
       admins,
     };
+
+    // const payload = dirtyFields.reduce((obj, key) => {
+    //   let value = data[key];
+    //   if (key == 'newUsers') {
+    //     value = data.newUsers.map((user) => user._id);
+    //     return { ...obj, newUsers: value };
+    //   } else if (key == 'usersWithRole') {
+    //     const users = data.usersWithRole
+    //       .filter((item) => item.role == 'user')
+    //       .map((user) => user._id);
+    //     const admins = data.usersWithRole
+    //       .filter((item) => item.role == 'admin')
+    //       .map((user) => user._id);
+    //     return { ...obj, users, admins };
+    //   } else {
+    //     return { ...obj, [key]: value };
+    //   }
+    // }, {});
+
+    // console.log(payload);
+
+    // const existingUsers = initialValues.usersWithRole
+    //   .filter((item) => item.role == 'user')
+    //   .map((user) => user._id);
+
+    // payload.users = (payload?.users || existingUsers).concat(
+    //   payload?.newUsers || [],
+    // );
+    // delete payload.newUsers;
+
+    // console.log(dirtyFields, payload);
+
     const response = await updateProject(projectId, payload);
     handleResponse(response);
     setLoading(false);

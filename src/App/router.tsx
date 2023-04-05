@@ -7,7 +7,11 @@ import type { RouteObject } from 'react-router';
 import ProjectList from 'features/project/ProjectList';
 import ProjectCreate from 'pages/project/ProjectCreate';
 import ProjectEdit from 'pages/project/ProjectEdit';
+import CardList from 'features/card/CardList';
+import CardCreate from 'pages/card/CardCreate';
+import CardEdit from 'pages/card/CardEdit';
 import Hero from 'features/home/Hero';
+import DashboardLayout from 'shared/components/layout/DashboardLayout/DashboardLayout';
 
 const router: RouteObject[] = [
   {
@@ -30,23 +34,41 @@ const router: RouteObject[] = [
             path: '/login',
             element: <Login />,
           },
-          {
-            path: '/project-create',
-            element: <ProjectCreate />,
-          },
-          {
-            path: '/project-edit/:projectId',
-            element: <ProjectEdit />,
-          },
-          {
-            path: '/project-list',
-            element: <ProjectList />,
-          },
         ],
       },
       {
         path: '*',
         element: <Status404 />,
+      },
+    ],
+  },
+  {
+    path: '',
+    element: <DashboardLayout />,
+    children: [
+      {
+        path: '/projects/list',
+        element: <ProjectList />,
+      },
+      {
+        path: '/projects/create',
+        element: <ProjectCreate />,
+      },
+      {
+        path: '/projects/:projectId',
+        element: <ProjectEdit />,
+      },
+      {
+        path: '/projects/:projectId/cards/',
+        element: <CardList />,
+      },
+      {
+        path: '/projects/:projectId/cards/create',
+        element: <CardCreate />,
+      },
+      {
+        path: '/projects/:projectId/cards/:cardId',
+        element: <CardEdit />,
       },
     ],
   },

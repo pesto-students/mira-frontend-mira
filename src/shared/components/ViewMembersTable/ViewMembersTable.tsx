@@ -19,7 +19,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import type { SxProps, Theme } from '@mui/material';
 
 import TextFieldWrapper from 'shared/components/TextFieldWrapper';
-import SelectWrapper from 'shared/components/SelectWrapper/SelectWrapper';
+import { SelectWrapperTable } from 'shared/components/SelectWrapper/SelectWrapper';
 
 type UserType = {
   _id: string;
@@ -71,13 +71,13 @@ const ViewMembersTable: FC = ({ register, fields, remove, watch }) => {
                   </Stack>
                 </TableCell>
                 <TableCell align="right">
-                  <SelectWrapper
+                  <SelectWrapperTable
                     defaultValue={data[index].role}
                     {...register(`usersWithRole.${index}.role`)}
                   >
                     <MenuItem value={'admin'}>Admin</MenuItem>
                     <MenuItem value={'user'}>User</MenuItem>
-                  </SelectWrapper>
+                  </SelectWrapperTable>
                 </TableCell>
                 <TableCell align="right">
                   <IconButton component="label" onClick={() => remove(index)}>

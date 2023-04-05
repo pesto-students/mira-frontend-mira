@@ -36,7 +36,7 @@ const ProjectCreate: FC = () => {
         'success',
         'Successfully created the project',
         () => {
-          navigate('/project-list');
+          navigate('/projects/list');
         },
       );
     } else {
@@ -53,14 +53,19 @@ const ProjectCreate: FC = () => {
     }
   };
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data, dirtyFields) => {
     setLoading(true);
-    const payload = {
-      name: data.name,
-      description: data.description,
-      logo: data.logo,
-      users: data.newUsers.map((user) => user._id),
-    };
+
+    const payload = dirtyFields.reduce((obj, key) => {
+      let value = data[key];
+      if (key == 'newUsers') {
+        value = data.newUsers.map((user) => user._id);
+        return { ...obj, users: value };
+      } else {
+        return { ...obj, [key]: value };
+      }
+    }, {});
+
     const response = await createProject(payload);
     handleResponse(response);
     setLoading(false);

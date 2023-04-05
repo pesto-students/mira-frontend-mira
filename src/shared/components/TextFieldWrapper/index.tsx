@@ -1,5 +1,10 @@
 import React from 'react';
-import { InputLabel, TextField } from '@mui/material';
+import {
+  InputLabel,
+  TextField as MuiTextField,
+  styled,
+  Typography,
+} from '@mui/material';
 import type { TextFieldProps, SxProps, Theme } from '@mui/material';
 
 const styles: SxProps<Theme> = {
@@ -14,13 +19,23 @@ const styles: SxProps<Theme> = {
   },
 };
 
-const TextFieldWrapper: React.FC<TextFieldProps> = (props, ref) => {
-  const { label, name, ...textFieldProps } = props;
+const HelperText = styled(Typography)(({ theme }) => ({
+  '&': {
+    fontSize: '0.75rem',
+    marginTop: '4px',
+  },
+  '&.helperText-error': {
+    color: '#FF1943',
+  },
+}));
+
+const TextField: React.FC<TextFieldProps> = (props, ref) => {
+  const { label, required, name, error, helperText, ...textFieldProps } = props;
 
   return (
     <>
       {label && <InputLabel htmlFor={name}>{label}</InputLabel>}
-      <TextField
+      <MuiTextField
         autoComplete="on"
         name={name}
         fullWidth
@@ -29,8 +44,30 @@ const TextFieldWrapper: React.FC<TextFieldProps> = (props, ref) => {
         inputRef={ref}
         {...textFieldProps}
       />
+      <HelperText className={error ? 'helperText-error' : ''}>
+        {helperText}
+      </HelperText>
     </>
   );
 };
 
-export default React.forwardRef(TextFieldWrapper);
+const TextFieldWrapper = React.forwardRef(TextField);
+
+export default TextFieldWrapper;
+
+export const TextFieldHeading = styled(TextFieldWrapper)(({ theme }) => ({
+  '& input': {
+    fontSize: '24px',
+    paddingLeft: 0,
+    fontFamily: 'IBM Plex Sans',
+    fontWeight: 'bold',
+  },
+  '& .MuiInputBase-root': { backgroundColor: 'white' },
+  '& .MuiInputBase-root:hover': {
+    backgroundColor: 'white',
+  },
+  '& input:focus': {
+    backgroundColor: 'white',
+  },
+  '& fieldset': { border: 'none' },
+}));
