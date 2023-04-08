@@ -18,7 +18,7 @@ const displayStatus = (
   });
 };
 
-const ProjectEdit: FC = () => {
+const ProjectEdit: FC = (props) => {
   const [loading, setLoading] = useState(true);
   const [initialValues, setInitialValues] = useState({
     name: '',
@@ -64,6 +64,7 @@ const ProjectEdit: FC = () => {
 
   useEffect(() => {
     (async () => {
+      setLoading(true);
       const response = await getProject({ id: projectId });
       if (response.status == 'success') {
         setInitialValues((prev) => {
@@ -80,7 +81,7 @@ const ProjectEdit: FC = () => {
       }
       setLoading(false);
     })();
-  }, []);
+  }, [projectId]);
 
   const onSubmit = async (data, dirtyFields) => {
     setLoading(true);

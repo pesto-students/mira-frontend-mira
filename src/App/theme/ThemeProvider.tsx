@@ -1,5 +1,5 @@
 import React from 'react';
-import { ThemeProvider } from '@mui/material';
+import { ThemeProvider } from '@mui/material/';
 import { StylesProvider } from '@mui/styles';
 import theme from './theme';
 

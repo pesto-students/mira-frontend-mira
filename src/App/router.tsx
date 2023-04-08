@@ -55,7 +55,7 @@ const router: RouteObject[] = [
         element: <ProjectCreate />,
       },
       {
-        path: '/projects/:projectId',
+        path: '/projects/:projectId/overview',
         element: <ProjectEdit />,
       },
       {

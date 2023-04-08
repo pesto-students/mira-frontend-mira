@@ -1,39 +1,25 @@
-import { FC, ReactNode } from 'react';
-import PropTypes from 'prop-types';
+import { ReactNode, FC } from 'react';
+import Box from '@mui/material/Box';
+import CssBaseline from '@mui/material/CssBaseline';
 import { Outlet } from 'react-router-dom';
-import { Box, styled, Container } from '@mui/material';
-
+import Sidebar from 'components/Sidebar/Sidebar';
 interface DashboardLayoutProps {
   children?: ReactNode;
 }
 
-const DashboardWrapper = styled(Box)(
-  () => `
-    overflow: auto;
-    flex: 1;
-    overflow-x: hidden;
-    align-items: center;
-    margin-top: 20px;
-`,
-);
-
-const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
+const DashboardLayout: FC<DashboardLayoutProps> = () => {
   return (
-    <Box
-      sx={{
-        flex: 1,
-        height: '100%',
-      }}
-    >
-      <DashboardWrapper>
-        <Container maxWidth="lg">{children || <Outlet />}</Container>
-      </DashboardWrapper>
+    <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+      <Sidebar />
+      <Box
+        component="main"
+        sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
+      >
+        <Outlet />
+      </Box>
     </Box>
   );
-};
-
-DashboardLayout.propTypes = {
-  children: PropTypes.node,
 };
 
 export default DashboardLayout;
