@@ -1,7 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-const initialState: any = {};
+const initialState: any = {
+  user: {
+    id: '641138545ab8c5b59a359637',
+  },
+};
 
 export const authSlice = createSlice({
   name: 'user',
