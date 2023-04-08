@@ -1,4 +1,3 @@
-// Error
 export const error = {
   PAGE_NOT_FOUND_ERROR: '404: Page not found',
   INTERNAL_SERVER_ERROR: '500: Internal server error',
@@ -11,16 +10,3 @@ export const error = {
   DATABASE_ERROR: 'Error accessing database, please try again later',
   CONFIGURATION_ERROR: 'Error in application configuration',
 } as const;
-
-// Success
-export const successMessages = {
-  BOARD_CREATED: 'Board created successfully!',
-  BOARD_UPDATED: 'Board updated successfully!',
-  BOARD_DELETED: 'Board deleted successfully!',
-  LIST_CREATED: 'List created successfully!',
-  LIST_UPDATED: 'List updated successfully!',
-  LIST_DELETED: 'List deleted successfully!',
-  CARD_CREATED: 'Card created successfully!',
-  CARD_UPDATED: 'Card updated successfully!',
-  CARD_DELETED: 'Card deleted successfully!',
-};

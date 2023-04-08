@@ -23,14 +23,12 @@ const StyledSnackbarContent = styled(MaterialDesignContent)(({ theme }) => ({
 const App = () => {
   const content = useRoutes(router);
 
-  const user = useAppSelector((state) => state.auth.value);
-  console.log('user from state', user);
-
   const dispatch = useAppDispatch();
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        dispatch(saveUser(user.refreshToken));
+        dispatch(saveUser(user));
+        localStorage.setItem('token', (user as any).accessToken);
       } else {
         dispatch(saveUser(undefined));
       }

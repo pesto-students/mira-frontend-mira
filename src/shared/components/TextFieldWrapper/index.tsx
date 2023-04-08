@@ -1,21 +1,10 @@
 import React from 'react';
 import { InputLabel, TextField } from '@mui/material';
-import type { TextFieldProps, SxProps, Theme } from '@mui/material';
-
-const styles: SxProps<Theme> = {
-  mt: 0,
-  mb: 0,
-  backgroundColor: 'secondary.main',
-  '&:hover': {
-    backgroundColor: 'secondary.light', //'#ebecf0',
-  },
-  '& input:focus': {
-    backgroundColor: '#ffffff',
-  },
-};
+import type { TextFieldProps } from '@mui/material';
+import { sxTextField } from './Styles';
 
 const TextFieldWrapper: React.FC<TextFieldProps> = (props) => {
-  const { label, name, ...textFieldProps } = props;
+  const { label, name, sx, ...textFieldProps } = props;
 
   return (
     <>
@@ -25,8 +14,14 @@ const TextFieldWrapper: React.FC<TextFieldProps> = (props) => {
         name={name}
         fullWidth
         id={name}
-        sx={styles}
         {...textFieldProps}
+        sx={[
+          {
+            ...sxTextField,
+          },
+          // You cannot spread `sx` directly because `SxProps` (typeof sx) can be an array.
+          ...(Array.isArray(sx) ? sx : [sx]),
+        ]}
       />
     </>
   );

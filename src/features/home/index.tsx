@@ -2,6 +2,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { Box, Container, Grid, styled } from '@mui/material';
 import Hero from './Hero';
 import HeroImage from 'app/assets/hero.png';
+import Header from 'shared/components/Header';
 
 const HomeWrapper = styled(Box)(
   () => `
@@ -22,31 +23,34 @@ function Home() {
   );
 
   return (
-    <HomeWrapper>
-      <Container maxWidth="lg">
-        <Grid container>
-          <Grid
-            container
-            item
-            xs={12}
-            md={6}
-            alignContent="center"
-            display={{ xs: 'none', md: 'block' }}
-          >
-            <img
-              src={HeroImage}
-              height="auto"
-              width={'100%'}
-              alt="hero_image"
-            />
-          </Grid>
+    <>
+      <Header />
+      <HomeWrapper>
+        <Container maxWidth="lg">
+          <Grid container>
+            <Grid
+              container
+              item
+              xs={12}
+              md={6}
+              alignContent="center"
+              display={{ xs: 'none', md: 'block' }}
+            >
+              <img
+                src={HeroImage}
+                height="auto"
+                width={'100%'}
+                alt="hero_image"
+              />
+            </Grid>
 
-          <Grid item container xs={12} md={6} order={{ xs: 1 }}>
-            {content}
+            <Grid item container xs={12} md={6} order={{ xs: 1 }}>
+              {content}
+            </Grid>
           </Grid>
-        </Grid>
-      </Container>
-    </HomeWrapper>
+        </Container>
+      </HomeWrapper>
+    </>
   );
 }
 
