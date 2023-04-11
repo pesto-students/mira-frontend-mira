@@ -1,7 +1,7 @@
 import { request } from 'app/axios';
 import { AxiosError } from 'axios';
 
-const errorParser = (error) => {
+export const errorParser = (error) => {
   const { response } = error;
   return {
     status: response?.data?.status || 'failed',
@@ -12,20 +12,16 @@ const errorParser = (error) => {
   };
 };
 
+export const signIn = async () => {
+  const response = await request.post('/auth/signin');
+  return response.data;
+};
+
 export const searchUsers = async (searchString = '') => {
   try {
     const searchUrl =
       '/users/search' + (searchString ? `?email[like]=${searchString}` : '');
     const response = await request.get(searchUrl);
-    return response.data;
-  } catch (e) {
-    return errorParser(e);
-  }
-};
-
-export const getProjectList = async () => {
-  try {
-    const response = await request.get('/projects');
     return response.data;
   } catch (e) {
     return errorParser(e);

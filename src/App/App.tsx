@@ -3,10 +3,9 @@ import { styled, CssBaseline } from '@mui/material';
 import { useRoutes } from 'react-router-dom';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { useAppDispatch, useAppSelector } from './hooks';
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from './firebase/firebaseConfig';
-import { saveUser } from 'features/auth/authSlice';
+import { useAppDispatch, useAppSelector } from 'App/hooks';
+import { onAuthStateChangedListener } from 'App/firebase/firebaseConfig';
+import { saveFirebaseUser } from 'features/auth/authSlice';
 import { SnackbarProvider, MaterialDesignContent } from 'notistack';
 import router from './router';
 import ThemeProvider from './theme/ThemeProvider';
@@ -23,20 +22,26 @@ const StyledSnackbarContent = styled(MaterialDesignContent)(({ theme }) => ({
 const App = () => {
   const content = useRoutes(router);
 
-  const user = useAppSelector((state) => state.auth.value);
-  console.log('user from state', user);
+  // const user = useAppSelector((state) => state.auth.value);
 
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        dispatch(saveUser(user.refreshToken));
-        localStorage.setItem('token', user.accessToken);
-      } else {
-        dispatch(saveUser(undefined));
-      }
-    });
-  }, [auth, dispatch]);
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChangedListener((user) => {
+  //     console.log('Changed user');
+  //     if (user) {
+  //       const pickedUser = (({ accessToken, email, uid }) => ({
+  //         accessToken,
+  //         email,
+  //         uid,
+  //       }))(user);
+  //       dispatch(saveFirebaseUser(pickedUser));
+  //       localStorage.setItem('token', user.accessToken);
+  //     } else {
+  //       dispatch(saveFirebaseUser(undefined));
+  //     }
+  //   });
+  //   return unsubscribe;
+  // }, []);
 
   return (
     <SnackbarProvider

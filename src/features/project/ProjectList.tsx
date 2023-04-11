@@ -8,25 +8,21 @@ import {
   Typography,
 } from '@mui/material';
 
-import { getProjectList } from 'api/api';
+import { useGetProjectsQuery } from './projectApiSlice';
 
 const ListProjects = () => {
-  const [projectList, setProjectList] = React.useState([]);
-  useEffect(() => {
-    (async () => {
-      const response = await getProjectList();
-      if (response.status == 'success') {
-        setProjectList(response.data.data);
-      }
-    })();
-  }, []);
+  const {
+    data: {
+      data: { data: projects },
+      results,
+    },
+  } = useGetProjectsQuery();
 
   return (
     <Box sx={{ padding: 5, pt: 0 }}>
       <Typography variant="h5">List Projects</Typography>
-      <div>Hello there</div>
       <List>
-        {projectList.map((project) => (
+        {projects.map((project) => (
           <ListItem
             key={project._id}
             button

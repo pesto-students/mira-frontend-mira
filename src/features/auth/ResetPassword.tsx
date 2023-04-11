@@ -3,8 +3,7 @@ import DialogWrapper from 'shared/components/DialogWrapper/DialogWrapper';
 import TextFieldWrapper from 'shared/components/TextFieldWrapper';
 import { sleep } from 'shared/helpers/sleep';
 import CircularProgress from '@mui/material/CircularProgress';
-import { sendPasswordResetEmail } from 'firebase/auth';
-import { auth } from 'app/firebase/firebaseConfig';
+import { firebaseSendPasswordResetEmail } from 'App/firebase/firebaseConfig';
 import { useSnackbar } from 'notistack';
 
 interface IResetPasswordProps {
@@ -29,7 +28,7 @@ const ResetPassword: React.FunctionComponent<IResetPasswordProps> = (props) => {
     await sleep(3000);
     console.log(email);
 
-    sendPasswordResetEmail(auth, email)
+    firebaseSendPasswordResetEmail(email)
       .then(() => {
         console.log('success');
         enqueueSnackbar('Email sent successfully! - check it out!', {

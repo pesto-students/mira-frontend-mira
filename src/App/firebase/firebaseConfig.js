@@ -1,5 +1,11 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+  sendPasswordResetEmail,
+  onAuthStateChanged,
+} from 'firebase/auth';
 import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
@@ -14,3 +20,18 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const storage = getStorage(app);
+
+export const firebaseSignIn = (email, password) => {
+  return signInWithEmailAndPassword(auth, email, password);
+};
+
+export const firebaseSignOut = () => {
+  return signOut(auth);
+};
+
+export const firebaseSendPasswordResetEmail = (email) => {
+  return sendPasswordResetEmail(auth, email);
+};
+
+export const onAuthStateChangedListener = (callback) =>
+  onAuthStateChanged(auth, callback);

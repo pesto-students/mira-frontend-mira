@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Grid,
   Typography,
@@ -14,9 +14,11 @@ import TextFieldWrapper from 'shared/components/TextFieldWrapper';
 import LinkWrapper from 'shared/components/LinkWrapper';
 import GenericErrorModal from 'shared/components/Modal/GenericErrorModal';
 import ResetPassword from './ResetPassword';
-
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from 'app/firebase/firebaseConfig';
+import { useAppDispatch, useAppSelector } from 'App/hooks';
+import { userLogin } from './authAction';
+import { setError as setAuthError, setCredentials } from './authSlice';
+import { useLoginMutation } from './authApiSlice';
+import { useNavigate } from 'react-router-dom';
 
 interface ILoginData {
   email: string;
@@ -31,9 +33,24 @@ const Login = () => {
     password: '',
     rememberMe: false,
   });
-  const [loading, setLoading] = useState(false);
-  const [openErrorModal, setOpenErrorModal] = useState(false);
+  const { loading: isLoadingFirebaseLogin, error: errorFirebaseLogin } =
+    useAppSelector((state) => state.auth);
+
+  const [
+    login,
+    { isLoading: isLoadingPlatformLogin, error: errorPlatformLogin },
+    result,
+  ] = useLoginMutation();
+
+  const navigate = useNavigate();
   const [resetPassword, setResetPassword] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    setError(errorFirebaseLogin || errorPlatformLogin);
+  }, [errorFirebaseLogin, errorPlatformLogin]);
+
+  const dispatch = useAppDispatch();
 
   const handleChange = (e: React.BaseSyntheticEvent) => {
     const [value, name] = [
@@ -48,22 +65,22 @@ const Login = () => {
     return false;
   };
 
-  const handleLoginSubmit = () => {
-    setLoading(true);
-    signInWithEmailAndPassword(auth, loginData.email, loginData.password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log('Singed in user: ', user);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log('An error occured: ', errorCode, errorMessage);
-        setOpenErrorModal(true);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+  const handleLoginSubmit = async () => {
+    try {
+      const response = await dispatch(
+        userLogin({ email: loginData.email, password: loginData.password }),
+      );
+      if (!response.error) {
+        const userData = await login({}).unwrap();
+        const response1 = await dispatch(
+          setCredentials({ ...userData.data.user }),
+        );
+        localStorage.setItem('userInfo', JSON.stringify(userData.data.user));
+        navigate('/projects/list');
+      }
+    } catch (e) {
+      console.log({ e });
+    }
   };
 
   return (
@@ -129,7 +146,7 @@ const Login = () => {
               <ButtonWrapper
                 variant="contained"
                 disableElevation
-                loading={loading}
+                loading={isLoadingFirebaseLogin || isLoadingPlatformLogin}
                 size="large"
                 fullWidth
                 sx={{
@@ -159,10 +176,13 @@ const Login = () => {
         <ResetPassword onClose={() => setResetPassword(false)} />
       )}
       <GenericErrorModal
-        title="Error: Invalid Credentials"
-        description="Incorrect password or email does not exists! Please try again."
-        open={openErrorModal}
-        handleClose={() => setOpenErrorModal(false)}
+        title="Error"
+        description={error}
+        open={!!error}
+        handleClose={() => {
+          setError(null);
+          dispatch(setAuthError(null));
+        }}
       ></GenericErrorModal>
     </>
   );

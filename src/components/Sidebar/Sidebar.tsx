@@ -28,6 +28,9 @@ import AddIcon from '@mui/icons-material/Add';
 import Logo from 'app/assets/logo.png';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
+import { useAppDispatch, useAppSelector } from 'App/hooks';
+import { useGetProjectsQuery } from 'features/project/projectApiSlice';
+
 const ProjectMenuItem = styled(MenuItem)(({ theme }) => ({
   '& .MuiListItemIcon-root': {
     minWidth: '40px',
@@ -59,17 +62,27 @@ const NavigationLink = (props) => {
       text-decoration: none;
     }
   `;
-  const { projectId } = useParams();
+  const { currentProject } = useAppSelector((state) => state.project);
   const { children, to, ...otherProps } = props;
   return (
-    <StyledLink {...otherProps} to={`/projects/${projectId}/${to}`}>
+    <StyledLink {...otherProps} to={`/projects/${currentProject._id}/${to}`}>
       {children}
     </StyledLink>
   );
 };
 
 const Sidebar: FC = () => {
+  const dispatch = useAppDispatch();
   const drawerWidth = 293;
+
+  const {
+    data: projects,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetProjectsQuery();
+
   return (
     <Drawer
       sx={{
@@ -96,7 +109,7 @@ const Sidebar: FC = () => {
           sx={{ color: 'white', marginBottom: '16px' }}
           aria-label="signout"
           size="large"
-          href="/signout"
+          href="/logout"
         >
           <ExitToAppIcon fontSize="inherit" />
         </IconButton>

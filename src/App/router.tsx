@@ -12,6 +12,8 @@ import CardCreate from 'pages/card/CardCreate';
 import CardEdit from 'pages/card/CardEdit';
 import Hero from 'features/home/Hero';
 import DashboardLayout from 'shared/components/layout/DashboardLayout/DashboardLayout';
+import ProtectedRoutes from 'components/ProtectedRoutes';
+import Logout from 'components/Logout';
 
 const router: RouteObject[] = [
   {
@@ -34,6 +36,10 @@ const router: RouteObject[] = [
             path: '/login',
             element: <Login />,
           },
+          {
+            path: '/create-project',
+            element: <ProjectCreate />,
+          },
         ],
       },
       {
@@ -43,34 +49,44 @@ const router: RouteObject[] = [
     ],
   },
   {
-    path: '',
-    element: <DashboardLayout />,
+    path: '/projects',
+    element: <ProtectedRoutes />,
     children: [
       {
-        path: '/projects/list',
-        element: <ProjectList />,
-      },
-      {
-        path: '/projects/create',
-        element: <ProjectCreate />,
-      },
-      {
-        path: '/projects/:projectId/overview',
-        element: <ProjectEdit />,
-      },
-      {
-        path: '/projects/:projectId/cards/',
-        element: <CardList />,
-      },
-      {
-        path: '/projects/:projectId/cards/create',
-        element: <CardCreate />,
-      },
-      {
-        path: '/projects/:projectId/cards/:cardId',
-        element: <CardEdit />,
+        path: '',
+        element: <DashboardLayout />,
+        children: [
+          {
+            path: 'list',
+            element: <ProjectList />,
+          },
+          {
+            path: 'create',
+            element: <ProjectCreate />,
+          },
+          {
+            path: ':projectId/overview',
+            element: <ProjectEdit />,
+          },
+          {
+            path: ':projectId/cards/',
+            element: <CardList />,
+          },
+          {
+            path: ':projectId/cards/create',
+            element: <CardCreate />,
+          },
+          {
+            path: ':projectId/cards/:cardId',
+            element: <CardEdit />,
+          },
+        ],
       },
     ],
+  },
+  {
+    path: '/logout',
+    element: <Logout />,
   },
 ];
 

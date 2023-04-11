@@ -1,4 +1,4 @@
-import React from 'react';
+import { MouseEvent, useState, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import ButtonWrapper from '../ButtonWrapper';
 import {
@@ -12,7 +12,11 @@ import {
   MenuItem,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import Logo from 'app/assets/MIRA.png';
+import Logo from 'App/assets/MIRA.png';
+
+import { useAppSelector, useAppDispatch } from 'App/hooks';
+// import { useGetUserDetailsQuery } from 'features/auth/authService';
+import { logout, setCredentials } from 'features/auth/authSlice';
 
 const pages = [
   {
@@ -26,17 +30,18 @@ const pages = [
 ];
 
 function Header() {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null,
-  );
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
+
+  const { userInfo, userToken } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
 
   return (
     <AppBar
