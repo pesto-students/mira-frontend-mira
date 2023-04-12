@@ -1,4 +1,4 @@
-import { Iproject, Iuser } from 'app/types';
+import { Iproject, Iuser } from 'App/types';
 
 export interface Iboard {
   title: string;

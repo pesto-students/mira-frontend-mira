@@ -13,7 +13,7 @@ import LinkWrapper from 'shared/components/LinkWrapper';
 import DatePickerWrapper from 'shared/components/DatePickerWrapper/DatePickerWrapper';
 import { IcustomEventObj } from 'shared/types';
 import GenericErrorModal from 'shared/components/Modal/GenericErrorModal';
-import { request } from 'app/axios';
+import { request } from 'App/axios';
 import { format } from 'date-fns';
 import { useSnackbar } from 'notistack';
 import { AxiosError } from 'axios';

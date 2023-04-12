@@ -9,7 +9,7 @@ import TextFieldWrapper from 'shared/components/TextFieldWrapper';
 // import AvatarGroupWrapper, {
 //   type AvatarPropsExtended,
 // } from 'shared/components/AvatarGroupWrapper';
-import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { useAppDispatch, useAppSelector } from 'App/hooks';
 import {
   setClearAll,
   setMyOnly,

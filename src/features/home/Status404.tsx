@@ -1,6 +1,6 @@
 import { Box, Typography, Container } from '@mui/material';
 
-import statusImg from 'app/assets/404.svg';
+import statusImg from 'App/assets/404.svg';
 
 import { styled } from '@mui/material/styles';
 import ButtonWrapper from 'shared/components/ButtonWrapper';

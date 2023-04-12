@@ -1,4 +1,4 @@
-import { request } from 'app/axios';
+import { request } from 'App/axios';
 
 export const errorParser = (error) => {
   const { response } = error;

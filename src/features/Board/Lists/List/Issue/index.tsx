@@ -17,7 +17,7 @@ import {
   Assignees,
   AssigneeAvatar,
 } from './Styles';
-import { useAppSelector } from 'app/hooks';
+import { useAppSelector } from 'App/hooks';
 import { CardPriority } from 'shared/constants/card';
 import { useNavigate } from 'react-router-dom';
 

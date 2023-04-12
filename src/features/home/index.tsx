@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import { Box, Container, Grid, styled } from '@mui/material';
-import HeroImage from 'app/assets/hero.png';
+import HeroImage from 'App/assets/hero.png';
 
 const HomeWrapper = styled(Box)(
   () => `
