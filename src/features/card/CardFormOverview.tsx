@@ -42,6 +42,7 @@ type ICardForm = {
   onSubmit: (finalData: {}, dirtyFields: string[]) => unknown;
   isCreate?: boolean;
   processing?: boolean;
+  loading?: boolean;
   project: {};
 };
 
@@ -50,6 +51,7 @@ const CardForm: FC<ICardForm> = ({
   onSubmit,
   isCreate = true,
   processing = false,
+  loading = false,
   project,
 }) => {
   const {

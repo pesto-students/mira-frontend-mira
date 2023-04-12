@@ -58,7 +58,7 @@ interface IProps {
   onImageChange: (image: string) => void;
   currentImage?: string;
   path: string;
-  loading: boolean;
+  loading?: boolean;
 }
 
 const UploadImage: React.FC<IProps> = ({

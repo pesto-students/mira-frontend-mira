@@ -3,15 +3,7 @@ import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from 'App/hooks';
 import { useGetProjectsQuery } from 'features/project/projectApiSlice';
 import { setCurrentProject } from 'features/project/projectSlice';
-
-const Loading = () => {
-  return (
-    <div className="loading">
-      <h1>We are loading your dashboard...</h1>
-      <span>Thank you for your patience!!</span>
-    </div>
-  );
-};
+import GlobalLoader from './GlobalLoader/GlobalLoader';
 
 const Error = ({ refetch, error }) => {
   return (
@@ -31,6 +23,7 @@ export default function ProtectedRoutes() {
     isLoading,
     isSuccess,
     isError,
+    isFetching,
     error,
     refetch,
   } = useGetProjectsQuery();
@@ -40,7 +33,7 @@ export default function ProtectedRoutes() {
   const { projectId } = useParams();
 
   useEffect(() => {
-    if (isSuccess) {
+    if (!isFetching && isSuccess) {
       if (!projects.results) {
         navigate('/create-project');
       } else {
@@ -57,10 +50,12 @@ export default function ProtectedRoutes() {
         }
         dispatch(setCurrentProject(currentProject));
       }
-    } else {
-      console.log('have projects', projects);
     }
-  }, [isSuccess, projects]);
+  }, [isFetching]);
+
+  useEffect(() => {
+    refetch();
+  }, [projectId]);
 
   useEffect(() => {
     if (!userInfo) {
@@ -69,7 +64,7 @@ export default function ProtectedRoutes() {
   }, [userInfo]);
 
   return isLoading || !currentProject ? (
-    <Loading />
+    <GlobalLoader title />
   ) : isError ? (
     <Error refetch={refetch} error={error} />
   ) : (

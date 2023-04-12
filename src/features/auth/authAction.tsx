@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { firebaseSignIn } from 'App/firebase/firebaseConfig';
-import { signIn, errorParser } from 'api/api';
 
 export const userLogin = createAsyncThunk(
   'auth/login',

@@ -1,10 +1,12 @@
 import { FC, useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import CardForm from 'features/card/CardForm';
 import { format } from 'date-fns';
-import { getProject, createCard } from 'api/api';
-import { Typography } from '@mui/material';
+import { useAppSelector } from 'App/hooks';
+import { useGetProjectQuery } from 'features/project/projectApiSlice';
+import { useCreateCardMutation } from 'features/card/cardApiSlice';
+import GlobalLoader from 'components/GlobalLoader/GlobalLoader';
 
 const displayStatus = (
   enqueueSnackbar,
@@ -29,37 +31,52 @@ const CardCreate: FC = () => {
     reporter: '',
     assignee: '',
   });
-  const [loading, setLoading] = useState(false);
-  const [processing, setProcessing] = useState(false);
-  const [project, setProject] = useState(null);
-  const { enqueueSnackbar } = useSnackbar();
 
-  const handleResponse = (response) => {
-    if (response.status == 'success') {
+  const { enqueueSnackbar } = useSnackbar();
+  const { currentProject } = useAppSelector((state) => state.project);
+
+  const {
+    data: project,
+    isFetching: isFetchingProject,
+    isError: isErrorFetchProject,
+    error: errorFetchProject,
+  } = useGetProjectQuery(currentProject._id);
+
+  const [
+    createCard,
+    {
+      data: response,
+      error: errorCreate,
+      isLoading: isProcessing,
+      isError: isErrorCreate,
+      isSuccess: isSuccessCreate,
+    },
+  ] = useCreateCardMutation();
+
+  useEffect(() => {
+    if (isErrorFetchProject) {
+      displayStatus(enqueueSnackbar, 'error', errorFetchProject);
+    }
+  }, [isFetchingProject]);
+
+  useEffect(() => {
+    if (isSuccessCreate) {
+      console.log('Success create');
       displayStatus(
         enqueueSnackbar,
         'success',
         'Successfully created the card',
         () => {
-          navigate(`/projects/${projectId}/cards`);
-        },
-      );
-    } else {
-      displayStatus(
-        enqueueSnackbar,
-        'error',
-        response?.message || 'Something went wrong',
-        () => {
-          if (response.status == 401) {
-            navigate('/login');
-          }
+          navigate(`/projects/${currentProject._id}/dashboard`);
         },
       );
     }
-  };
+    if (isErrorCreate) {
+      displayStatus(enqueueSnackbar, 'error', errorCreate);
+    }
+  }, [isProcessing]);
 
   const onSubmit = async (data, dirtyFields) => {
-    setProcessing(true);
     const payload = dirtyFields.reduce((obj, key) => {
       let value = data[key];
       if (key == 'estimatedDate') {
@@ -68,41 +85,23 @@ const CardCreate: FC = () => {
       return { ...obj, [key]: value };
     }, {});
 
-    const response = await createCard(projectId, payload);
-    handleResponse(response);
-    setProcessing(false);
+    await createCard({
+      projectId: currentProject._id,
+      payload,
+    });
   };
   const navigate = useNavigate();
-  const { projectId } = useParams();
-
-  useEffect(() => {
-    setLoading(true);
-    (async () => {
-      const response = await getProject({ id: projectId });
-      if (response.status == 'success') {
-        setProject(response.data.data);
-      } else {
-        console.log(response);
-        handleResponse(response);
-      }
-      setLoading(false);
-    })();
-  }, []);
 
   return (
     <>
-      <Typography variant="h5">Create Card</Typography>
-      {!loading ? (
-        <CardForm
-          initialValues={initialValues}
-          onSubmit={onSubmit}
-          processing={processing}
-          isCreate={true}
-          project={project}
-        />
-      ) : (
-        ''
-      )}
+      <GlobalLoader open={isFetchingProject} />
+      <CardForm
+        initialValues={initialValues}
+        onSubmit={onSubmit}
+        processing={isProcessing}
+        isCreate={true}
+        project={project || {}}
+      />
     </>
   );
 };

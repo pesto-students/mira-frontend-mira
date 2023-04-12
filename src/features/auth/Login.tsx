@@ -76,7 +76,7 @@ const Login = () => {
           setCredentials({ ...userData.data.user }),
         );
         localStorage.setItem('userInfo', JSON.stringify(userData.data.user));
-        navigate('/projects/list');
+        navigate('/projects');
       }
     } catch (e) {
       console.log({ e });

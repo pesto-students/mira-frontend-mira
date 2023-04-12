@@ -14,6 +14,7 @@ import Hero from 'features/home/Hero';
 import DashboardLayout from 'shared/components/layout/DashboardLayout/DashboardLayout';
 import ProtectedRoutes from 'components/ProtectedRoutes';
 import Logout from 'components/Logout';
+import ProjectBoard from 'features/Board';
 
 const router: RouteObject[] = [
   {
@@ -56,13 +57,17 @@ const router: RouteObject[] = [
         path: '',
         element: <DashboardLayout />,
         children: [
-          {
-            path: 'list',
-            element: <ProjectList />,
-          },
+          // {
+          //   path: 'list',
+          //   element: <ProjectList />,
+          // },
           {
             path: 'create',
             element: <ProjectCreate />,
+          },
+          {
+            path: ':projectId/dashboard',
+            element: <ProjectBoard />,
           },
           {
             path: ':projectId/overview',

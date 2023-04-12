@@ -3,8 +3,13 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import CardFormOverview from 'features/card/CardFormOverview';
 import { format } from 'date-fns';
-import { getCard, getProject, updateCard } from 'api/api';
-import { Typography } from '@mui/material';
+import { useAppSelector } from 'App/hooks';
+import { useGetProjectQuery } from 'features/project/projectApiSlice';
+import {
+  useGetCardQuery,
+  useUpdateCardMutation,
+} from 'features/card/cardApiSlice';
+import GlobalLoader from 'components/GlobalLoader/GlobalLoader';
 
 const displayStatus = (
   enqueueSnackbar,
@@ -19,50 +24,25 @@ const displayStatus = (
   });
 };
 
+const init = JSON.stringify({
+  title: '',
+  description: '',
+  status: '',
+  priority: '',
+  estimatedDate: null,
+  reporter: '',
+  assignee: '',
+});
+
 const CardEdit: FC = () => {
-  const [initialValues, setInitialValues] = useState({
-    title: '',
-    description: '',
-    status: '',
-    priority: '',
-    estimatedDate: new Date(),
-    reporter: '',
-    assignee: '',
-  });
-  const [loadingCard, setLoadingCard] = useState(false);
-  const [loadingProject, setLoadingProject] = useState(false);
-  const [processing, setProcessing] = useState(false);
-  const [project, setProject] = useState(null);
+  const [initialValues, setInitialValues] = useState(JSON.parse(init));
+  const [loading, setLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
-  const { projectId, cardId } = useParams();
-
-  const handleResponse = (response) => {
-    if (response.status == 'success') {
-      displayStatus(
-        enqueueSnackbar,
-        'success',
-        'Successfully updated the card',
-        () => {
-          // navigate(`projects/list`);
-        },
-      );
-    } else {
-      displayStatus(
-        enqueueSnackbar,
-        'error',
-        response?.message || 'Something went wrong',
-        () => {
-          if (response.status == 401) {
-            navigate('/login');
-          }
-        },
-      );
-    }
-  };
+  const { cardId } = useParams();
+  const { currentProject } = useAppSelector((state) => state.project);
 
   const onSubmit = async (data, dirtyFields) => {
-    setProcessing(true);
     const payload = dirtyFields.reduce((obj, key) => {
       let value = data[key];
       if (key == 'estimatedDate') {
@@ -71,55 +51,93 @@ const CardEdit: FC = () => {
       return { ...obj, [key]: value };
     }, {});
 
-    const response = await updateCard(projectId, cardId, payload);
-    handleResponse(response);
-    setProcessing(false);
+    await updateCard({ projectId: currentProject._id, id: cardId, payload });
   };
 
-  useEffect(() => {
-    (async () => {
-      setLoadingCard(true);
-      const response = await getCard({ projectId, cardId });
-      if (response.status == 'success') {
-        setInitialValues((prev) => {
-          const data = { ...prev, ...response.data.data };
-          if (data.estimatedDate && !(data.estimatedDate instanceof Date)) {
-            data.estimatedDate = new Date(data.estimatedDate);
-            data.reporter = data.reporter._id;
-          }
-          'description' in data &&
-            (data.description = data.description.replace(/&lt;/g, '<'));
-          return data;
-        });
-      } else {
-        handleResponse(response);
-      }
-      setLoadingCard(false);
-    })();
-  }, []);
+  const {
+    data: project,
+    isFetching: isFetchingProject,
+    isError: isErrorProject,
+    error: errorFetchProject,
+  } = useGetProjectQuery(currentProject._id);
+
+  const {
+    data: card,
+    isFetching: isFetchingCard,
+    isError: isErrorCard,
+    error: errorCard,
+    isSuccess: isSuccessFetchingCard,
+  } = useGetCardQuery({ projectId: currentProject._id, id: cardId });
+
+  const [
+    updateCard,
+    {
+      data: response,
+      isLoading: isProcessing,
+      isSuccess: isSuccessUpdate,
+      error: errorUpdate,
+      isError: isErrorUpdate,
+      reset,
+    },
+  ] = useUpdateCardMutation();
 
   useEffect(() => {
-    (async () => {
-      setLoadingProject(true);
-      const response = await getProject({ id: projectId });
-      if (response.status == 'success') {
-        setProject(response.data.data);
-      } else {
-        console.log(response);
-        handleResponse(response);
-      }
-      setLoadingProject(false);
-    })();
-  }, []);
+    setLoading(isFetchingCard || isFetchingProject);
+  }, [isFetchingCard, isFetchingProject]);
+
+  useEffect(() => {
+    if (!isFetchingCard && isSuccessFetchingCard) {
+      setInitialValues((prev) => {
+        const data = { ...prev, ...card };
+        if (data.estimatedDate && !(data.estimatedDate instanceof Date)) {
+          data.estimatedDate = new Date(data.estimatedDate);
+        }
+        'reporter' in data && (data.reporter = data.reporter._id);
+        'description' in data &&
+          (data.description = data.description.replace(/&lt;/g, '<'));
+        return data;
+      });
+    }
+  }, [isFetchingCard]);
+
+  useEffect(() => {
+    if (isErrorProject) {
+      displayStatus(enqueueSnackbar, 'error', errorFetchProject);
+    }
+  }, [isFetchingProject]);
+
+  useEffect(() => {
+    if (isErrorCard) {
+      displayStatus(enqueueSnackbar, 'error', errorCard);
+    }
+  }, [isFetchingProject]);
+
+  useEffect(() => {
+    if (isSuccessUpdate) {
+      displayStatus(
+        enqueueSnackbar,
+        'success',
+        'Successfully edited the Card',
+        () => {
+          navigate(`/projects/${currentProject._id}/dashboard`);
+        },
+      );
+    }
+    if (isErrorUpdate) {
+      displayStatus(enqueueSnackbar, 'error', errorUpdate);
+    }
+  }, [isProcessing]);
 
   return (
     <>
+      <GlobalLoader open={isFetchingProject || isFetchingCard} />
       <CardFormOverview
         initialValues={initialValues}
         onSubmit={onSubmit}
-        processing={processing}
+        loading={loading}
+        processing={isProcessing}
         isCreate={false}
-        project={project}
+        project={project || {}}
       />
     </>
   );

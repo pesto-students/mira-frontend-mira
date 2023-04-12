@@ -1,8 +1,9 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import ProjectForm from 'features/project/ProjectForm';
 import { useNavigate } from 'react-router-dom';
-import { createProject } from 'api/api';
 import { useSnackbar } from 'notistack';
+import { useCreateProjectMutation } from 'features/project/projectApiSlice';
+import { useAppSelector } from 'App/hooks';
 
 const displayStatus = (
   enqueueSnackbar,
@@ -17,45 +18,41 @@ const displayStatus = (
   });
 };
 
-const ProjectCreate: FC = () => {
-  const [initialValues, setInitialValues] = useState({
-    name: '',
-    description: '',
-    logo: 'https://i2.wp.com/thehealthyexec.com/wp-content/uploads/2015/11/reddit-logo.png',
-    admins: [],
-    users: [],
-    newUsers: [],
-  });
-  const [loading, setLoading] = useState(false);
-  const { enqueueSnackbar } = useSnackbar();
+const init = JSON.stringify({
+  name: '',
+  description: '',
+  logo: 'https://i2.wp.com/thehealthyexec.com/wp-content/uploads/2015/11/reddit-logo.png',
+  admins: [],
+  users: [],
+  newUsers: [],
+});
 
-  const handleResponse = (response) => {
-    if (response.status == 'success') {
+const ProjectCreate: FC = () => {
+  const [initialValues, setInitialValues] = useState({ ...JSON.parse(init) });
+  const { enqueueSnackbar } = useSnackbar();
+  const [
+    createProject,
+    { data: createData, error, isLoading: isProcessing, isError, isSuccess },
+  ] = useCreateProjectMutation();
+  const { currentProject } = useAppSelector((state) => state.project);
+
+  useEffect(() => {
+    if (isSuccess) {
       displayStatus(
         enqueueSnackbar,
         'success',
         'Successfully created the project',
         () => {
-          navigate('/projects/list');
-        },
-      );
-    } else {
-      displayStatus(
-        enqueueSnackbar,
-        'error',
-        response?.message || 'Something went wrong',
-        () => {
-          if (response.status == 401) {
-            navigate('/login');
-          }
+          navigate(`/projects/${createData._id}/dashboard`);
         },
       );
     }
-  };
+    if (isError) {
+      displayStatus(enqueueSnackbar, 'error', error);
+    }
+  }, [isProcessing]);
 
   const onSubmit = async (data, dirtyFields) => {
-    setLoading(true);
-
     const payload = dirtyFields.reduce((obj, key) => {
       let value = data[key];
       if (key == 'newUsers') {
@@ -66,9 +63,7 @@ const ProjectCreate: FC = () => {
       }
     }, {});
 
-    const response = await createProject(payload);
-    handleResponse(response);
-    setLoading(false);
+    createProject(payload);
   };
   const navigate = useNavigate();
 
@@ -77,7 +72,7 @@ const ProjectCreate: FC = () => {
       <ProjectForm
         initialValues={initialValues}
         onSubmit={onSubmit}
-        loading={loading}
+        processing={isProcessing}
       />
     </>
   );

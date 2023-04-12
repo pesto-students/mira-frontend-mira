@@ -19,13 +19,38 @@ const LinkBehavior = React.forwardRef<
 
 LinkBehavior.displayName = 'LinkBehavior';
 
-const themeOptions: ThemeOptions = {
-  colors: {
-    shadows: {
-      primary:
-        '0px 1px 4px rgba(85, 105, 255, 0.25), 0px 3px 12px 2px rgba(85, 105, 255, 0.35)',
-    },
+const colors = {
+  primary: '#0052cc', // Blue
+  success: '#0B875B', // green
+  danger: '#E13C3C', // red
+  warning: '#F89C1C', // orange
+  secondary: '#F4F5F7', // light grey
+
+  textDarkest: '#172b4d',
+  textDark: '#42526E',
+  textMedium: '#5E6C84',
+  textLight: '#8993a4',
+  textLink: '#0052cc',
+
+  backgroundDarkPrimary: '#0747A6',
+  backgroundMedium: '#dfe1e6',
+  backgroundLight: '#ebecf0',
+  backgroundLightest: '#F4F5F7',
+  backgroundLightPrimary: '#D2E5FE',
+  backgroundLightSuccess: '#E4FCEF',
+
+  borderLightest: '#dfe1e6',
+  borderLight: '#C1C7D0',
+  borderInputFocus: '#4c9aff',
+
+  shadows: {
+    primary:
+      '0px 1px 4px rgba(85, 105, 255, 0.25), 0px 3px 12px 2px rgba(85, 105, 255, 0.35)',
   },
+};
+
+const themeOptions: ThemeOptions = {
+  colors,
   palette: {
     primary: {
       main: '#2151c5',

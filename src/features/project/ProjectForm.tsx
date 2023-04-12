@@ -20,6 +20,7 @@ type IProjectForm = {
   onSubmit: (finalData: {}, dirtyFields: string[]) => unknown;
   isCreateProject?: boolean;
   loading?: boolean;
+  processing?: boolean;
 };
 
 const ProjectForm: FC<IProjectForm> = ({
@@ -27,6 +28,7 @@ const ProjectForm: FC<IProjectForm> = ({
   onSubmit,
   isCreateProject = true,
   loading = false,
+  processing = false,
 }) => {
   const {
     register,
@@ -83,7 +85,6 @@ const ProjectForm: FC<IProjectForm> = ({
                 }
                 currentImage={imageUrl}
                 path="projectLogo/"
-                loading={loading}
               />
             </Grid>
           </Grid>
@@ -162,7 +163,7 @@ const ProjectForm: FC<IProjectForm> = ({
               type="submit"
               variant="contained"
               disableElevation
-              loading={loading}
+              loading={processing}
               size="large"
               fullWidth
               sx={{

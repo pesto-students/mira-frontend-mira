@@ -1,9 +1,13 @@
 import { FC, useState, useEffect } from 'react';
 import ProjectForm from 'features/project/ProjectForm';
-import { useParams, useNavigate } from 'react-router-dom';
-import { getProject } from 'api/api';
 import { useSnackbar } from 'notistack';
-import { updateProject } from 'api/api';
+import {
+  useGetProjectQuery,
+  useUpdateProjectMutation,
+} from 'features/project/projectApiSlice';
+import { useAppSelector } from 'App/hooks';
+import { useNavigate } from 'react-router-dom';
+import GlobalLoader from 'components/GlobalLoader/GlobalLoader';
 
 const displayStatus = (
   enqueueSnackbar,
@@ -18,74 +22,73 @@ const displayStatus = (
   });
 };
 
-const ProjectEdit: FC = (props) => {
-  const [loading, setLoading] = useState(true);
-  const [initialValues, setInitialValues] = useState({
-    name: '',
-    description: '',
-    logo: '',
-    usersWithRole: [],
-    newUsers: [],
-  });
+const init = JSON.stringify({
+  name: '',
+  description: '',
+  logo: '',
+  users: [],
+  newUsers: [],
+});
 
-  const { projectId } = useParams();
-  const { enqueueSnackbar } = useSnackbar();
+const ProjectEdit: FC = () => {
+  const [initialValues, setInitialValues] = useState(JSON.parse(init));
+
+  const { currentProject } = useAppSelector((state) => state.project);
   const navigate = useNavigate();
 
-  const mapUserRole = (role) => {
-    return (item) => {
-      return { ...item, role };
-    };
-  };
+  const {
+    data: project,
+    isFetching: isFetchingProject,
+    isSuccess: isSuccessFetch,
+    isError: isErrorFetch,
+    error: errorFetch,
+    refetch,
+  } = useGetProjectQuery(currentProject._id);
 
-  const handleResponse = (response) => {
-    if (response.status == 'success') {
+  const [
+    updateProject,
+    {
+      data: response,
+      isLoading: isProcessing,
+      isSuccess: isSuccessUpdate,
+      error: errorUpdate,
+      isError: isErrorUpdate,
+      reset,
+    },
+  ] = useUpdateProjectMutation();
+
+  const { enqueueSnackbar } = useSnackbar();
+
+  useEffect(() => {
+    if (isErrorFetch) {
+      displayStatus(enqueueSnackbar, 'error', errorFetch);
+    }
+  }, [isFetchingProject]);
+
+  useEffect(() => {
+    if (isSuccessUpdate) {
       displayStatus(
         enqueueSnackbar,
         'success',
-        'Successfully updated the project',
-        () => {
-          navigate('/projects/list');
-        },
-      );
-    } else {
-      displayStatus(
-        enqueueSnackbar,
-        'error',
-        response?.message || 'Something went wrong',
-        () => {
-          if (response.status == 401) {
-            navigate('/login');
-          }
-        },
+        'Successfully edited the project',
       );
     }
-  };
+    if (isErrorUpdate) {
+      displayStatus(enqueueSnackbar, 'error', errorUpdate);
+    }
+  }, [isProcessing]);
 
   useEffect(() => {
-    (async () => {
-      setLoading(true);
-      const response = await getProject({ id: projectId });
-      if (response.status == 'success') {
-        setInitialValues((prev) => {
-          const data = { ...prev, ...response.data.data };
-          data.usersWithRole = [
-            ...data.admins.map(mapUserRole('admin')),
-            ...data.users.map(mapUserRole('user')),
-          ];
-          return data;
-        });
-      } else {
-        console.log(response);
-        handleResponse(response);
-      }
-      setLoading(false);
-    })();
-  }, [projectId]);
+    if (!isFetchingProject && isSuccessFetch) {
+      setInitialValues((prev) => {
+        const data = { ...JSON.parse(init), ...project };
+        data.usersWithRole = data.allUsers;
+        return data;
+      });
+    }
+  }, [currentProject._id, isFetchingProject]);
 
   const onSubmit = async (data, dirtyFields) => {
-    setLoading(true);
-
     const newUsers = data.newUsers.map((user) => user._id);
     const users = data.usersWithRole
       .filter((item) => item.role == 'user')
@@ -103,50 +106,20 @@ const ProjectEdit: FC = (props) => {
       users: allUsers,
       admins,
     };
-
-    // const payload = dirtyFields.reduce((obj, key) => {
-    //   let value = data[key];
-    //   if (key == 'newUsers') {
-    //     value = data.newUsers.map((user) => user._id);
-    //     return { ...obj, newUsers: value };
-    //   } else if (key == 'usersWithRole') {
-    //     const users = data.usersWithRole
-    //       .filter((item) => item.role == 'user')
-    //       .map((user) => user._id);
-    //     const admins = data.usersWithRole
-    //       .filter((item) => item.role == 'admin')
-    //       .map((user) => user._id);
-    //     return { ...obj, users, admins };
-    //   } else {
-    //     return { ...obj, [key]: value };
-    //   }
-    // }, {});
-
-    // console.log(payload);
-
-    // const existingUsers = initialValues.usersWithRole
-    //   .filter((item) => item.role == 'user')
-    //   .map((user) => user._id);
-
-    // payload.users = (payload?.users || existingUsers).concat(
-    //   payload?.newUsers || [],
-    // );
-    // delete payload.newUsers;
-
-    // console.log(dirtyFields, payload);
-
-    const response = await updateProject(projectId, payload);
-    handleResponse(response);
-    setLoading(false);
+    await updateProject({ id: currentProject._id, payload });
   };
 
   return (
-    <ProjectForm
-      initialValues={initialValues}
-      isCreateProject={false}
-      loading={loading}
-      onSubmit={onSubmit}
-    />
+    <>
+      <GlobalLoader open={isFetchingProject} />
+      <ProjectForm
+        initialValues={initialValues}
+        isCreateProject={false}
+        loading={isFetchingProject}
+        processing={isProcessing}
+        onSubmit={onSubmit}
+      />
+    </>
   );
 };
 

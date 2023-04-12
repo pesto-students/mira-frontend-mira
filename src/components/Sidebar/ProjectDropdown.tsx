@@ -58,7 +58,6 @@ export default function ProjectDropdown() {
     event: MouseEvent<HTMLElement>,
     index: number,
   ) => {
-    dispatch(setCurrentProject(projects[index]));
     setAnchorEl(null);
   };
 
@@ -74,7 +73,6 @@ export default function ProjectDropdown() {
   } = useGetProjectsQuery();
 
   const { currentProject } = useAppSelector((state) => state.project);
-  console.log(currentProject);
 
   return (
     <>
@@ -122,7 +120,7 @@ export default function ProjectDropdown() {
         {projects.map((option, index) => (
           <StyledLink
             key={option._id}
-            to={`/projects/${option._id}/overview`}
+            to={`/projects/${option._id}/dashboard`}
             onClick={(event) => handleMenuItemClick(event, index)}
           >
             <MenuItem

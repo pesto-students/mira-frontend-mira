@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, NavLink } from 'react-router-dom';
 import {
   List,
   ListItem,
@@ -10,19 +10,22 @@ import {
   Button,
 } from '@mui/material';
 
-import { getCardList } from 'api/api';
+import { useGetCardsQuery } from './cardApiSlice';
+import { useAppSelector } from 'App/hooks';
 
 const ListCards = () => {
-  const [cardList, setCardList] = React.useState([]);
+  const { currentProject } = useAppSelector((state) => state.project);
+  const [cards, setCards] = useState([]);
+
+  const { data, isLoading, isSuccess } = useGetCardsQuery({
+    projectId: currentProject._id,
+  });
+
   useEffect(() => {
-    (async () => {
-      const response = await getCardList(projectId);
-      if (response.status == 'success') {
-        setCardList(response.data.data);
-      }
-    })();
-  }, []);
-  const { projectId } = useParams();
+    if (isSuccess) {
+      setCards(data.data.data);
+    }
+  }, [isLoading]);
 
   return (
     <Box sx={{ padding: 5, pt: 0 }}>
@@ -32,18 +35,22 @@ const ListCards = () => {
           Create Card
         </Button>
       </div>
-      <List>
-        {cardList.map((card) => (
-          <ListItem
-            key={card._id}
-            button
-            component="a"
-            href={`/projects/${projectId}/cards/${card._id}`}
-          >
-            <ListItemText primary={card.title} />
-          </ListItem>
-        ))}
-      </List>
+      {isLoading ? (
+        'Loading cards ...'
+      ) : (
+        <List>
+          {cards.map((card) => (
+            <NavLink
+              key={card._id}
+              button
+              component="a"
+              to={`/projects/${currentProject._id}/cards/${card._id}`}
+            >
+              <ListItemText primary={card.title} />
+            </NavLink>
+          ))}
+        </List>
+      )}
     </Box>
   );
 };
