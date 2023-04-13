@@ -16,7 +16,7 @@ const HelperText = styled(Typography)(({ theme }) => ({
 }));
 
 const Editor = styled(ReactQuill)(({ theme }) => ({
-  '& .ql-editor': { minHeight: '180px' },
+  '& .ql-editor': { minHeight: '300px' },
   '& h1,h2,h3,h4,h5,h6,b': {
     fontFamily: 'IBM Plex Sans !important',
   },
@@ -49,7 +49,6 @@ const RichTextEditor = (props, ref) => {
         value={value}
         {...quillConfig}
         onChange={(val) => {
-          console.log(val.length);
           onChange({
             target: {
               name,

@@ -68,6 +68,13 @@ const ProjectBoardLists = () => {
     if (isErrorUpdate) {
       displayStatus(enqueueSnackbar, 'error', errorUpdate);
     }
+    if (isSuccessUpdate) {
+      displayStatus(
+        enqueueSnackbar,
+        'success',
+        'Successfully updated the Card',
+      );
+    }
   }, [isProcessing]);
 
   const handleIssueDrop = ({
@@ -77,7 +84,6 @@ const ProjectBoardLists = () => {
   }: DropResult) => {
     if (!isPositionChanged(source, destination)) return;
     setFilteredListCardsMap((prev) => getNewState(prev, destination, source));
-    console.log(draggableId, source, destination);
     // call api to update
     updateCard({
       projectId: currentProject._id,
@@ -85,12 +91,6 @@ const ProjectBoardLists = () => {
       payload: { status: destination.droppableId },
     });
     // revert if api fails
-    if (isErrorUpdate) {
-      console.log(errorUpdate);
-    }
-    if (isSuccessUpdate) {
-      console.log('Success');
-    }
   };
 
   return (

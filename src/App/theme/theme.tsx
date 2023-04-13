@@ -22,15 +22,17 @@ LinkBehavior.displayName = 'LinkBehavior';
 const colors = {
   primary: '#0052cc', // Blue
   success: '#0B875B', // green
-  danger: '#E13C3C', // red
+  danger: '#d30d0d', // red
   warning: '#F89C1C', // orange
   secondary: '#F4F5F7', // light grey
+  dangerLight: '#dc0e0e',
 
   textDarkest: '#172b4d',
   textDark: '#42526E',
   textMedium: '#5E6C84',
   textLight: '#8993a4',
   textLink: '#0052cc',
+  textWhite: '#ffffff',
 
   backgroundDarkPrimary: '#0747A6',
   backgroundMedium: '#dfe1e6',

@@ -6,6 +6,7 @@ import ButtonWrapper from 'shared/components/ButtonWrapper';
 import UploadImage from 'shared/components/UploadImage';
 import SearchMembers from 'shared/components/SearchMembers/SearchMembers';
 import ViewMembersTable from 'shared/components/ViewMembersTable/ViewMembersTable';
+import DeleteWrapper from 'shared/components/DeleteWrapper/DeleteWrapper';
 
 type FormData = {
   name?: string;
@@ -21,6 +22,7 @@ type IProjectForm = {
   isCreateProject?: boolean;
   loading?: boolean;
   processing?: boolean;
+  onDelete?: any;
 };
 
 const ProjectForm: FC<IProjectForm> = ({
@@ -29,6 +31,7 @@ const ProjectForm: FC<IProjectForm> = ({
   isCreateProject = true,
   loading = false,
   processing = false,
+  onDelete = null,
 }) => {
   const {
     register,
@@ -70,7 +73,7 @@ const ProjectForm: FC<IProjectForm> = ({
         <Typography variant="h5">
           {isCreateProject ? 'Create Project' : 'Project Overview'}
         </Typography>
-        <Grid container spacing={2} sx={{ marginTop: '24px' }}>
+        <Grid container spacing={2} sx={{ marginTop: '24px' }} md={10}>
           <Grid container item xs={12}>
             <Grid item xs={6} alignItems="center" container>
               Profile Picture:
@@ -154,7 +157,18 @@ const ProjectForm: FC<IProjectForm> = ({
                   onChange={(value) =>
                     setValue('newUsers', value, { shouldDirty: true })
                   }
+                  excludeList={usersWithRole || []}
+                  reset={!processing}
                 />
+                {onDelete ? (
+                  <DeleteWrapper
+                    text="Delete Project"
+                    confirmationText="Do you really want to delete the project? This process cannot be undone."
+                    onConfirm={onDelete}
+                  />
+                ) : (
+                  ''
+                )}
               </Grid>
             </Grid>
           </Grid>

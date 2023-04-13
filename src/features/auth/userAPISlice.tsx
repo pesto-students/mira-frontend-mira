@@ -2,7 +2,11 @@ import { apiSlice } from 'api/apiSlice';
 
 const apiSliceWithTag = apiSlice.enhanceEndpoints({ addTagTypes: ['User'] });
 
-export const usersApiSlice = apiSliceWithTag.injectEndpoints({
+const transformSearchUserResponse = (response) => {
+  return response?.data?.data || [];
+};
+
+export const userApiSlice = apiSliceWithTag.injectEndpoints({
   endpoints: (builder) => ({
     searchUsers: builder.query({
       query: ({ searchString }) => {
@@ -12,8 +16,11 @@ export const usersApiSlice = apiSliceWithTag.injectEndpoints({
         return searchUrl;
       },
       providesTags: ['User'],
+      transformResponse: (response, meta, arg) => {
+        return transformSearchUserResponse(response);
+      },
     }),
   }),
 });
 
-export const { util, useGetSearchUsersQuery } = usersApiSlice;
+export const { util, useSearchUsersQuery } = userApiSlice;

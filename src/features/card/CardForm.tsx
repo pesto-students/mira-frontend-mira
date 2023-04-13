@@ -23,7 +23,6 @@ import QueueIcon from '@mui/icons-material/Queue';
 import DoneIcon from '@mui/icons-material/Done';
 import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import LoopIcon from '@mui/icons-material/Loop';
-import SearchMembersSingle from 'shared/components/SearchMembersSingle/SearchMembersSingle';
 import RichTextEditor from 'shared/components/RichTextEditor/RichTextEditor';
 
 type FormData = {
@@ -86,7 +85,7 @@ const CardForm: FC<ICardForm> = ({
         <Typography variant="h5">
           {isCreate ? 'Create Card' : 'Edit Card'}
         </Typography>
-        <Grid container spacing={2} sx={{ marginTop: '24px' }}>
+        <Grid container spacing={2} sx={{ marginTop: '24px' }} md={10}>
           <Grid item xs={12}>
             <TextFieldWrapper
               {...register('title', {
@@ -225,6 +224,7 @@ const CardForm: FC<ICardForm> = ({
                   }}
                   disablePast
                   format="dd/MM/yyyy"
+                  sx={{ '& .MuiInputBase-root': { height: '33px' } }}
                 />
               )}
             />
@@ -239,6 +239,9 @@ const CardForm: FC<ICardForm> = ({
               value={reporter}
               sx={{
                 width: '235px',
+                '& .MuiTypography-root': {
+                  overflow: 'hidden',
+                },
               }}
               error={errors.reporter ? true : false}
             >
@@ -259,13 +262,13 @@ const CardForm: FC<ICardForm> = ({
           <Grid item xs={12} sm={12}>
             <SelectWrapper
               label="Assignee"
-              {...register(
-                'assignee',
-                // { required: 'Assignee is required' }
-              )}
+              {...register('assignee')}
               value={assignee}
               sx={{
                 width: '235px',
+                '& .MuiTypography-root': {
+                  overflow: 'hidden',
+                },
               }}
               error={errors.assignee ? true : false}
             >

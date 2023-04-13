@@ -22,18 +22,21 @@ const displayStatus = (
 };
 
 const CardCreate: FC = () => {
+  const { enqueueSnackbar } = useSnackbar();
+  const { currentProject } = useAppSelector((state) => state.project);
+  const { userInfo: currentUser } = useAppSelector((state) => state.auth);
+
   const [initialValues, setInitialValues] = useState({
     title: '',
     description: '',
     status: '',
     priority: '',
-    estimatedDate: null,
-    reporter: '',
-    assignee: '',
+    estimatedDate: new Date(),
+    reporter: currentUser._id,
+    assignee: currentUser._id,
   });
 
-  const { enqueueSnackbar } = useSnackbar();
-  const { currentProject } = useAppSelector((state) => state.project);
+  console.log(initialValues);
 
   const {
     data: project,
@@ -77,17 +80,10 @@ const CardCreate: FC = () => {
   }, [isProcessing]);
 
   const onSubmit = async (data, dirtyFields) => {
-    const payload = dirtyFields.reduce((obj, key) => {
-      let value = data[key];
-      if (key == 'estimatedDate') {
-        value = format(value, 'yyyy-MM-dd');
-      }
-      return { ...obj, [key]: value };
-    }, {});
-
+    data['estimatedDate'] = format(data['estimatedDate'], 'yyyy-MM-dd');
     await createCard({
       projectId: currentProject._id,
-      payload,
+      payload: data,
     });
   };
   const navigate = useNavigate();

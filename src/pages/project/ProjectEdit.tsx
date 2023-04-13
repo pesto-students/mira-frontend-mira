@@ -4,10 +4,12 @@ import { useSnackbar } from 'notistack';
 import {
   useGetProjectQuery,
   useUpdateProjectMutation,
+  useDeleteProjectMutation,
 } from 'features/project/projectApiSlice';
 import { useAppSelector } from 'App/hooks';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import GlobalLoader from 'components/GlobalLoader/GlobalLoader';
+import Breadcrumbs from 'shared/components/Breadcrumbs';
 
 const displayStatus = (
   enqueueSnackbar,
@@ -57,6 +59,17 @@ const ProjectEdit: FC = () => {
     },
   ] = useUpdateProjectMutation();
 
+  const [
+    deleteProject,
+    {
+      data: responseDelete,
+      isLoading: isDeleting,
+      isSuccess: isSuccessDelete,
+      error: errorDelete,
+      isError: isErrorDelete,
+    },
+  ] = useDeleteProjectMutation();
+
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
@@ -77,6 +90,20 @@ const ProjectEdit: FC = () => {
       displayStatus(enqueueSnackbar, 'error', errorUpdate);
     }
   }, [isProcessing]);
+
+  useEffect(() => {
+    if (isSuccessDelete) {
+      displayStatus(
+        enqueueSnackbar,
+        'success',
+        'Successfully deleted the project',
+      );
+      navigate(`/projects`);
+    }
+    if (isErrorDelete) {
+      displayStatus(enqueueSnackbar, 'error', errorDelete);
+    }
+  }, [isDeleting]);
 
   useEffect(() => {
     if (!isFetchingProject && isSuccessFetch) {
@@ -111,13 +138,16 @@ const ProjectEdit: FC = () => {
 
   return (
     <>
-      <GlobalLoader open={isFetchingProject} />
+      <GlobalLoader open={isFetchingProject || isDeleting} />
       <ProjectForm
         initialValues={initialValues}
         isCreateProject={false}
         loading={isFetchingProject}
         processing={isProcessing}
         onSubmit={onSubmit}
+        onDelete={() => {
+          deleteProject({ id: currentProject._id });
+        }}
       />
     </>
   );
