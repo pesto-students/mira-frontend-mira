@@ -73,7 +73,7 @@ const ProjectForm: FC<IProjectForm> = ({
         <Typography variant="h5">
           {isCreateProject ? 'Create Project' : 'Project Overview'}
         </Typography>
-        <Grid container spacing={2} sx={{ marginTop: '24px' }} md={10}>
+        <Grid container spacing={2} sx={{ marginTop: '24px' }} md={12}>
           <Grid container item xs={12}>
             <Grid item xs={6} alignItems="center" container>
               Profile Picture:
@@ -95,7 +95,7 @@ const ProjectForm: FC<IProjectForm> = ({
           <Grid item xs={12}>
             <TextFieldWrapper
               {...register('name', {
-                // required: 'Name is required',
+                required: 'Name is required',
                 minLength: {
                   value: 3,
                   message: 'Project name must be atleast 3 characters long',
@@ -184,7 +184,7 @@ const ProjectForm: FC<IProjectForm> = ({
                 margin: '10px 0px',
                 padding: '10px',
               }}
-              disabled={!isValid || !isDirty}
+              disabled={!isDirty}
             >
               {isCreateProject ? 'Create' : 'Save'}
             </ButtonWrapper>

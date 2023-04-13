@@ -26,6 +26,12 @@ interface ILoginData {
   rememberMe: boolean;
 }
 
+const isValidEmail = (email) =>
+  // eslint-disable-next-line no-useless-escape
+  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+    email,
+  );
+
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loginData, setLoginData] = useState<ILoginData>({
@@ -33,6 +39,10 @@ const Login = () => {
     password: '',
     rememberMe: false,
   });
+  const navigate = useNavigate();
+  const [resetPassword, setResetPassword] = useState(false);
+  const [error, setError] = useState(null);
+
   const { loading: isLoadingFirebaseLogin, error: errorFirebaseLogin } =
     useAppSelector((state) => state.auth);
 
@@ -42,15 +52,11 @@ const Login = () => {
     result,
   ] = useLoginMutation();
 
-  const navigate = useNavigate();
-  const [resetPassword, setResetPassword] = useState(false);
-  const [error, setError] = useState(null);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     setError(errorFirebaseLogin || errorPlatformLogin);
   }, [errorFirebaseLogin, errorPlatformLogin]);
-
-  const dispatch = useAppDispatch();
 
   const handleChange = (e: React.BaseSyntheticEvent) => {
     const [value, name] = [
@@ -61,7 +67,12 @@ const Login = () => {
   };
 
   const isLoginDisabled = () => {
-    if (!loginData.email || !loginData.password) return true;
+    if (
+      !loginData.email ||
+      !isValidEmail(loginData.email) ||
+      !loginData.password
+    )
+      return true;
     return false;
   };
 
@@ -72,9 +83,7 @@ const Login = () => {
       );
       if (!response.error) {
         const userData = await login({}).unwrap();
-        const response1 = await dispatch(
-          setCredentials({ ...userData.data.user }),
-        );
+        await dispatch(setCredentials({ ...userData.data.user }));
         localStorage.setItem('userInfo', JSON.stringify(userData.data.user));
         navigate('/projects');
       }

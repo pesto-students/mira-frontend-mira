@@ -28,7 +28,7 @@ const init = JSON.stringify({
 });
 
 const ProjectCreate: FC = () => {
-  const [initialValues, setInitialValues] = useState({ ...JSON.parse(init) });
+  const [initialValues, setInitialValues] = useState(JSON.parse(init));
   const { enqueueSnackbar } = useSnackbar();
   const [
     createProject,
@@ -53,17 +53,11 @@ const ProjectCreate: FC = () => {
   }, [isProcessing]);
 
   const onSubmit = async (data, dirtyFields) => {
-    const payload = dirtyFields.reduce((obj, key) => {
-      let value = data[key];
-      if (key == 'newUsers') {
-        value = data.newUsers.map((user) => user._id);
-        return { ...obj, users: value };
-      } else {
-        return { ...obj, [key]: value };
-      }
-    }, {});
+    if ('newUsers' in dirtyFields) {
+      data.users = data.newUsers.map((user) => user._id);
+    }
 
-    createProject(payload);
+    createProject(data);
   };
   const navigate = useNavigate();
 

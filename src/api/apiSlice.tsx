@@ -1,8 +1,18 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { logout } from 'features/auth/authSlice';
 
+const getBaseUrl = () => {
+  if (localStorage.getItem('env') == 'dev') {
+    return 'https://dev--mira-backend.netlify.app/.netlify/functions/api/v1/';
+  }
+  if (localStorage.getItem('env') == 'local') {
+    return 'http://localhost:8000/api/v1/';
+  }
+  return 'https://mira-backend.netlify.app/.netlify/functions/api/v1/';
+};
+
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'https://dev--mira-backend.netlify.app/.netlify/functions/api/v1/',
+  baseUrl: getBaseUrl(),
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.userToken;
     if (token) {

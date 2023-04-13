@@ -7,6 +7,9 @@ export const authApiSlice = apiSlice.injectEndpoints({
         url: 'auth/signin',
         method: 'POST',
         body: { ...credentials },
+        transformResponse: (response, meta, arg) => {
+          return response.data.user;
+        },
       }),
     }),
   }),

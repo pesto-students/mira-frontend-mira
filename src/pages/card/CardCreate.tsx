@@ -36,8 +36,6 @@ const CardCreate: FC = () => {
     assignee: currentUser._id,
   });
 
-  console.log(initialValues);
-
   const {
     data: project,
     isFetching: isFetchingProject,

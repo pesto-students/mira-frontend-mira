@@ -108,7 +108,7 @@ const ProjectEdit: FC = () => {
   useEffect(() => {
     if (!isFetchingProject && isSuccessFetch) {
       setInitialValues((prev) => {
-        const data = { ...JSON.parse(init), ...project };
+        const data = { ...prev, ...project };
         data.usersWithRole = data.allUsers;
         return data;
       });

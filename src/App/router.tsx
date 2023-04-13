@@ -1,10 +1,9 @@
 import BaseLayout from 'shared/components/layout/BaseLayout';
 import Login from 'features/auth/Login';
-import Register from 'features/auth/Register';
+import Register from 'features/user/Register';
 import Home from 'features/home';
 import Status404 from 'features/home/Status404';
 import type { RouteObject } from 'react-router';
-import ProjectList from 'features/project/ProjectList';
 import ProjectCreate from 'pages/project/ProjectCreate';
 import ProjectEdit from 'pages/project/ProjectEdit';
 import CardList from 'features/card/CardList';
@@ -15,6 +14,7 @@ import DashboardLayout from 'shared/components/layout/DashboardLayout/DashboardL
 import ProtectedRoutes from 'components/ProtectedRoutes';
 import Logout from 'components/Logout';
 import ProjectBoard from 'features/Board';
+import ProfileEdit from 'features/user/ProfileEdit';
 
 const router: RouteObject[] = [
   {
@@ -41,6 +41,10 @@ const router: RouteObject[] = [
             path: '/create-project',
             element: <ProjectCreate />,
           },
+          {
+            path: '/profile',
+            element: <ProfileEdit />,
+          },
         ],
       },
       {
@@ -57,10 +61,6 @@ const router: RouteObject[] = [
         path: '',
         element: <DashboardLayout />,
         children: [
-          // {
-          //   path: 'list',
-          //   element: <ProjectList />,
-          // },
           {
             path: 'create',
             element: <ProjectCreate />,

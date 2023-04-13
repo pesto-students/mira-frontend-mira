@@ -11,7 +11,7 @@ import {
 import TextFieldWrapper from 'shared/components/TextFieldWrapper';
 import ChipWrapper from 'shared/components/ChipWrapper/ChipWrapper';
 import { useDebounce } from 'use-debounce';
-import { useSearchUsersQuery } from 'features/auth/userAPISlice';
+import { useSearchUsersQuery } from 'features/user/userApiSlice';
 
 type UserType = {
   _id: string;
