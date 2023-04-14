@@ -5,7 +5,8 @@ const apiSliceWithTag = apiSlice.enhanceEndpoints({ addTagTypes: ['Card'] });
 export const cardsApiSlice = apiSliceWithTag.injectEndpoints({
   endpoints: (builder) => ({
     getCards: builder.query({
-      query: ({ projectId }) => `/projects/${projectId}/cards`,
+      query: ({ projectId }) =>
+        `/projects/${projectId}/cards?fields=title,project,status,priority,estimateDate,reporter,assignee`,
       providesTags: ['Card'],
     }),
     getCard: builder.query({

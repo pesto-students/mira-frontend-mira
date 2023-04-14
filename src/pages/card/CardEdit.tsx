@@ -93,7 +93,6 @@ const CardEdit: FC = () => {
         if (data.estimatedDate && !(data.estimatedDate instanceof Date)) {
           data.estimatedDate = new Date(data.estimatedDate);
         }
-        'reporter' in data && (data.reporter = data.reporter._id);
         'description' in data &&
           (data.description = data.description.replace(/&lt;/g, '<'));
         return data;
