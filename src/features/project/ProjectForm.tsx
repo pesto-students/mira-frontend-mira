@@ -123,8 +123,9 @@ const ProjectForm: FC<IProjectForm> = ({
                     'Project description must be atleast 3 characters long',
                 },
                 maxLength: {
-                  value: 300,
-                  message: 'Project description can be max 300 characters long',
+                  value: 1000,
+                  message:
+                    'Project description can be max 1000 characters long',
                 },
                 validate: (value) =>
                   value?.trim() === value || 'No trailing spaces',
@@ -133,7 +134,7 @@ const ProjectForm: FC<IProjectForm> = ({
               helperText={errors.description?.message?.toString()}
               fullWidth
               multiline
-              rows={4}
+              minRows={4}
               label={'Description'}
             />
           </Grid>

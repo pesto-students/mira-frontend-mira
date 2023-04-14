@@ -161,14 +161,6 @@ const Sidebar: FC = () => {
               <ListItemText primary="Project Overview" />
             </ProjectMenuItem>
           </NavigationLink>
-          <NavigationLink to="analytics">
-            <ProjectMenuItem>
-              <ListItemIcon>
-                <BarChartIcon />
-              </ListItemIcon>
-              <ListItemText primary="Analytics" />
-            </ProjectMenuItem>
-          </NavigationLink>
           <Divider
             component="li"
             sx={{
