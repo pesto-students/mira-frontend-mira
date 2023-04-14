@@ -59,6 +59,7 @@ interface IProps {
   currentImage?: string;
   path: string;
   loading?: boolean;
+  disabled?: boolean;
 }
 
 const UploadImage: React.FC<IProps> = ({
@@ -66,6 +67,7 @@ const UploadImage: React.FC<IProps> = ({
   currentImage,
   path,
   loading = false,
+  disabled = false,
 }) => {
   const defaultImage = '';
   const [image, setImage] = useState(defaultImage);
@@ -120,20 +122,24 @@ const UploadImage: React.FC<IProps> = ({
       ) : (
         <Avatar alt={'upload-image'} src={image} />
       )}
-      <ButtonUploadWrapper>
-        <Input
-          accept="image/*"
-          id="icon-button-file"
-          name="icon-button-file"
-          type="file"
-          onChange={handleImageChange}
-        />
-        <label htmlFor="icon-button-file">
-          <IconButton component="span" color="primary">
-            <UploadTwoToneIcon />
-          </IconButton>
-        </label>
-      </ButtonUploadWrapper>
+      {!disabled ? (
+        <ButtonUploadWrapper>
+          <Input
+            accept="image/*"
+            id="icon-button-file"
+            name="icon-button-file"
+            type="file"
+            onChange={handleImageChange}
+          />
+          <label htmlFor="icon-button-file">
+            <IconButton component="span" color="primary">
+              <UploadTwoToneIcon />
+            </IconButton>
+          </label>
+        </ButtonUploadWrapper>
+      ) : (
+        ''
+      )}
     </AvatarWrapper>
   );
 };

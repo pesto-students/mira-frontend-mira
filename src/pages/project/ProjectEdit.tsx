@@ -136,6 +136,8 @@ const ProjectEdit: FC = () => {
     await updateProject({ id: currentProject._id, payload });
   };
 
+  const { userInfo } = useAppSelector((state) => state.auth);
+
   return (
     <>
       <GlobalLoader open={isFetchingProject || isDeleting} />
@@ -148,6 +150,7 @@ const ProjectEdit: FC = () => {
         onDelete={() => {
           deleteProject({ id: currentProject._id });
         }}
+        isAdmin={currentProject?.admins?.includes(userInfo._id)}
       />
     </>
   );
