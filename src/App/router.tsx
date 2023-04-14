@@ -6,6 +6,7 @@ import Status404 from 'features/home/Status404';
 import type { RouteObject } from 'react-router';
 import ProjectCreate from 'pages/project/ProjectCreate';
 import ProjectEdit from 'pages/project/ProjectEdit';
+import ProjectDefault from 'pages/project/ProjectDefault';
 import CardList from 'features/card/CardList';
 import CardCreate from 'pages/card/CardCreate';
 import CardEdit from 'pages/card/CardEdit';
@@ -62,8 +63,16 @@ const router: RouteObject[] = [
         element: <DashboardLayout />,
         children: [
           {
+            path: '',
+            element: <ProjectDefault />,
+          },
+          {
             path: 'create',
             element: <ProjectCreate />,
+          },
+          {
+            path: ':projectId',
+            element: <ProjectBoard />,
           },
           {
             path: ':projectId/dashboard',
