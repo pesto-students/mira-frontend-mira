@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from 'App/assets/img.png';
+import Image from 'App/assets/hero.png';
 import { Box, Typography, styled } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import { useAppSelector } from 'App/hooks';
@@ -12,13 +12,17 @@ const StyledLink = styled(NavLink)(({ theme }) => ({
   color: theme.colors.primary,
 }));
 
+const StyledImage = styled('img')(({ theme }) => ({
+  maxWidth: '50%',
+}));
+
 export default function ProjectDefault() {
   const { currentProject } = useAppSelector((state) => state.project);
   return (
     <Box
       sx={() => ({
         '&.MuiBox-root': {
-          height: '100vh',
+          height: '90vh',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -27,10 +31,8 @@ export default function ProjectDefault() {
       })}
       component="div"
     >
-      <img src={Image} alt="logo" />
-      <Typography
-        sx={{ maxWidth: '600px', padding: '10px', marginTop: '20px' }}
-      >
+      <StyledImage src={Image} alt="logo" />
+      <Typography sx={{ maxWidth: '60%', padding: '10px', marginTop: '20px' }}>
         Mira let you <StyledLink to="/projects/create">create</StyledLink> and{' '}
         <StyledLink to={`/projects/${currentProject._id}/overview`}>
           manage
