@@ -8,7 +8,7 @@ import { useAppSelector } from 'App/hooks';
 
 import type { IProjectBoardProps as Props } from './types';
 import PageError from 'shared/components/PageError';
-import ProjectBoardLists from './Lists';
+import ProjectBoardLists from './Lists/Lists';
 import { useGetProjectQuery } from 'features/project/projectApiSlice';
 import { useGetCardsQuery } from 'features/card/cardApiSlice';
 import GlobalLoader from 'components/GlobalLoader/GlobalLoader';

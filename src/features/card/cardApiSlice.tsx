@@ -6,7 +6,7 @@ export const cardsApiSlice = apiSliceWithTag.injectEndpoints({
   endpoints: (builder) => ({
     getCards: builder.query({
       query: ({ projectId }) =>
-        `/projects/${projectId}/cards?fields=title,project,status,priority,estimateDate,reporter,assignee`,
+        `/projects/${projectId}/cards?fields=title,project,status,priority,estimatedDate,reporter,assignee`,
       providesTags: ['Card'],
     }),
     getCard: builder.query({

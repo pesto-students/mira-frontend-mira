@@ -102,7 +102,7 @@ const ProjectBoardLists = () => {
             status={status}
             cards={filteredListCardsMap?.[status] || undefined}
             filters={filters}
-            currentUserId={auth.userInfo.id}
+            currentUserId={auth.userInfo._id}
           />
         ))}
       </Lists>
