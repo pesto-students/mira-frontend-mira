@@ -31,9 +31,7 @@ const ProjectBoardListIssue = ({ card, index }) => {
   const renderPriorityIcon = (priority) => {
     switch (priority) {
       case CardPriority.LOW:
-        return (
-          <LowPriorityIcon sx={{ color: (theme) => theme.colors.primary }} />
-        );
+        return <LowPriorityIcon sx={{ color: 'green' }} />;
       case CardPriority.HIGH:
         return (
           <HighPriorityIcon sx={{ color: (theme) => theme.colors.danger }} />

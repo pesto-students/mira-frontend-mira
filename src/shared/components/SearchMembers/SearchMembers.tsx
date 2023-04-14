@@ -10,7 +10,8 @@ import {
 } from '@mui/material';
 import TextFieldWrapper from 'shared/components/TextFieldWrapper';
 import ChipWrapper from 'shared/components/ChipWrapper/ChipWrapper';
-import { searchUsers } from 'api/api';
+import { useDebounce } from 'use-debounce';
+import { useSearchUsersQuery } from 'features/user/userApiSlice';
 
 type UserType = {
   _id: string;
@@ -20,8 +21,13 @@ type UserType = {
   imageUrl: string;
 };
 
-const SearchMembers = (props) => {
-  const { onChange, name, ...otherProps } = props;
+const SearchMembers = ({
+  onChange,
+  name,
+  reset,
+  excludeList = [],
+  ...otherProps
+}) => {
   // selectedUsers: Users selected by the clent
   const [selectedUsers, setSelectedUsers] = React.useState<UserType[]>([]);
   // inputValue: value typed in the input textfield
@@ -34,33 +40,21 @@ const SearchMembers = (props) => {
     onChange(selectedUsers);
   }, [selectedUsers]);
 
-  const [loading, setLoading] = useState(true);
-  const [userList, setUserList] = useState([]);
+  const [searchTerm] = useDebounce(inputValue, 500);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      (async () => {
-        setLoading(true);
-        const response = await searchUsers(inputValue);
-        if (response && response.status == 'success') {
-          setUserList(response.data.data);
-        } else {
-          setUserList([]);
-        }
-        setLoading(false);
-      })();
-    }, 500);
-    return () => clearTimeout(timer);
-  }, [inputValue]);
+  const { data: userList, isFetching } = useSearchUsersQuery({
+    searchString: searchTerm || '',
+  });
 
   // Remove users that are selected, from the options
   useEffect(() => {
-    setFilteredOptions(
-      userList.filter(
-        (user) => !selectedUsers.map((item) => item._id).includes(user._id),
-      ),
+    const allExcludedUsers = selectedUsers.concat(excludeList);
+    const filteredUsers = (userList || []).filter(
+      (user) => !allExcludedUsers.map((item) => item._id).includes(user._id),
     );
-  }, [userList]);
+
+    setFilteredOptions(filteredUsers);
+  }, [userList, excludeList]);
 
   // Remove user from the list when they are de-selected.
   const removeUserFromSelection = (userid: string) => {
@@ -74,6 +68,11 @@ const SearchMembers = (props) => {
     }
   };
 
+  useEffect(() => {
+    setSelectedUsers([]);
+    setInputValue('');
+  }, [reset]);
+
   return (
     <div>
       <Autocomplete
@@ -82,7 +81,7 @@ const SearchMembers = (props) => {
             setSelectedUsers([...selectedUsers, newValue]);
           }
         }}
-        loading={loading}
+        loading={isFetching}
         loadingText="Loading…"
         getOptionLabel={(user) => `${user.email}`}
         isOptionEqualToValue={(option, value) => {

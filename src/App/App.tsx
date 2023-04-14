@@ -22,26 +22,7 @@ const StyledSnackbarContent = styled(MaterialDesignContent)(({ theme }) => ({
 const App = () => {
   const content = useRoutes(router);
 
-  // const user = useAppSelector((state) => state.auth.value);
-
   const dispatch = useAppDispatch();
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChangedListener((user) => {
-  //     console.log('Changed user');
-  //     if (user) {
-  //       const pickedUser = (({ accessToken, email, uid }) => ({
-  //         accessToken,
-  //         email,
-  //         uid,
-  //       }))(user);
-  //       dispatch(saveFirebaseUser(pickedUser));
-  //       localStorage.setItem('token', user.accessToken);
-  //     } else {
-  //       dispatch(saveFirebaseUser(undefined));
-  //     }
-  //   });
-  //   return unsubscribe;
-  // }, []);
 
   return (
     <SnackbarProvider

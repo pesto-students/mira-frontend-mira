@@ -1,14 +1,21 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { InputAdornment, ToggleButton } from '@mui/material';
+import {
+  InputAdornment,
+  ToggleButton,
+  Avatar,
+  AvatarGroup,
+  Menu,
+  MenuItem,
+  ListItemAvatar,
+  ListItemText,
+  Box,
+} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { debounce, xor } from 'lodash';
 
 import { ClearAll, Filters } from './Styles';
 
 import TextFieldWrapper from 'shared/components/TextFieldWrapper';
-// import AvatarGroupWrapper, {
-//   type AvatarPropsExtended,
-// } from 'shared/components/AvatarGroupWrapper';
 import { useAppDispatch, useAppSelector } from 'App/hooks';
 import {
   setClearAll,
@@ -20,6 +27,118 @@ import {
 
 import { useGetProjectQuery } from 'features/project/projectApiSlice';
 
+const AvatarMenu = ({ anchorEl, handleClose, open, data, onAvatarClick }) => {
+  return (
+    <Menu
+      anchorEl={anchorEl}
+      id="account-menu"
+      open={open}
+      onClose={handleClose}
+      onClick={handleClose}
+      PaperProps={{
+        elevation: 0,
+        sx: {
+          overflow: 'visible',
+          filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+          mt: 1.5,
+          '& .MuiAvatar-root': {
+            width: 32,
+            height: 32,
+            ml: -0.5,
+            mr: 1,
+          },
+          '&:before': {
+            content: '""',
+            display: 'block',
+            position: 'absolute',
+            top: 0,
+            right: 14,
+            width: 10,
+            height: 10,
+            bgcolor: 'background.paper',
+            transform: 'translateY(-50%) rotate(45deg)',
+            zIndex: 0,
+          },
+        },
+      }}
+      transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+      anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+    >
+      {data.map((user) => (
+        <Box
+          key={user.key}
+          onClick={() => {
+            onAvatarClick(user);
+          }}
+        >
+          <MenuItem
+            key={user.key}
+            onClick={handleClose}
+            selected={false}
+            value={user}
+          >
+            <ListItemAvatar sx={{ minWidth: '40px' }}>
+              <Avatar
+                alt={'project-logo'}
+                src={user.src}
+                sx={{ width: 25, height: 25 }}
+              />
+            </ListItemAvatar>
+            <ListItemText primary={user.name} />
+          </MenuItem>
+        </Box>
+      ))}
+    </Menu>
+  );
+};
+
+const GroupAvatars = ({ data = [], onAvatarClick, maxCount }) => {
+  const { filterBar } = useAppSelector((state) => state);
+  const { userIds: selectedUsers } = filterBar;
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const [excessData, setExcessData] = useState([]);
+
+  useEffect(() => {
+    setExcessData(data.slice(maxCount - 1));
+  }, [data, maxCount]);
+  return (
+    <>
+      <AvatarGroup
+        max={maxCount}
+        onClick={(e) => {
+          if (e.target.outerText.includes('+')) {
+            setAnchorEl(e.target);
+          }
+        }}
+        sx={{ cursor: 'pointer' }}
+      >
+        {data.map((user) => {
+          return (
+            <Avatar
+              key={user.key}
+              alt={user.name}
+              src={user.src}
+              onClick={() => {
+                onAvatarClick(user);
+              }}
+            />
+          );
+        })}
+      </AvatarGroup>
+      <AvatarMenu
+        anchorEl={anchorEl}
+        handleClose={() => {
+          setAnchorEl(null);
+        }}
+        open={open}
+        data={excessData}
+        onAvatarClick={onAvatarClick}
+      />
+    </>
+  );
+};
+
 const ProjectBoardFilters: React.FC = () => {
   const dispatch = useAppDispatch();
   const {
@@ -29,9 +148,7 @@ const ProjectBoardFilters: React.FC = () => {
   const { searchTerm, userIds, myOnly, recent } = filterBar;
 
   const [userInput, setUserInput] = useState(searchTerm);
-  const [formattedAvatarData, setFormattedAvatarData] = useState<
-    AvatarPropsExtended[]
-  >([]);
+  const [formattedAvatarData, setFormattedAvatarData] = useState([]);
   const { data: project } = useGetProjectQuery(currentProject._id);
 
   useEffect(() => {
@@ -70,7 +187,7 @@ const ProjectBoardFilters: React.FC = () => {
     [],
   );
 
-  const handleUserSelect = (avatar: AvatarPropsExtended) => {
+  const handleUserSelect = (avatar) => {
     dispatch(setUserIds(xor(userIds, [avatar.key])));
     setFormattedAvatarData((prev) => {
       const data = [...prev];
@@ -106,11 +223,11 @@ const ProjectBoardFilters: React.FC = () => {
           handleSearchChange(e.target.value);
         }}
       />
-      {/* <AvatarGroupWrapper
+      <GroupAvatars
         data={formattedAvatarData}
         onAvatarClick={handleUserSelect}
         maxCount={3}
-      /> */}
+      />
       <ToggleButton
         value="check"
         selected={myOnly}

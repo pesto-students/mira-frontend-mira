@@ -1,5 +1,4 @@
 import { Box, Typography, Button } from '@mui/material';
-import GitHubIcon from '@mui/icons-material/GitHub';
 
 const ProjectBoardHeader = ({ name = 'Kanban board' }) => (
   <Box

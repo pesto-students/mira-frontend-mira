@@ -8,7 +8,7 @@ const userToken = localStorage.getItem('userToken')
   : null;
 
 const userInfo = localStorage.getItem('userInfo')
-  ? JSON.parse(localStorage.getItem('userInfo'))
+  ? JSON.parse(localStorage.getItem('userInfo') || '{}')
   : null;
 
 const initialState: any = {

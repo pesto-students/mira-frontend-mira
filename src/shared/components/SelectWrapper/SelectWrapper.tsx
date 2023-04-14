@@ -34,14 +34,25 @@ const Select = (props, ref) => {
 const SelectBase = React.forwardRef(Select);
 
 export const SelectWrapper = styled(SelectBase)(({ theme }) => ({
+  '&.MuiInputBase-root': {
+    minHeight: '33px',
+  },
   '& .MuiSelect-select': {
     display: 'flex',
     alignItems: 'center',
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(1),
+    paddingLeft: '16px',
+    paddingRight: '7px',
+    paddingTop: '2px',
+    paddingBottom: '2px',
   },
   '& .MuiListItemIcon-root': {
     minWidth: theme.spacing(4),
+  },
+  '& .MuiTypography-root': {
+    fontSize: '14px',
+  },
+  '& MuiSvgIcon-root': {
+    fontSize: '19px',
   },
 }));
 

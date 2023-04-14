@@ -8,6 +8,7 @@ import { useGetProjectQuery } from 'features/project/projectApiSlice';
 import {
   useGetCardQuery,
   useUpdateCardMutation,
+  useDeleteCardMutation,
 } from 'features/card/cardApiSlice';
 import GlobalLoader from 'components/GlobalLoader/GlobalLoader';
 
@@ -117,7 +118,7 @@ const CardEdit: FC = () => {
       displayStatus(
         enqueueSnackbar,
         'success',
-        'Successfully edited the Card',
+        'Successfully updated the Card',
         () => {
           navigate(`/projects/${currentProject._id}/dashboard`);
         },
@@ -128,9 +129,34 @@ const CardEdit: FC = () => {
     }
   }, [isProcessing]);
 
+  const [
+    deleteCard,
+    {
+      data: responseDelete,
+      isLoading: isDeleting,
+      isSuccess: isSuccessDelete,
+      error: errorDelete,
+      isError: isErrorDelete,
+    },
+  ] = useDeleteCardMutation();
+
+  useEffect(() => {
+    if (isSuccessDelete) {
+      displayStatus(
+        enqueueSnackbar,
+        'success',
+        'Successfully deleted the card',
+      );
+      navigate(`/projects/${currentProject._id}/dashboard`);
+    }
+    if (isErrorDelete) {
+      displayStatus(enqueueSnackbar, 'error', errorDelete);
+    }
+  }, [isDeleting]);
+
   return (
     <>
-      <GlobalLoader open={isFetchingProject || isFetchingCard} />
+      <GlobalLoader open={isFetchingProject || isFetchingCard || isDeleting} />
       <CardFormOverview
         initialValues={initialValues}
         onSubmit={onSubmit}
@@ -138,6 +164,9 @@ const CardEdit: FC = () => {
         processing={isProcessing}
         isCreate={false}
         project={project || {}}
+        onDelete={() => {
+          deleteCard({ projectId: currentProject._id, id: cardId });
+        }}
       />
     </>
   );

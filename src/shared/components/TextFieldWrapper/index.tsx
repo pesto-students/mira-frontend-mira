@@ -56,13 +56,13 @@ const TextFieldWrapper = React.forwardRef(TextField);
 export default TextFieldWrapper;
 
 export const TextFieldHeading = styled(TextFieldWrapper)(({ theme }) => ({
-  '& input': {
+  '& textarea': {
     fontSize: '24px',
-    paddingLeft: 0,
+    lineHeight: '125%',
     fontFamily: 'IBM Plex Sans',
     fontWeight: 'bold',
   },
-  '& .MuiInputBase-root': { backgroundColor: 'white' },
+  '& .MuiInputBase-root': { backgroundColor: 'white', padding: 0 },
   '& .MuiInputBase-root:hover': {
     backgroundColor: 'white',
   },

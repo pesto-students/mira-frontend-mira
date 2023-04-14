@@ -14,6 +14,7 @@ import {
   Avatar,
   IconButton,
   Button,
+  Tooltip,
 } from '@mui/material';
 
 import { NavLink, useParams } from 'react-router-dom';
@@ -82,6 +83,7 @@ const Sidebar: FC = () => {
     isError,
     error,
   } = useGetProjectsQuery();
+  const { userInfo } = useAppSelector((state) => state.auth);
 
   return (
     <Drawer
@@ -102,17 +104,37 @@ const Sidebar: FC = () => {
         sx={{ width: '64px', background: '#1E46A0' }}
         justifyContent="space-between"
       >
-        <Button href="/" sx={{ marginTop: '16px' }}>
-          <img src={Logo} alt="logo" height={30} />
-        </Button>
-        <IconButton
-          sx={{ color: 'white', marginBottom: '16px' }}
-          aria-label="signout"
-          size="large"
-          href="/logout"
-        >
-          <ExitToAppIcon fontSize="inherit" />
-        </IconButton>
+        <Stack>
+          <Button href="/" sx={{ marginTop: '16px' }}>
+            <img src={Logo} alt="logo" height={30} />
+          </Button>
+        </Stack>
+        <Stack>
+          <Tooltip title="View Profile" placement="right">
+            <IconButton
+              sx={{ color: 'white', marginBottom: '16px' }}
+              aria-label="signout"
+              size="small"
+              href="/profile"
+            >
+              <Avatar
+                alt={'Current user'}
+                src={userInfo.imageUrl}
+                sx={{ width: 40, height: 40 }}
+              />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Logout" placement="right">
+            <IconButton
+              sx={{ color: 'white', marginBottom: '16px' }}
+              aria-label="signout"
+              size="large"
+              href="/logout"
+            >
+              <ExitToAppIcon fontSize="inherit" />
+            </IconButton>
+          </Tooltip>
+        </Stack>
       </Stack>
       <Stack
         sx={{
