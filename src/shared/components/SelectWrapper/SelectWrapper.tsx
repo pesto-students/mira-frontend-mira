@@ -50,6 +50,7 @@ export const SelectWrapper = styled(SelectBase)(({ theme }) => ({
   },
   '& .MuiTypography-root': {
     fontSize: '14px',
+    overflow: 'hidden',
   },
   '& MuiSvgIcon-root': {
     fontSize: '19px',
