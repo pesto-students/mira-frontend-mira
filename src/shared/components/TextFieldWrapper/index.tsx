@@ -17,6 +17,9 @@ const styles: SxProps<Theme> = {
   '& input:focus': {
     backgroundColor: '#ffffff',
   },
+  '& .Mui-disabled': {
+    '-webkit-text-fill-color': 'black !important',
+  },
 };
 
 const HelperText = styled(Typography)(({ theme }) => ({

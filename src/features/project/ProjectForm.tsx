@@ -23,6 +23,7 @@ type IProjectForm = {
   loading?: boolean;
   processing?: boolean;
   onDelete?: any;
+  isAdmin?: boolean;
 };
 
 const ProjectForm: FC<IProjectForm> = ({
@@ -32,6 +33,7 @@ const ProjectForm: FC<IProjectForm> = ({
   loading = false,
   processing = false,
   onDelete = null,
+  isAdmin = true,
 }) => {
   const {
     register,
@@ -77,9 +79,13 @@ const ProjectForm: FC<IProjectForm> = ({
           <Grid container item xs={12}>
             <Grid item xs={6} alignItems="center" container>
               Profile Picture:
-              <Typography variant="caption" sx={{ color: '#777' }}>
-                (Use default or upload your own)
-              </Typography>
+              {isAdmin ? (
+                <Typography variant="caption" sx={{ color: '#777' }}>
+                  (Use default or upload your own)
+                </Typography>
+              ) : (
+                ''
+              )}
             </Grid>
             <Grid item xs={6}>
               <UploadImage
@@ -88,6 +94,7 @@ const ProjectForm: FC<IProjectForm> = ({
                 }
                 currentImage={imageUrl}
                 path="projectLogo/"
+                disabled={!isAdmin}
               />
             </Grid>
           </Grid>
@@ -111,6 +118,7 @@ const ProjectForm: FC<IProjectForm> = ({
               helperText={errors.name?.message?.toString()}
               fullWidth
               label={'Project Name'}
+              disabled={!isAdmin}
             />
           </Grid>
           <Grid item xs={12}>
@@ -136,6 +144,7 @@ const ProjectForm: FC<IProjectForm> = ({
               multiline
               minRows={4}
               label={'Description'}
+              disabled={!isAdmin}
             />
           </Grid>
           <Grid item xs={12} sm={12}>
@@ -147,49 +156,58 @@ const ProjectForm: FC<IProjectForm> = ({
                     fields={fieldsUsersWithRole}
                     remove={removeUsersWithRole}
                     watch={watch}
+                    disabled={!isAdmin}
                   />
                 </Grid>
               ) : (
                 ''
               )}
-              <Grid item xs={12} md={6}>
-                <SearchMembers
-                  name="newUsers"
-                  onChange={(value) =>
-                    setValue('newUsers', value, { shouldDirty: true })
-                  }
-                  excludeList={usersWithRole || []}
-                  reset={!processing}
-                />
-                {onDelete ? (
-                  <DeleteWrapper
-                    text="Delete Project"
-                    confirmationText="Do you really want to delete the project? This process cannot be undone."
-                    onConfirm={onDelete}
+              {isAdmin ? (
+                <Grid item xs={12} md={6}>
+                  <SearchMembers
+                    name="newUsers"
+                    onChange={(value) =>
+                      setValue('newUsers', value, { shouldDirty: true })
+                    }
+                    excludeList={usersWithRole || []}
+                    reset={!processing}
                   />
-                ) : (
-                  ''
-                )}
-              </Grid>
+                  {onDelete ? (
+                    <DeleteWrapper
+                      text="Delete Project"
+                      confirmationText="Do you really want to delete the project? This process cannot be undone."
+                      onConfirm={onDelete}
+                    />
+                  ) : (
+                    ''
+                  )}
+                </Grid>
+              ) : (
+                ''
+              )}
             </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <ButtonWrapper
-              type="submit"
-              variant="contained"
-              disableElevation
-              loading={processing}
-              size="large"
-              fullWidth
-              sx={{
-                margin: '10px 0px',
-                padding: '10px',
-              }}
-              disabled={!isDirty}
-            >
-              {isCreateProject ? 'Create' : 'Save'}
-            </ButtonWrapper>
-          </Grid>
+          {isAdmin ? (
+            <Grid item xs={12}>
+              <ButtonWrapper
+                type="submit"
+                variant="contained"
+                disableElevation
+                loading={processing}
+                size="large"
+                fullWidth
+                sx={{
+                  margin: '10px 0px',
+                  padding: '10px',
+                }}
+                disabled={!isDirty}
+              >
+                {isCreateProject ? 'Create' : 'Save'}
+              </ButtonWrapper>
+            </Grid>
+          ) : (
+            ''
+          )}
         </Grid>
       </Box>
     </>

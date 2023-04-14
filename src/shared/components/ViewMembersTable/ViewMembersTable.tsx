@@ -28,9 +28,16 @@ type UserType = {
   email: string;
   imageUrl: string;
   role: string;
+  disabled: boolean;
 };
 
-const ViewMembersTable: FC = ({ register, fields, remove, watch }) => {
+const ViewMembersTable: FC = ({
+  register,
+  fields,
+  remove,
+  watch,
+  disabled = false,
+}) => {
   const data = watch('usersWithRole');
 
   const [query, setQuery] = useState('');
@@ -70,20 +77,28 @@ const ViewMembersTable: FC = ({ register, fields, remove, watch }) => {
                     </Stack>
                   </Stack>
                 </TableCell>
-                <TableCell align="right">
-                  <SelectWrapperTable
-                    defaultValue={data[index].role}
-                    {...register(`usersWithRole.${index}.role`)}
-                  >
-                    <MenuItem value={'admin'}>Admin</MenuItem>
-                    <MenuItem value={'user'}>User</MenuItem>
-                  </SelectWrapperTable>
-                </TableCell>
-                <TableCell align="right">
-                  <IconButton component="label" onClick={() => remove(index)}>
-                    <DeleteIcon />
-                  </IconButton>
-                </TableCell>
+                {!disabled ? (
+                  <TableCell align="right">
+                    <SelectWrapperTable
+                      defaultValue={data[index].role}
+                      {...register(`usersWithRole.${index}.role`)}
+                    >
+                      <MenuItem value={'admin'}>Admin</MenuItem>
+                      <MenuItem value={'user'}>User</MenuItem>
+                    </SelectWrapperTable>
+                  </TableCell>
+                ) : (
+                  ''
+                )}
+                {!disabled ? (
+                  <TableCell align="right">
+                    <IconButton component="label" onClick={() => remove(index)}>
+                      <DeleteIcon />
+                    </IconButton>
+                  </TableCell>
+                ) : (
+                  ''
+                )}
               </TableRow>
             ))}
           </TableBody>
