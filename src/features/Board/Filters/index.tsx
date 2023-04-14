@@ -203,6 +203,10 @@ const ProjectBoardFilters: React.FC = () => {
   const areFiltersCleared =
     !searchTerm && userIds.length === 0 && !myOnly && !recent;
 
+  useEffect(() => {
+    dispatch(setClearAll());
+  }, [currentProject._id]);
+
   return (
     <Filters>
       <TextFieldWrapper
