@@ -73,7 +73,7 @@ const ProjectForm: FC<IProjectForm> = ({
         <Typography variant="h5">
           {isCreateProject ? 'Create Project' : 'Project Overview'}
         </Typography>
-        <Grid container spacing={2} sx={{ marginTop: '24px' }} md={12}>
+        <Grid container spacing={2} sx={{ marginTop: '24px' }}>
           <Grid container item xs={12}>
             <Grid item xs={6} alignItems="center" container>
               Profile Picture:

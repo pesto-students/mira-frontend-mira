@@ -1,7 +1,7 @@
 import { DragDropContext, DraggableLocation } from 'react-beautiful-dnd';
 import { CardStatus } from 'shared/constants/card';
 
-import List from './List';
+import List from './List/List';
 import { Lists } from './Styles';
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'App/hooks';
@@ -96,15 +96,17 @@ const ProjectBoardLists = () => {
   return (
     <DragDropContext onDragEnd={handleIssueDrop}>
       <Lists>
-        {Object.values(CardStatus).map((status) => (
-          <List
-            key={status}
-            status={status}
-            cards={filteredListCardsMap?.[status] || undefined}
-            filters={filters}
-            currentUserId={auth.userInfo._id}
-          />
-        ))}
+        {Object.values(CardStatus).map((status) => {
+          return (
+            <List
+              key={status}
+              status={status}
+              cards={filteredListCardsMap?.[status] || []}
+              filters={filters}
+              currentUserId={auth.userInfo._id}
+            />
+          );
+        })}
       </Lists>
     </DragDropContext>
   );

@@ -5,14 +5,13 @@ import { CardStatusCopy } from 'shared/constants/card';
 // import Fuse from 'fuse.js';
 // import { isAfter, subDays } from 'date-fns';
 
-import Issue from './Issue';
+import Issue from './Issue/Issue';
 import { List, Title, IssuesCount, Issues } from './Styles';
 import { parseISO, isWithinInterval, endOfDay, addDays } from 'date-fns';
 import { intersection } from 'lodash';
 
 const ProjectBoardList = ({ status, cards = [], filters, currentUserId }) => {
   const filteredCards = filterCards(cards, filters, currentUserId);
-
   return (
     <Droppable key={status} droppableId={status}>
       {(provided) => (

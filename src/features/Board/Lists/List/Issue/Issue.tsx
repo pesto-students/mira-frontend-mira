@@ -48,7 +48,11 @@ const ProjectBoardListIssue = ({ card, index }) => {
   };
 
   return (
-    <Draggable draggableId={card.id.toString()} index={index}>
+    <Draggable
+      draggableId={card._id.toString()}
+      key={card._id.toString()}
+      index={index}
+    >
       {(provided, snapshot) => (
         <Box
           ref={provided.innerRef}
@@ -79,7 +83,7 @@ const ProjectBoardListIssue = ({ card, index }) => {
               <Assignees>
                 {[assignees].map((user) => (
                   <AssigneeAvatar
-                    key={user.id}
+                    key={user._id}
                     sx={{ width: 24, height: 24 }}
                     src={user.imageUrl}
                     alt={user.firstName}

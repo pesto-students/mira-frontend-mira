@@ -53,10 +53,9 @@ const ProjectCreate: FC = () => {
   }, [isProcessing]);
 
   const onSubmit = async (data, dirtyFields) => {
-    if ('newUsers' in dirtyFields) {
+    if (dirtyFields.includes('newUsers')) {
       data.users = data.newUsers.map((user) => user._id);
     }
-
     createProject(data);
   };
   const navigate = useNavigate();
