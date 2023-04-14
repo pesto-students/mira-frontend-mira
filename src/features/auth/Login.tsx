@@ -35,8 +35,8 @@ const isValidEmail = (email) =>
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loginData, setLoginData] = useState<ILoginData>({
-    email: '',
-    password: '',
+    email: 'user1@pestoproject.com',
+    password: 'password1234',
     rememberMe: false,
   });
   const navigate = useNavigate();
