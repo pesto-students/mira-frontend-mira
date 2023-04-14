@@ -94,6 +94,7 @@ const CardForm: FC<ICardForm> = ({
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextFieldHeading
+                  multiline
                   {...register('title', {
                     required: 'Title is required',
                     minLength: {
@@ -101,8 +102,8 @@ const CardForm: FC<ICardForm> = ({
                       message: 'Title must be atleast 3 characters long',
                     },
                     maxLength: {
-                      value: 300,
-                      message: 'Title can be max 30 characters long',
+                      value: 150,
+                      message: 'Title can be max 150 characters long',
                     },
                     validate: (value) =>
                       value?.trim() === value || 'No trailing spaces',
@@ -110,7 +111,6 @@ const CardForm: FC<ICardForm> = ({
                   error={errors.title ? true : false}
                   helperText={errors.title?.message?.toString()}
                   fullWidth
-                  style={{ wordWrap: 'break-word' }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -171,12 +171,6 @@ const CardForm: FC<ICardForm> = ({
                     </ListItemIcon>
                     <ListItemText>Backlog</ListItemText>
                   </MenuItem>
-                  <MenuItem value={'in progress'}>
-                    <ListItemIcon>
-                      <LoopIcon fontSize="small" sx={{ color: 'violet' }} />
-                    </ListItemIcon>
-                    <ListItemText>In progress</ListItemText>
-                  </MenuItem>
                   <MenuItem value={'ready2deploy'}>
                     <ListItemIcon>
                       <BookmarksIcon
@@ -184,7 +178,13 @@ const CardForm: FC<ICardForm> = ({
                         sx={{ color: 'orange' }}
                       />
                     </ListItemIcon>
-                    <ListItemText>Ready</ListItemText>
+                    <ListItemText>Selected for development</ListItemText>
+                  </MenuItem>
+                  <MenuItem value={'in progress'}>
+                    <ListItemIcon>
+                      <LoopIcon fontSize="small" sx={{ color: 'violet' }} />
+                    </ListItemIcon>
+                    <ListItemText>In progress</ListItemText>
                   </MenuItem>
                   <MenuItem value={'done'}>
                     <ListItemIcon>

@@ -23,9 +23,9 @@ const ProjectBoardList = ({ status, cards = [], filters, currentUserId }) => {
           </Title>
           <Issues {...provided.droppableProps} ref={provided.innerRef}>
             {filteredCards.length
-              ? filteredCards.map((card, index) => (
-                  <Issue key={card.id} card={card} index={index} />
-                ))
+              ? filteredCards.map((card, index) => {
+                  return <Issue key={card._id} card={card} index={index} />;
+                })
               : null}
 
             {provided.placeholder}
