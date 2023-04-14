@@ -20,7 +20,7 @@ const transformProjectResponse = (response) => {
 export const projectsApiSlice = apiSliceWithTag.injectEndpoints({
   endpoints: (builder) => ({
     getProjects: builder.query({
-      query: () => '/projects',
+      query: () => '/projects?fields=name,logo,admins,users',
       providesTags: ['Project'],
     }),
     getProject: builder.query({
