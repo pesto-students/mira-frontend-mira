@@ -72,7 +72,7 @@ const NavigationLink = (props) => {
   );
 };
 
-const Sidebar: FC = () => {
+const Sidebar: FC = ({ open, variant, onClose }) => {
   const dispatch = useAppDispatch();
   const drawerWidth = 293;
 
@@ -97,8 +97,13 @@ const Sidebar: FC = () => {
           flexDirection: 'row',
         },
       }}
-      variant="permanent"
+      variant={variant}
+      open={open}
       anchor="left"
+      onClose={onClose}
+      ModalProps={{
+        keepMounted: true,
+      }}
     >
       <Stack
         sx={{ width: '64px', background: '#1E46A0' }}

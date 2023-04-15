@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { useCreateProjectMutation } from 'features/project/projectApiSlice';
 import { useAppSelector } from 'App/hooks';
+import Breadcrumbs from 'shared/components/Breadcrumbs';
+import PageHeader from 'shared/components/PageHeader/PageHeader';
 
 const displayStatus = (
   enqueueSnackbar,
@@ -62,6 +64,8 @@ const ProjectCreate: FC = () => {
 
   return (
     <>
+      <Breadcrumbs items={['Projects', 'Create Project']} />
+      <PageHeader name="Create Project" />
       <ProjectForm
         initialValues={initialValues}
         onSubmit={onSubmit}

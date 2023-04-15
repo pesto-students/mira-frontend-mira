@@ -7,6 +7,8 @@ import { useAppSelector } from 'App/hooks';
 import { useGetProjectQuery } from 'features/project/projectApiSlice';
 import { useCreateCardMutation } from 'features/card/cardApiSlice';
 import GlobalLoader from 'components/GlobalLoader/GlobalLoader';
+import Breadcrumbs from 'shared/components/Breadcrumbs';
+import PageHeader from 'shared/components/PageHeader/PageHeader';
 
 const displayStatus = (
   enqueueSnackbar,
@@ -89,6 +91,8 @@ const CardCreate: FC = () => {
   return (
     <>
       <GlobalLoader open={isFetchingProject} />
+      <Breadcrumbs items={['Projects', currentProject?.name, 'Create Card']} />
+      <PageHeader name="Create Card" />
       <CardForm
         initialValues={initialValues}
         onSubmit={onSubmit}

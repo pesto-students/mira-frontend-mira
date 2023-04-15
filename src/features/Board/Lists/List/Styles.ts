@@ -8,6 +8,7 @@ export const List = styled('div')(
   min-height: 400px;
   width: 25%;
   border-radius: 3px;
+  min-width: 265px;
   background: ${theme.colors.backgroundLightest};
 `,
 );

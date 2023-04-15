@@ -16,6 +16,7 @@ import ProtectedRoutes from 'components/ProtectedRoutes';
 import Logout from 'components/Logout';
 import ProjectBoard from 'features/Board/ProjectBoard';
 import ProfileEdit from 'features/user/ProfileEdit';
+import TempDrawer from 'components/temp/tempDrawer';
 
 const router: RouteObject[] = [
   {
@@ -53,6 +54,10 @@ const router: RouteObject[] = [
         element: <Status404 />,
       },
     ],
+  },
+  {
+    path: '/temp',
+    element: <TempDrawer />,
   },
   {
     path: '/projects',

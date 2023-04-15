@@ -10,6 +10,7 @@ import { useAppSelector } from 'App/hooks';
 import { NavLink, useNavigate } from 'react-router-dom';
 import GlobalLoader from 'components/GlobalLoader/GlobalLoader';
 import Breadcrumbs from 'shared/components/Breadcrumbs';
+import PageHeader from 'shared/components/PageHeader/PageHeader';
 
 const displayStatus = (
   enqueueSnackbar,
@@ -141,6 +142,8 @@ const ProjectEdit: FC = () => {
   return (
     <>
       <GlobalLoader open={isFetchingProject || isDeleting} />
+      <Breadcrumbs items={['Projects', currentProject?.name, 'Overview']} />
+      <PageHeader name="Project Overview" />
       <ProjectForm
         initialValues={initialValues}
         isCreateProject={false}

@@ -213,6 +213,7 @@ const ProjectBoardFilters: React.FC = () => {
         style={{
           marginRight: '18px',
           width: '160px',
+          flexShrink: 0,
         }}
         InputProps={{
           startAdornment: (
@@ -243,6 +244,7 @@ const ProjectBoardFilters: React.FC = () => {
             border: 'none',
             ml: 1,
             p: 1,
+            flexShrink: 0,
           },
         }}
       >
@@ -255,6 +257,7 @@ const ProjectBoardFilters: React.FC = () => {
             border: 'none',
             ml: 1,
             p: 1,
+            flexShrink: 0,
           },
         }}
         selected={recent}
