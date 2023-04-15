@@ -218,7 +218,6 @@ const CardForm: FC<ICardForm> = ({
                       },
                     });
                   }}
-                  disablePast
                   format="dd/MM/yyyy"
                   sx={{ '& .MuiInputBase-root': { height: '33px' } }}
                 />

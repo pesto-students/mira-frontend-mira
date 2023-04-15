@@ -12,6 +12,7 @@ import {
   MenuItem,
   Stack,
   Typography,
+  InputLabel,
 } from '@mui/material';
 
 import IconButton from '@mui/material/IconButton';
@@ -40,17 +41,21 @@ const ViewMembersTable: FC = ({
 }) => {
   const data = watch('usersWithRole');
 
-  const [query, setQuery] = useState('');
+  const [disabledDelete, setDisabledDelete] = useState([]);
+
+  useEffect(() => {
+    console.log(data);
+    const admins = (data || []).filter((item) => item.role == 'admin');
+    const isDisabledAdmin = admins.length < 2;
+    const isDisabledList = (data || []).map(
+      (user) => user.role == 'admin' && isDisabledAdmin,
+    );
+    setDisabledDelete(isDisabledList);
+  }, [data]);
 
   return (
     <Stack>
-      <TextFieldWrapper
-        label="Members"
-        placeholder="Seach by email id"
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-          setQuery(event.target.value);
-        }}
-      />
+      <InputLabel>Members</InputLabel>
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
           <TableBody>
@@ -92,7 +97,11 @@ const ViewMembersTable: FC = ({
                 )}
                 {!disabled ? (
                   <TableCell align="right">
-                    <IconButton component="label" onClick={() => remove(index)}>
+                    <IconButton
+                      component="label"
+                      onClick={() => remove(index)}
+                      disabled={disabledDelete[index]}
+                    >
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>

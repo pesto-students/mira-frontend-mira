@@ -112,7 +112,14 @@ const UploadImage: React.FC<IProps> = ({
   }, [currentImage]);
 
   const handleImageChange = (e: React.BaseSyntheticEvent) => {
-    setImageFile(e.target.files[0]);
+    const file = e.target.files[0];
+    if (!file) return;
+    if (file.size < 500000) {
+      console.log(file.size);
+      setImageFile(e.target.files[0]);
+    } else {
+      alert('Please upload file size < 0.5 MB');
+    }
   };
 
   return (
