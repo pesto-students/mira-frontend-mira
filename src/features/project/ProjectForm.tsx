@@ -69,12 +69,8 @@ const ProjectForm: FC<IProjectForm> = ({
         onSubmit={handleSubmit((finalData) => {
           onSubmit(finalData, Object.keys(dirtyFields));
         })}
-        sx={{ padding: 5, pt: 0 }}
         autoComplete="off"
       >
-        <Typography variant="h5">
-          {isCreateProject ? 'Create Project' : 'Project Overview'}
-        </Typography>
         <Grid container spacing={2} sx={{ marginTop: '24px' }}>
           <Grid container item xs={12}>
             <Grid item xs={6} alignItems="center" container>
@@ -150,7 +146,7 @@ const ProjectForm: FC<IProjectForm> = ({
           <Grid item xs={12} sm={12}>
             <Grid container spacing={2}>
               {!isCreateProject ? (
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} lg={7}>
                   <ViewMembersTable
                     register={register}
                     fields={fieldsUsersWithRole}
@@ -163,7 +159,7 @@ const ProjectForm: FC<IProjectForm> = ({
                 ''
               )}
               {isAdmin ? (
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} lg={5}>
                   <SearchMembers
                     name="newUsers"
                     onChange={(value) =>

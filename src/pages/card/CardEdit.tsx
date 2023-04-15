@@ -11,6 +11,7 @@ import {
   useDeleteCardMutation,
 } from 'features/card/cardApiSlice';
 import GlobalLoader from 'components/GlobalLoader/GlobalLoader';
+import Breadcrumbs from 'shared/components/Breadcrumbs';
 
 const displayStatus = (
   enqueueSnackbar,
@@ -156,6 +157,7 @@ const CardEdit: FC = () => {
   return (
     <>
       <GlobalLoader open={isFetchingProject || isFetchingCard || isDeleting} />
+      <Breadcrumbs items={['Projects', project?.name, 'Card']} />
       <CardFormOverview
         initialValues={initialValues}
         onSubmit={onSubmit}

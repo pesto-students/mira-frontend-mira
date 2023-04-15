@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import Breadcrumbs from 'shared/components/Breadcrumbs';
 
-import Header from './header';
+import PageHeader from 'shared/components/PageHeader/PageHeader';
 import Filters from './Filters';
 import { useAppSelector } from 'App/hooks';
 
@@ -44,7 +44,7 @@ const ProjectBoard: React.FC<Props> = () => {
   return (
     <>
       <Breadcrumbs items={['Projects', project?.name, 'Kanban Board']} />
-      <Header name="Kanban Board" />
+      <PageHeader name="Kanban Board" />
       <Filters />
       <ProjectBoardLists />
     </>

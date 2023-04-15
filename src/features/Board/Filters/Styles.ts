@@ -10,6 +10,8 @@ export const Filters = styled('div')(
   display: flex;
   align-items: center;
   margin-top: 24px;  
+  flex-wrap: wrap;
+  row-gap: 10px;
 `,
 );
 

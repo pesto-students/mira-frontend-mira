@@ -79,12 +79,8 @@ const CardForm: FC<ICardForm> = ({
         onSubmit={handleSubmit((finalData) => {
           onSubmit(finalData, Object.keys(dirtyFields));
         })}
-        sx={{ padding: 5, pt: 0 }}
         autoComplete="off"
       >
-        <Typography variant="h5">
-          {isCreate ? 'Create Card' : 'Edit Card'}
-        </Typography>
         <Grid container spacing={2} sx={{ marginTop: '24px' }}>
           <Grid item xs={12}>
             <TextFieldWrapper

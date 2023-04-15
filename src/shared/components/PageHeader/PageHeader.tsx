@@ -1,6 +1,6 @@
 import { Box, Typography, Button } from '@mui/material';
 
-const ProjectBoardHeader = ({ name = 'Kanban board' }) => (
+const PageHeader = ({ name = 'Kanban board' }) => (
   <Box
     sx={{ marginTop: '6px', display: 'flex', justifyContent: 'space-between' }}
   >
@@ -12,4 +12,4 @@ const ProjectBoardHeader = ({ name = 'Kanban board' }) => (
   </Box>
 );
 
-export default ProjectBoardHeader;
+export default PageHeader;

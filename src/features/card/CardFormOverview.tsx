@@ -86,7 +86,6 @@ const CardForm: FC<ICardForm> = ({
         onSubmit={handleSubmit((finalData) => {
           onSubmit(finalData, Object.keys(dirtyFields));
         })}
-        sx={{ padding: 5, pt: 0 }}
         autoComplete="off"
       >
         <Grid container spacing={2}>

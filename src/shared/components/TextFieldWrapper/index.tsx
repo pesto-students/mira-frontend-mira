@@ -18,7 +18,7 @@ const styles: SxProps<Theme> = {
     backgroundColor: '#ffffff',
   },
   '& .Mui-disabled': {
-    '-webkit-text-fill-color': 'black !important',
+    WebkitTextFillColor: 'black !important',
   },
 };
 
