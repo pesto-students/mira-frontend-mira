@@ -12,6 +12,7 @@ import TextFieldWrapper from 'shared/components/TextFieldWrapper';
 import ChipWrapper from 'shared/components/ChipWrapper/ChipWrapper';
 import { useDebounce } from 'use-debounce';
 import { useSearchUsersQuery } from 'features/user/userApiSlice';
+import { useAppSelector } from 'App/hooks';
 
 type UserType = {
   _id: string;
@@ -36,6 +37,7 @@ const SearchMembers = ({
   const [filteredOptions, setFilteredOptions] = React.useState<UserType[]>([]);
   // serchPath: base url to search for user details
 
+  const { userInfo } = useAppSelector((state) => state.auth);
   useEffect(() => {
     onChange(selectedUsers);
   }, [selectedUsers]);
@@ -48,7 +50,7 @@ const SearchMembers = ({
 
   // Remove users that are selected, from the options
   useEffect(() => {
-    const allExcludedUsers = selectedUsers.concat(excludeList);
+    const allExcludedUsers = selectedUsers.concat(excludeList).concat(userInfo);
     const filteredUsers = (userList || []).filter(
       (user) => !allExcludedUsers.map((item) => item._id).includes(user._id),
     );
