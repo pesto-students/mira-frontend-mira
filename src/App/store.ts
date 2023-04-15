@@ -3,16 +3,17 @@ import { apiSlice } from 'api/apiSlice';
 import authReducer from 'features/auth/authSlice';
 import projectReducer from 'features/project/projectSlice';
 import filterReducer from 'features/Board/Filters/FilterSlice';
+import sentryMiddleware from './middleware/sentryMiddleware';
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
     project: projectReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
-    filterBar: filterReducer
+    filterBar: filterReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiSlice.middleware)
+    getDefaultMiddleware().concat(apiSlice.middleware, sentryMiddleware),
 });
 
 export default store;

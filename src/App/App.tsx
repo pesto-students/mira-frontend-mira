@@ -34,6 +34,7 @@ const App = () => {
         horizontal: 'right',
         vertical: 'bottom',
       }}
+      autoHideDuration={3000}
     >
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <ThemeProvider>
