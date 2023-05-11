@@ -1,65 +1,49 @@
-<!DOCTYPE html>
-<html>
+# MIRA - Frontend
 
-<head>
-  <meta charset="utf-8">
-  <title>MIRA - Frontend</title>
-</head>
+MIRA is a lightweight task and project tracking tool, inspired by JIRA. It allows teams to track and manage software development projects through an easy-to-use web interface. This repository contains the frontend codebase for MIRA.
 
-<body>
-  <h1>MIRA - Frontend</h1>
-  <p>MIRA is a lightweight task and project tracking tool, inspired by JIRA. It allows teams to track and manage software
-    development projects through an easy-to-use web interface. This repository contains the frontend codebase for MIRA.</p>
+## Features
 
-  <h2>Features</h2>
-  <ul>
-    <li>Create and manage projects</li>
-    <li>Create and assign tasks</li>
-    <li>Interactive Kanban board for project management</li>
-    <li>User authentication and authorization</li>
-    <li>Collaborate with team members</li>
-    <li>Comment on tasks</li>
-    <li>Responsive design for desktop and mobile devices</li>
-  </ul>
+- Create and manage projects
+- Create and assign tasks
+- Interactive Kanban board for project management
 
-  <h2>Technologies Used</h2>
-  <ul>
-    <li>React.js: JavaScript library for building user interfaces</li>
-    <li>Redux: State management for JavaScript applications</li>
-    <li>Redux Thunk: Middleware for handling asynchronous actions in Redux</li>
-    <li>Material-UI: UI component library based on Material Design</li>
-    <li>Sentry: Application monitoring and error tracking platform</li>
-    <li>React Router: Routing library for React applications</li>
-  </ul>
+## Frontend Tech Stack
 
-  <h2>Getting Started</h2>
-  <h3>Prerequisites</h3>
-  <ul>
-    <li>Node.js and npm (Node Package Manager) installed on your machine</li>
-  </ul>
+The frontend of MIRA is built using the following technologies:
 
-  <h3>Installation</h3>
-  <ol>
-    <li>Clone the repository:
-      <pre><code>git clone https://github.com/pesto-students/mira-frontend-mira.git</code></pre>
-    </li>
-    <li>Navigate to the project directory:
-      <pre><code>cd mira-frontend-mira</code></pre>
-    </li>
-    <li>Install dependencies:
-      <pre><code>npm install</code></pre>
-    </li>
-    <li>Start the development server:
-      <pre><code>npm start</code></pre>
-    </li>
-    <li>Open your browser and visit <a href="http://localhost:3000">http://localhost:3000</a> to see the application.</li>
-  </ol>
+- **React**: A popular JavaScript library for building user interfaces.
+- **Redux**: A predictable state container for managing application state.
+- **React Router**: A library for handling routing in a React application.
+- **Material-UI**: A UI component library for React that provides a set of customizable components following Material Design principles.
+- **Redux Thunk**: A middleware for Redux that allows asynchronous actions using Redux.
+- **Sentry**: An error monitoring and logging platform that helps track and debug application issues.
 
-  <h2>Backend Repository</h2>
-  <p>The backend codebase for MIRA can be found at <a href="https://github.com/pesto-students/mira---backend-mira">mira---backend-mira</a>.</p>
+## Best Practices
 
-  <h2>Project Requirement Document (PRD)</h2>
-  <p>The PRD for MIRA can be found at <a href="https://brawny-erigeron-46a.notion.site/Project-Requirement-Document-0c844afff1f0437d9e95441f1f967871">Project Requirement Document</a>.</p>
-</body>
+The MIRA frontend codebase follows several best practices, including:
 
-</html>
+- **Modular component structure**: The codebase is organized into modular components, making it easier to understand, maintain, and reuse code.
+- **Separation of concerns**: The codebase separates business logic from presentational components, promoting better code organization and testability.
+- **Consistent coding style**: The codebase follows a consistent coding style and adheres to industry best practices to ensure readability and maintainability.
+- **Use of Redux for state management**: Redux is used to manage application state, providing a predictable and centralized data flow.
+- **Error handling and logging**: Sentry is integrated for error monitoring and logging, helping to track and debug issues in the application.
+- **Responsive design**: The frontend is designed to be responsive, providing an optimal viewing experience across different devices and screen sizes.
+
+## Getting Started
+
+To get started with the MIRA frontend, follow these steps:
+
+1. Clone the repository: `git clone https://github.com/pesto-students/mira-frontend-mira.git`
+2. Install the dependencies: `npm install`
+3. Start the development server: `npm start`
+4. Open your browser and navigate to `http://localhost:3000` to access the MIRA application.
+
+## Contributing
+
+Contributions are welcomed! If you find any issues or have suggestions for improvement, feel free to open an issue or submit a pull request.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
