@@ -1,12 +1,9 @@
-import { useEffect } from 'react';
 import { styled, CssBaseline } from '@mui/material';
 import { useRoutes } from 'react-router-dom';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { useAppDispatch, useAppSelector } from 'hooks';
-import { onAuthStateChangedListener } from 'firebase/firebaseConfig';
-import { saveFirebaseUser } from 'features/auth/authSlice';
 import { SnackbarProvider, MaterialDesignContent } from 'notistack';
+
 import router from './router';
 import ThemeProvider from './theme/ThemeProvider';
 
@@ -21,8 +18,6 @@ const StyledSnackbarContent = styled(MaterialDesignContent)(({ theme }) => ({
 
 const App = () => {
   const content = useRoutes(router);
-
-  const dispatch = useAppDispatch();
 
   return (
     <SnackbarProvider
