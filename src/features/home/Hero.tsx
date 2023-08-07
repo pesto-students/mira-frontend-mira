@@ -28,11 +28,10 @@ function Hero() {
             color="text.secondary"
             fontWeight="normal"
           >
-            MIRA is a lightweight task and project tracking tool. It allows teams to track and manage software development projects through an easy-to-use web interface. Teams can use
-MIRA to create and assign tasks, manage groups of tasks and user stories, administer
-and monitor the progress of projects, and generate reports. MIRA combines the
-flexibility and power of an issue management tool with an elegant, intuitive interface that
-makes project and issue tracking easy for teams.
+            MIRA is a lightweight task and project tracking tool for software
+            development, offering an intuitive web interface. It combines issue
+            management functionality with ease of use for efficient project and
+            issue tracking by teams.
           </TypographyH2>
           <Button
             component={RouterLink}
