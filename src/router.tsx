@@ -1,4 +1,4 @@
-import BaseLayout from 'shared/components/layout/BaseLayout';
+import BaseLayout from 'ui/layout/BaseLayout';
 import Login from 'features/auth/Login';
 import Register from 'features/user/Register';
 import Home from 'features/home';
@@ -11,12 +11,11 @@ import CardList from 'features/card/CardList';
 import CardCreate from 'pages/card/CardCreate';
 import CardEdit from 'pages/card/CardEdit';
 import Hero from 'features/home/Hero';
-import DashboardLayout from 'shared/components/layout/DashboardLayout/DashboardLayout';
-import ProtectedRoutes from 'components/ProtectedRoutes';
-import Logout from 'components/Logout';
+import DashboardLayout from 'ui/layout/DashboardLayout/DashboardLayout';
+import ProtectedRoutes from 'ui/ProtectedRoutes';
+import Logout from 'ui/Logout';
 import ProjectBoard from 'features/Board/ProjectBoard';
 import ProfileEdit from 'features/user/ProfileEdit';
-import TempDrawer from 'components/temp/tempDrawer';
 
 const router: RouteObject[] = [
   {
@@ -54,10 +53,6 @@ const router: RouteObject[] = [
         element: <Status404 />,
       },
     ],
-  },
-  {
-    path: '/temp',
-    element: <TempDrawer />,
   },
   {
     path: '/projects',

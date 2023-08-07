@@ -4,7 +4,7 @@ import RegisterForm from './RegisterForm';
 import { useUpdateProfileMutation, useGetProfileQuery } from './userApiSlice';
 import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
-import GlobalLoader from 'components/GlobalLoader/GlobalLoader';
+import GlobalLoader from 'ui/GlobalLoader/GlobalLoader';
 
 const displayStatus = (
   enqueueSnackbar,

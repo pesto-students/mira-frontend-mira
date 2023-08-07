@@ -15,7 +15,7 @@ import { debounce, xor } from 'lodash';
 
 import { ClearAll, Filters } from './Styles';
 
-import TextFieldWrapper from 'shared/components/TextFieldWrapper';
+import TextFieldWrapper from 'ui/TextFieldWrapper';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import {
   setClearAll,

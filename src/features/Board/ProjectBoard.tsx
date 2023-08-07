@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react';
 
-import Breadcrumbs from 'shared/components/Breadcrumbs';
+import Breadcrumbs from 'ui/Breadcrumbs';
 
-import PageHeader from 'shared/components/PageHeader/PageHeader';
+import PageHeader from 'ui/PageHeader/PageHeader';
 import Filters from './Filters';
 import { useAppSelector } from 'hooks';
 
 import type { IProjectBoardProps as Props } from './types';
-import PageError from 'shared/components/PageError';
+import PageError from 'ui/PageError';
 import ProjectBoardLists from './Lists/Lists';
 import { useGetProjectQuery } from 'features/project/projectApiSlice';
 import { useGetCardsQuery } from 'features/card/cardApiSlice';
-import GlobalLoader from 'components/GlobalLoader/GlobalLoader';
+import GlobalLoader from 'ui/GlobalLoader/GlobalLoader';
 
 const ProjectBoard: React.FC<Props> = () => {
   const { currentProject } = useAppSelector((state) => state.project);

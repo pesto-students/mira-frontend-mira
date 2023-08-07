@@ -1,7 +1,7 @@
 import { FC, ReactNode } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Box } from '@mui/material';
-import Header from 'shared/components/Header';
+import Header from 'ui/Header';
 
 interface BaseLayoutProps {
   children?: ReactNode;

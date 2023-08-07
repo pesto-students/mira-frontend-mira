@@ -19,8 +19,8 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import type { SxProps, Theme } from '@mui/material';
 
-import TextFieldWrapper from 'shared/components/TextFieldWrapper';
-import { SelectWrapperTable } from 'shared/components/SelectWrapper/SelectWrapper';
+import TextFieldWrapper from 'ui/TextFieldWrapper';
+import { SelectWrapperTable } from 'ui/SelectWrapper/SelectWrapper';
 
 type UserType = {
   _id: string;

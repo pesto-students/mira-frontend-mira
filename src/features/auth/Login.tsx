@@ -9,10 +9,10 @@ import {
   FormControlLabel,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import ButtonWrapper from 'shared/components/ButtonWrapper';
-import TextFieldWrapper from 'shared/components/TextFieldWrapper';
-import LinkWrapper from 'shared/components/LinkWrapper';
-import GenericErrorModal from 'shared/components/Modal/GenericErrorModal';
+import ButtonWrapper from 'ui/ButtonWrapper';
+import TextFieldWrapper from 'ui/TextFieldWrapper';
+import LinkWrapper from 'ui/LinkWrapper';
+import GenericErrorModal from 'ui/Modal/GenericErrorModal';
 import ResetPassword from './ResetPassword';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { userLogin } from './authAction';

@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { useCreateProjectMutation } from 'features/project/projectApiSlice';
 import { useAppSelector } from 'hooks';
-import Breadcrumbs from 'shared/components/Breadcrumbs';
-import PageHeader from 'shared/components/PageHeader/PageHeader';
+import Breadcrumbs from 'ui/Breadcrumbs';
+import PageHeader from 'ui/PageHeader/PageHeader';
 
 const displayStatus = (
   enqueueSnackbar,

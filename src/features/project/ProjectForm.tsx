@@ -1,12 +1,12 @@
 import { Box, Grid, Typography } from '@mui/material';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { FC, useEffect, useState } from 'react';
-import TextFieldWrapper from 'shared/components/TextFieldWrapper';
-import ButtonWrapper from 'shared/components/ButtonWrapper';
-import UploadImage from 'shared/components/UploadImage';
-import SearchMembers from 'shared/components/SearchMembers/SearchMembers';
-import ViewMembersTable from 'shared/components/ViewMembersTable/ViewMembersTable';
-import DeleteWrapper from 'shared/components/DeleteWrapper/DeleteWrapper';
+import TextFieldWrapper from 'ui/TextFieldWrapper';
+import ButtonWrapper from 'ui/ButtonWrapper';
+import UploadImage from 'ui/UploadImage';
+import SearchMembers from 'ui/SearchMembers/SearchMembers';
+import ViewMembersTable from 'ui/ViewMembersTable/ViewMembersTable';
+import DeleteWrapper from 'ui/DeleteWrapper/DeleteWrapper';
 
 type FormData = {
   name?: string;

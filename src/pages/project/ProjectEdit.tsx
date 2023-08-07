@@ -8,9 +8,9 @@ import {
 } from 'features/project/projectApiSlice';
 import { useAppSelector } from 'hooks';
 import { NavLink, useNavigate } from 'react-router-dom';
-import GlobalLoader from 'components/GlobalLoader/GlobalLoader';
-import Breadcrumbs from 'shared/components/Breadcrumbs';
-import PageHeader from 'shared/components/PageHeader/PageHeader';
+import GlobalLoader from 'ui/GlobalLoader/GlobalLoader';
+import Breadcrumbs from 'ui/Breadcrumbs';
+import PageHeader from 'ui/PageHeader/PageHeader';
 
 const displayStatus = (
   enqueueSnackbar,

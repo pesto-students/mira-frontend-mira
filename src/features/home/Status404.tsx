@@ -3,7 +3,7 @@ import { Box, Typography, Container } from '@mui/material';
 import statusImg from '/404.svg';
 
 import { styled } from '@mui/material/styles';
-import ButtonWrapper from 'shared/components/ButtonWrapper';
+import ButtonWrapper from 'ui/ButtonWrapper';
 
 const MainContent = styled(Box)(
   ({ theme }) => `

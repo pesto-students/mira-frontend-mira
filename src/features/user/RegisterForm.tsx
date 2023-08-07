@@ -6,11 +6,11 @@ import {
   Grid,
   Typography,
 } from '@mui/material';
-import TextFieldWrapper from 'shared/components/TextFieldWrapper';
-import UploadImage from 'shared/components/UploadImage';
-import ButtonWrapper from 'shared/components/ButtonWrapper';
-import LinkWrapper from 'shared/components/LinkWrapper';
-import DatePickerWrapper from 'shared/components/DatePickerWrapper/DatePickerWrapper';
+import TextFieldWrapper from 'ui/TextFieldWrapper';
+import UploadImage from 'ui/UploadImage';
+import ButtonWrapper from 'ui/ButtonWrapper';
+import LinkWrapper from 'ui/LinkWrapper';
+import DatePickerWrapper from 'ui/DatePickerWrapper/DatePickerWrapper';
 import { format } from 'date-fns';
 
 import { useForm, Controller } from 'react-hook-form';

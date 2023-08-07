@@ -2,7 +2,7 @@ import { ReactNode, FC, useEffect, useState } from 'react';
 import { Box, IconButton } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Outlet } from 'react-router-dom';
-import Sidebar from 'components/Sidebar/Sidebar';
+import Sidebar from 'ui/Sidebar/Sidebar';
 
 import MenuIcon from '@mui/icons-material/Menu';
 import { useWindowSize } from 'hooks';

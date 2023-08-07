@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import DialogWrapper from 'shared/components/DialogWrapper/DialogWrapper';
-import TextFieldWrapper from 'shared/components/TextFieldWrapper';
+import DialogWrapper from 'ui/DialogWrapper/DialogWrapper';
+import TextFieldWrapper from 'ui/TextFieldWrapper';
 import { sleep } from 'shared/helpers/sleep';
 import CircularProgress from '@mui/material/CircularProgress';
 import { firebaseSendPasswordResetEmail } from '@/firebase/firebaseConfig';

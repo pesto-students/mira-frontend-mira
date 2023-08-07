@@ -8,8 +8,8 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@mui/material';
-import TextFieldWrapper from 'shared/components/TextFieldWrapper';
-import ChipWrapper from 'shared/components/ChipWrapper/ChipWrapper';
+import TextFieldWrapper from 'ui/TextFieldWrapper';
+import ChipWrapper from 'ui/ChipWrapper/ChipWrapper';
 import { useDebounce } from 'use-debounce';
 import { useSearchUsersQuery } from 'features/user/userApiSlice';
 import { useAppSelector } from 'hooks';

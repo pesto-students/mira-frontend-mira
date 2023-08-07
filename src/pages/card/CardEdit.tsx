@@ -10,8 +10,8 @@ import {
   useUpdateCardMutation,
   useDeleteCardMutation,
 } from 'features/card/cardApiSlice';
-import GlobalLoader from 'components/GlobalLoader/GlobalLoader';
-import Breadcrumbs from 'shared/components/Breadcrumbs';
+import GlobalLoader from 'ui/GlobalLoader/GlobalLoader';
+import Breadcrumbs from 'ui/Breadcrumbs';
 
 const displayStatus = (
   enqueueSnackbar,

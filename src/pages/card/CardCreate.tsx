@@ -6,9 +6,9 @@ import { format } from 'date-fns';
 import { useAppSelector } from 'hooks';
 import { useGetProjectQuery } from 'features/project/projectApiSlice';
 import { useCreateCardMutation } from 'features/card/cardApiSlice';
-import GlobalLoader from 'components/GlobalLoader/GlobalLoader';
-import Breadcrumbs from 'shared/components/Breadcrumbs';
-import PageHeader from 'shared/components/PageHeader/PageHeader';
+import GlobalLoader from 'ui/GlobalLoader/GlobalLoader';
+import Breadcrumbs from 'ui/Breadcrumbs';
+import PageHeader from 'ui/PageHeader/PageHeader';
 
 const displayStatus = (
   enqueueSnackbar,
