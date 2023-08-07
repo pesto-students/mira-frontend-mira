@@ -14,7 +14,7 @@ import TextFieldWrapper from 'shared/components/TextFieldWrapper';
 import LinkWrapper from 'shared/components/LinkWrapper';
 import GenericErrorModal from 'shared/components/Modal/GenericErrorModal';
 import ResetPassword from './ResetPassword';
-import { useAppDispatch, useAppSelector } from 'App/hooks';
+import { useAppDispatch, useAppSelector } from 'hooks';
 import { userLogin } from './authAction';
 import { setError as setAuthError, setCredentials } from './authSlice';
 import { useLoginMutation } from './authApiSlice';

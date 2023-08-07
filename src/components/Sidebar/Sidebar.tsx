@@ -29,7 +29,7 @@ import AddIcon from '@mui/icons-material/Add';
 import Logo from '/logo.png';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
-import { useAppDispatch, useAppSelector } from 'App/hooks';
+import { useAppDispatch, useAppSelector } from 'hooks';
 import { useGetProjectsQuery } from 'features/project/projectApiSlice';
 
 const ProjectMenuItem = styled(MenuItem)(({ theme }) => ({

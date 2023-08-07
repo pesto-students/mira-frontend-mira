@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom';
 import Sidebar from 'components/Sidebar/Sidebar';
 
 import MenuIcon from '@mui/icons-material/Menu';
-import { useWindowSize } from 'App/hooks';
+import { useWindowSize } from 'hooks';
 interface DashboardLayoutProps {
   children?: ReactNode;
 }

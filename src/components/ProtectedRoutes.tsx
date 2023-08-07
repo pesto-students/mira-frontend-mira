@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from 'App/hooks';
+import { useAppSelector, useAppDispatch } from 'hooks';
 import { useGetProjectsQuery } from 'features/project/projectApiSlice';
 import { setCurrentProject } from 'features/project/projectSlice';
 import GlobalLoader from './GlobalLoader/GlobalLoader';

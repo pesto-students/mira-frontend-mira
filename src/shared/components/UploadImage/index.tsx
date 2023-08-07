@@ -2,7 +2,7 @@ import { Box, Card, Avatar, IconButton, CircularProgress } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import UploadTwoToneIcon from '@mui/icons-material/UploadTwoTone';
 import React, { useState, useEffect } from 'react';
-import { storage } from 'App/firebase/firebaseConfig';
+import { storage } from '@/firebase/firebaseConfig';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 const AvatarWrapper = styled(Card)(

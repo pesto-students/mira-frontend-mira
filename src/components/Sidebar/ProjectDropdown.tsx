@@ -14,7 +14,7 @@ import {
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useNavigate, NavLink, useParams } from 'react-router-dom';
 import { useGetProjectsQuery } from 'features/project/projectApiSlice';
-import { useAppSelector, useAppDispatch } from 'App/hooks';
+import { useAppSelector, useAppDispatch } from 'hooks';
 import { setCurrentProject } from 'features/project/projectSlice';
 
 const MenuWrapper = styled(Menu)(({ theme }) => ({

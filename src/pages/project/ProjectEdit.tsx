@@ -6,7 +6,7 @@ import {
   useUpdateProjectMutation,
   useDeleteProjectMutation,
 } from 'features/project/projectApiSlice';
-import { useAppSelector } from 'App/hooks';
+import { useAppSelector } from 'hooks';
 import { NavLink, useNavigate } from 'react-router-dom';
 import GlobalLoader from 'components/GlobalLoader/GlobalLoader';
 import Breadcrumbs from 'shared/components/Breadcrumbs';

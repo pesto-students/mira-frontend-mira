@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import CardForm from 'features/card/CardForm';
 import { format } from 'date-fns';
-import { useAppSelector } from 'App/hooks';
+import { useAppSelector } from 'hooks';
 import { useGetProjectQuery } from 'features/project/projectApiSlice';
 import { useCreateCardMutation } from 'features/card/cardApiSlice';
 import GlobalLoader from 'components/GlobalLoader/GlobalLoader';

@@ -3,7 +3,7 @@ import ProjectForm from 'features/project/ProjectForm';
 import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { useCreateProjectMutation } from 'features/project/projectApiSlice';
-import { useAppSelector } from 'App/hooks';
+import { useAppSelector } from 'hooks';
 import Breadcrumbs from 'shared/components/Breadcrumbs';
 import PageHeader from 'shared/components/PageHeader/PageHeader';
 

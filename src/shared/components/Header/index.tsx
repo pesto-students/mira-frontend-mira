@@ -14,7 +14,7 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import Logo from '/mira.png';
 
-import { useAppSelector, useAppDispatch } from 'App/hooks';
+import { useAppSelector, useAppDispatch } from 'hooks';
 // import { useGetUserDetailsQuery } from 'features/auth/authService';
 import { logout, setCredentials } from 'features/auth/authSlice';
 

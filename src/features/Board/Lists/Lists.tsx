@@ -4,9 +4,9 @@ import { CardStatus } from 'shared/constants/card';
 import List from './List/List';
 import { Lists } from './Styles';
 import React, { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from 'App/hooks';
+import { useAppDispatch, useAppSelector } from 'hooks';
 
-import { Icard } from 'App/types';
+import { Icard } from 'types';
 import { Ifilters } from 'features/Board/types';
 import type { DropResult } from 'react-beautiful-dnd';
 import { useGetCardsQuery } from 'features/card/cardApiSlice';

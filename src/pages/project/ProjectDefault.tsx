@@ -2,7 +2,7 @@ import React from 'react';
 import Image from '/hero.png';
 import { Box, Typography, styled } from '@mui/material';
 import { NavLink } from 'react-router-dom';
-import { useAppSelector } from 'App/hooks';
+import { useAppSelector } from 'hooks';
 
 const StyledLink = styled(NavLink)(({ theme }) => ({
   textDecoration: 'none',

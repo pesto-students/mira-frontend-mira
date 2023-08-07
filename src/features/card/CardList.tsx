@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 
 import { useGetCardsQuery } from './cardApiSlice';
-import { useAppSelector } from 'App/hooks';
+import { useAppSelector } from 'hooks';
 
 const ListCards = () => {
   const { currentProject } = useAppSelector((state) => state.project);

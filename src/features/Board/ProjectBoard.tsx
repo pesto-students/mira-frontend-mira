@@ -4,7 +4,7 @@ import Breadcrumbs from 'shared/components/Breadcrumbs';
 
 import PageHeader from 'shared/components/PageHeader/PageHeader';
 import Filters from './Filters';
-import { useAppSelector } from 'App/hooks';
+import { useAppSelector } from 'hooks';
 
 import type { IProjectBoardProps as Props } from './types';
 import PageError from 'shared/components/PageError';

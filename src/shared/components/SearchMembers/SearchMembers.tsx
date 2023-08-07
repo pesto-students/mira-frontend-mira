@@ -12,7 +12,7 @@ import TextFieldWrapper from 'shared/components/TextFieldWrapper';
 import ChipWrapper from 'shared/components/ChipWrapper/ChipWrapper';
 import { useDebounce } from 'use-debounce';
 import { useSearchUsersQuery } from 'features/user/userApiSlice';
-import { useAppSelector } from 'App/hooks';
+import { useAppSelector } from 'hooks';
 
 type UserType = {
   _id: string;

@@ -3,7 +3,7 @@ import DialogWrapper from 'shared/components/DialogWrapper/DialogWrapper';
 import TextFieldWrapper from 'shared/components/TextFieldWrapper';
 import { sleep } from 'shared/helpers/sleep';
 import CircularProgress from '@mui/material/CircularProgress';
-import { firebaseSendPasswordResetEmail } from 'App/firebase/firebaseConfig';
+import { firebaseSendPasswordResetEmail } from '@/firebase/firebaseConfig';
 import { useSnackbar } from 'notistack';
 
 interface IResetPasswordProps {
