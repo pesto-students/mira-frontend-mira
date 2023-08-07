@@ -12,7 +12,7 @@ import {
   MenuItem,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import Logo from 'App/assets/MIRA.png';
+import Logo from '/mira.png';
 
 import { useAppSelector, useAppDispatch } from 'App/hooks';
 // import { useGetUserDetailsQuery } from 'features/auth/authService';

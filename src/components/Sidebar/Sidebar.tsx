@@ -26,7 +26,7 @@ import ProjectDropdown from './ProjectDropdown';
 import SettingsIcon from '@mui/icons-material/Settings';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import AddIcon from '@mui/icons-material/Add';
-import Logo from 'App/assets/logo.png';
+import Logo from '/logo.png';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 import { useAppDispatch, useAppSelector } from 'App/hooks';

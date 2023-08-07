@@ -1,7 +1,7 @@
 import { Modal, Fade, Box, Typography, Backdrop } from '@mui/material';
 import * as React from 'react';
 import ButtonWrapper from '../ButtonWrapper';
-import ModalImage from 'App/assets/undraw_wandering_mind.svg';
+import ModalImage from '/undraw_wandering_mind.svg';
 
 interface IGenericErrorModalProps {
   open: boolean;

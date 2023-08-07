@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from 'App/assets/hero.png';
+import Image from '/hero.png';
 import { Box, Typography, styled } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import { useAppSelector } from 'App/hooks';
