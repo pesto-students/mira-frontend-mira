@@ -1,21 +1,23 @@
-import BaseLayout from 'ui/layout/BaseLayout';
-import Login from 'features/auth/Login';
-import Register from 'features/user/Register';
-import Home from 'features/home';
-import Status404 from 'features/home/Status404';
 import type { RouteObject } from 'react-router';
-import ProjectCreate from 'pages/project/ProjectCreate';
-import ProjectEdit from 'pages/project/ProjectEdit';
-import ProjectDefault from 'pages/project/ProjectDefault';
-import CardList from 'features/card/CardList';
-import CardCreate from 'pages/card/CardCreate';
-import CardEdit from 'pages/card/CardEdit';
-import Hero from 'features/home/Hero';
+
+import BaseLayout from 'ui/layout/BaseLayout';
 import DashboardLayout from 'ui/layout/DashboardLayout/DashboardLayout';
-import ProtectedRoutes from 'ui/ProtectedRoutes';
-import Logout from 'ui/Logout';
-import ProjectBoard from 'features/Board/ProjectBoard';
-import ProfileEdit from 'features/user/ProfileEdit';
+import ProtectedRoutes from 'features/route/ProtectedRoutes';
+
+import LoginPage from 'pages/auth/LoginPage';
+import RegisterPage from 'pages/user/RegisterPage';
+import CardListPage from 'pages/card/CardListPage';
+import ProjectBoardPage from 'pages/project/ProjectBoardPage';
+import HomePage from 'pages/HomePage';
+import Status404Page from 'pages/Status404Page';
+import ProjectCreatePage from 'pages/project/ProjectCreatePage';
+import ProjectEditPage from 'pages/project/ProjectEditPage';
+import ProjectDefaultPage from 'pages/project/ProjectDefaultPage';
+import CardCreatePage from 'pages/card/CardCreatePage';
+import CardEditPage from 'pages/card/CardEditPage';
+import Hero from 'pages/Hero';
+import ProfileEditPage from 'pages/user/ProfileEditPage';
+import LogoutPage from 'pages/auth/LogoutPage';
 
 const router: RouteObject[] = [
   {
@@ -24,7 +26,7 @@ const router: RouteObject[] = [
     children: [
       {
         path: '/',
-        element: <Home />,
+        element: <HomePage />,
         children: [
           {
             path: '/',
@@ -32,25 +34,25 @@ const router: RouteObject[] = [
           },
           {
             path: '/sign-up',
-            element: <Register />,
+            element: <RegisterPage />,
           },
           {
             path: '/login',
-            element: <Login />,
+            element: <LoginPage />,
           },
           {
             path: '/create-project',
-            element: <ProjectCreate />,
+            element: <ProjectCreatePage />,
           },
           {
             path: '/profile',
-            element: <ProfileEdit />,
+            element: <ProfileEditPage />,
           },
         ],
       },
       {
         path: '*',
-        element: <Status404 />,
+        element: <Status404Page />,
       },
     ],
   },
@@ -64,35 +66,35 @@ const router: RouteObject[] = [
         children: [
           {
             path: '',
-            element: <ProjectDefault />,
+            element: <ProjectDefaultPage />,
           },
           {
             path: 'create',
-            element: <ProjectCreate />,
+            element: <ProjectCreatePage />,
           },
           {
             path: ':projectId',
-            element: <ProjectBoard />,
+            element: <ProjectBoardPage />,
           },
           {
             path: ':projectId/dashboard',
-            element: <ProjectBoard />,
+            element: <ProjectBoardPage />,
           },
           {
             path: ':projectId/overview',
-            element: <ProjectEdit />,
+            element: <ProjectEditPage />,
           },
           {
             path: ':projectId/cards/',
-            element: <CardList />,
+            element: <CardListPage />,
           },
           {
             path: ':projectId/cards/create',
-            element: <CardCreate />,
+            element: <CardCreatePage />,
           },
           {
             path: ':projectId/cards/:cardId',
-            element: <CardEdit />,
+            element: <CardEditPage />,
           },
         ],
       },
@@ -100,7 +102,7 @@ const router: RouteObject[] = [
   },
   {
     path: '/logout',
-    element: <Logout />,
+    element: <LogoutPage />,
   },
 ];
 

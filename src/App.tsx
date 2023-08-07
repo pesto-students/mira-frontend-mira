@@ -4,7 +4,7 @@ import { useRoutes } from 'react-router-dom';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { useAppDispatch, useAppSelector } from 'hooks';
-import { onAuthStateChangedListener } from '@/firebase/firebaseConfig';
+import { onAuthStateChangedListener } from 'firebase/firebaseConfig';
 import { saveFirebaseUser } from 'features/auth/authSlice';
 import { SnackbarProvider, MaterialDesignContent } from 'notistack';
 import router from './router';

@@ -3,7 +3,7 @@ import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from 'hooks';
 import { useGetProjectsQuery } from 'features/project/projectApiSlice';
 import { setCurrentProject } from 'features/project/projectSlice';
-import GlobalLoader from './GlobalLoader/GlobalLoader';
+import GlobalLoader from '../../ui/GlobalLoader/GlobalLoader';
 
 const Error = ({ refetch, error }) => {
   return (
