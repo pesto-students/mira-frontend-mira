@@ -10,23 +10,21 @@ import {
 } from '@mui/material';
 import { useForm, useFieldArray, Controller } from 'react-hook-form';
 import { FC, useEffect, useState } from 'react';
-import TextFieldWrapper, {
-  TextFieldHeading,
-} from 'shared/components/TextFieldWrapper';
-import ButtonWrapper from 'shared/components/ButtonWrapper';
-import UploadImage from 'shared/components/UploadImage';
-import SearchMembers from 'shared/components/SearchMembers/SearchMembers';
-import ViewMembersTable from 'shared/components/ViewMembersTable/ViewMembersTable';
-import { SelectWrapper } from 'shared/components/SelectWrapper/SelectWrapper';
-import DatePickerWrapper from 'shared/components/DatePickerWrapper/DatePickerWrapper';
+import TextFieldWrapper, { TextFieldHeading } from 'ui/TextFieldWrapper';
+import ButtonWrapper from 'ui/ButtonWrapper';
+import UploadImage from 'ui/UploadImage';
+import SearchMembers from 'ui/SearchMembers/SearchMembers';
+import ViewMembersTable from 'ui/ViewMembersTable/ViewMembersTable';
+import { SelectWrapper } from 'ui/SelectWrapper/SelectWrapper';
+import DatePickerWrapper from 'ui/DatePickerWrapper/DatePickerWrapper';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import QueueIcon from '@mui/icons-material/Queue';
 import DoneIcon from '@mui/icons-material/Done';
 import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import LoopIcon from '@mui/icons-material/Loop';
-import RichTextEditor from 'shared/components/RichTextEditor/RichTextEditor';
-import DeleteWrapper from 'shared/components/DeleteWrapper/DeleteWrapper';
+import RichTextEditor from 'ui/RichTextEditor/RichTextEditor';
+import DeleteWrapper from 'ui/DeleteWrapper/DeleteWrapper';
 
 type FormData = {
   title: string;
